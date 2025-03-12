@@ -1,0 +1,4 @@
+ito sir, complete na, included files:
+- python script to get attendances data
+- php script for website to send data
+- sql table
