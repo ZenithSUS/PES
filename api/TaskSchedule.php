@@ -233,7 +233,7 @@ try {
                         
                                     <div class='appointment-details'>
                                         <p>To maintain regular work, each employee listed must receive a passing grade of 75% or higher.</p>
-                                        <p>To evaluate them, please log on to our system at <a href='http://localhost/oas/authentication/SignIn.php'>http://localhost/oas/authentication/SignIn.php</a>.</p>
+                                        <p>To evaluate them, please log on to our system at <a href='http://localhost/PES/authentication/SignIn.php'>http://localhost/PES/authentication/SignIn.php</a>.</p>
                                         <p style='margin-bottom: 20px;'>Please complete these evaluations by their respective due dates. Failure to do so may result in the employee's automatic <b>END OF CONTRACT</b>.</p>
                                         
                                         <p>Thank you very much.</p>

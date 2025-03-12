@@ -202,7 +202,7 @@ try {
 
                                 <div class='appointment-details'>
                                     <p style=''>To maintain regular work, the aforementioned individual must get a standard passing grade of 75% or higher.</p>
-                                    <p style=''>To evaluate them, please log on to our system at <a href='http://localhost/oas/authentication/SignIn.php'>http://localhost/oas/authentication/SignIn.php</a>.</p>
+                                    <p style=''>To evaluate them, please log on to our system at <a href='http://localhost/PES/authentication/SignIn.php'>http://localhost/PES/authentication/SignIn.php</a>.</p>
                                     <p style='margin-bottom: 20px;'>Kindly evaluate this individual not later than $dateEvaluation. Failure to do so, employee will AUTOMATICALLY undergo <b>END OF CONTRACT</b></p>
                                     
                                     <p style=''>Thank you very much.</p>

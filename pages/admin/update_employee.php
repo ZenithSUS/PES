@@ -292,7 +292,7 @@
     <script>
     
     function getLastEmployeeIdAndIncrement() {
-        fetch('http://localhost/OAS/api/fetch_record_api.php?action=getLastID')
+        fetch('http://localhost/PES/api/fetch_record_api.php?action=getLastID')
             .then(response => response.json())
             .then(data => {
                 if (data.last_employee_id) {
@@ -310,7 +310,7 @@
     
     
     function getLastRFIDAndIncrement() {
-        fetch('http://localhost/OAS/api/fetch_record_api.php?action=getLastRFID')
+        fetch('http://localhost/PES/api/fetch_record_api.php?action=getLastRFID')
             .then(response => response.json())
             .then(data => {
                 if (data.last_employee_id) {

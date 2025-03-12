@@ -58,7 +58,7 @@ if (len(attendances) > 0):
     with open("attendance-logs.json", "a") as f:
         f.write(dumps(attendances, default=json_serial))
 
-    url = "http://localhost/oas/bio/processattendances.php" # the link to your website that will process the attendance data
+    url = "http://localhost/PES/bio/processattendances.php" # the link to your website that will process the attendance data
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
     r = requests.post(url=url, data=dumps(attendances, default=json_serial), headers=headers)
