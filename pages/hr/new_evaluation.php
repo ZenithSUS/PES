@@ -691,13 +691,13 @@
             } else if (value >= 4.5 && value <= 4.9) {
                 rateText = 'Very Good';
                 color = 'blue';
-            } else if (value >= 4 && value <= 4.4) {
+            } else if (value >= 3 && value <= 4.4) {
                 rateText = 'Good';
                 color = 'deepskyblue';
-            } else if (value >= 3.5 && value <= 3.9) {
+            } else if (value > 0 && value <= 2.9) {
                 rateText = 'Fair';
                 color = 'orange';
-            } else if (value <= 3.4) {
+            } else {
                 rateText = 'Poor';
                 color = 'red';
             }

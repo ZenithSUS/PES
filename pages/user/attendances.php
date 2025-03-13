@@ -278,6 +278,15 @@
             return `${parts[1]}/${parts[2]}/${parts[0]}`;
         }
 
+        document.getElementById("exportExcel").addEventListener("click", function() {
+            let table = document.getElementById("attendanceTable");
+            let ws = XLSX.utils.table_to_sheet(table);
+            let wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Attendance Report");
+
+            XLSX.writeFile(wb, "Attendance_Report.xlsx");
+        });
+
     </script>
 
 </body>

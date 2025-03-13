@@ -50,10 +50,10 @@ finally:
 if (len(attendances) > 0):
     # send the attendance data to your website
     
-    #url = "http://localhost:80/oas/bio/processattendances.php" for testing
+    #url = "http://localhost:80/PES/bio/processattendances.php" for testing
     # eto yung config papunta sa system naten
     # pwede rin i-access yan if may local ethernet using 
-    # http://IPv4:port/oas/bio/processattendances.php for implementation
+    # http://IPv4:port/PES/bio/processattendances.php for implementation
 
     with open("attendance-logs.json", "a") as f:
         f.write(dumps(attendances, default=json_serial))
