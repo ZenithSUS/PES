@@ -733,11 +733,6 @@
 
             let rateElement = document.getElementById(rateId);
 
-            if(value) {
-                rateElement.textContent = "";
-                return;
-            }
-
             rateElement.textContent = rateText;
             rateElement.style.color = color;
         }
