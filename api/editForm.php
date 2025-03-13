@@ -39,6 +39,7 @@ if (isset($_POST['fileName'])) {
 
     } else {
 
+        $user_to_eval = $_POST['user_to_eval'];
         $productivity = $_POST['productivity'];
         $knowledge = $_POST['knowledge'];
         $quality = $_POST['quality'];

@@ -206,7 +206,7 @@
                                                         <td>1. PRODUCTIVITY</td>
                                                         <td><b class="text-info">15%</b></td>
                                                         <td>
-                                                            <input id="productivity" class="form-control text-dark" name="eval_productivity" min="0" max="15" oninput="limitValue(this, 15)" type="number" onkeyup="scale15()">
+                                                            <input id="productivity" class="form-control text-dark" name="eval_productivity" min="0" max="15" oninput="limitValue(this, 15, 15)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="prodRate"> </p>
@@ -216,7 +216,7 @@
                                                         <td>2. KNOWLEDGE OF WORK</td>
                                                         <td><b class="text-info">15%</b></td>
                                                         <td>
-                                                            <input id="knowledge" class="form-control text-dark" name="eval_knowledge" min="0" max="15" oninput="limitValue(this, 15)" type="number" onkeyup="scale15()">
+                                                            <input id="knowledge" class="form-control text-dark" name="eval_knowledge" min="0" max="15" oninput="limitValue(this, 15, 15)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="knowRate"> </p>
@@ -226,7 +226,7 @@
                                                         <td>3. QUALITY OF WORK</td>
                                                         <td><b class="text-info">15%</b></td>
                                                         <td>
-                                                            <input id="quality" class="form-control text-dark" name="eval_quality" min="0" max="15" oninput="limitValue(this, 15)" type="number" onkeyup="scale15()">
+                                                            <input id="quality" class="form-control text-dark" name="eval_quality" min="0" max="15" oninput="limitValue(this, 15, 15)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="qualRate"> </p>
@@ -236,7 +236,7 @@
                                                         <td>4. INITIATIVE</td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="initiative" class="form-control text-dark" name="eval_initiative" min="0" max="10" oninput="limitValue(this, 10)" type="number">
+                                                            <input id="initiative" class="form-control text-dark" name="eval_initiative" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="initRate"> </p>
@@ -246,7 +246,7 @@
                                                         <td>5. WORK ATTITUDE</td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="workAttitude" class="form-control text-dark" name="eval_work_attitude" min="0" max="10" oninput="limitValue(this, 10)" type="number">
+                                                            <input id="workAttitude" class="form-control text-dark" name="eval_work_attitude" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="attitudeRate"> </p>
@@ -256,7 +256,7 @@
                                                         <td>6. COMMUNICATION</td>
                                                         <td><b class="text-info">5%</b></td>
                                                         <td>
-                                                            <input id="communication" class="form-control text-dark" name="eval_communication" min="0" max="5" oninput="limitValue(this, 5)" type="number" onkeyup="scale5()">
+                                                            <input id="communication" class="form-control text-dark" name="eval_communication" min="0" max="5" oninput="limitValue(this, 5, 5)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="commRate"> </p>
@@ -266,7 +266,7 @@
                                                         <td>7. CREATIVITY</td>
                                                         <td><b class="text-info">5%</b></td>
                                                         <td>
-                                                            <input id="creativity" class="form-control text-dark" name="eval_creativity" min="0" max="5" oninput="limitValue(this, 5)" type="number" onkeyup="scale5()">
+                                                            <input id="creativity" class="form-control text-dark" name="eval_creativity" min="0" max="5" oninput="limitValue(this, 5, 5)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="creativityRate"> </p>
@@ -301,7 +301,7 @@
                                                         <td><i>ABSENCES</i></td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="eval_hr_abs" class="form-control text-dark" name="eval_hr_abs" min="0" max="10" oninput="limitValue(this, 10)" type="number">
+                                                            <input id="eval_hr_abs" class="form-control text-dark" name="eval_hr_abs" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="hrAbs"> </p>
@@ -311,7 +311,7 @@
                                                         <td><i>DISCIPLINARY ACTION</i></td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="eval_hr_sus" class="form-control text-dark" name="eval_hr_sus" min="0" max="10" oninput="limitValue(this, 10)" type="number">
+                                                            <input id="eval_hr_sus" class="form-control text-dark" name="eval_hr_sus" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="hrSus"> </p>
@@ -321,7 +321,7 @@
                                                         <td><i>TARDINESS / UNDERTIME</i></td>
                                                         <td><b class="text-info">5%</b></td>
                                                         <td>
-                                                            <input id="eval_hr_tard" class="form-control text-dark" name="eval_hr_tard" min="0" max="5" oninput="limitValue(this, 5)" type="number" onkeyup="scale5()">
+                                                            <input id="eval_hr_tard" class="form-control text-dark" name="eval_hr_tard" min="0" max="5" oninput="limitValue(this, 5, 5)" type="number">
                                                         </td>
                                                         <td>
                                                             <p id="hrTard"> </p>
@@ -650,49 +650,110 @@
             });
         }
 
-        // function scale15() {
-        //     let productivity = document.getElementById('productivity').value;
-        //     let knowledge = document.getElementById('knowledge').value;
-        //     let quality = document.getElementById('quality').value;
+        function scale15() {
+            let productivity = document.getElementById('productivity');
+            let knowledge = document.getElementById('knowledge');
+            let quality = document.getElementById('quality');
 
-        //     updateRating(productivity, 'prodRate', 15);
-        //     updateRating(knowledge, 'knowRate', 15);
-        //     updateRating(quality, 'qualRate', 15);
-        // }
+            if (productivity.value) {
+                updateRating(productivity.value, 'prodRate', 15);
+            }
+
+            if (knowledge.value) {
+                updateRating(knowledge.value, 'knowRate', 15);
+            }
+
+            if (quality.value) {
+                updateRating(quality.value, 'qualRate', 15);
+            }
+        }
 
         function scale10() {
-            // let initiative = document.getElementById('initiative').value;
-            // let workAttitude = document.getElementById('workAttitude').value;
+            let initiative = document.getElementById('initiative');
+            let workAttitude = document.getElementById('workAttitude');
             let absences = document.getElementById('eval_hr_abs');
             let suspension = document.getElementById('eval_hr_sus');
 
-            // updateRating(initiative, 'initRate', 10);
-            // updateRating(workAttitude, 'attitudeRate', 10);
+            if (initiative.value) {
+                updateRating(initiative.value, 'initRate', 10, "Manager");
+            }
+
+            if (workAttitude.value) {
+                updateRating(workAttitude.value, 'attitudeRate', 10, "Manager");
+            }
 
             if (absences.value) {
-                updateRating(absences.value, 'hrAbs', 10);
+                updateRating(absences.value, 'hrAbs', 10, "HR");
             }
+
             if (suspension.value) {
-                updateRating(suspension.value, 'hrSus', 10);
+                updateRating(suspension.value, 'hrSus', 10, "HR");
             }
         }
 
         function scale5() {
-            // let communication = document.getElementById('communication').value;
-            // let creativity = document.getElementById('creativity').value;
-            let tardiness = document.getElementById('eval_hr_tard').value;
+            let communication = document.getElementById('communication');
+            let creativity = document.getElementById('creativity');
+            let tardiness = document.getElementById('eval_hr_tard');
 
-            // updateRating(communication, 'commRate', 5);
-            // updateRating(creativity, 'creativityRate', 5);
-            updateRating(tardiness, 'hrTard', 5);
+            if (communication.value) {
+                updateRating(communication.value, 'commRate', 5, "Manager");
+            }
+
+            if (creativity.value) {
+                updateRating(creativity.value, 'creativityRate', 5, "HR");
+            }
+
+            if (tardiness.value) {
+                updateRating(tardiness.value, 'hrTard', 5, "HR");
+            }
         }
 
-        function updateRating(value, rateId, scale) {
+        function updateRating(value, rateId, scale, type) {
             let rateText = '';
             let color = '';
             value = parseFloat(value);
 
-            if (scale === 10) {
+            if (scale === 15) {
+                if (value >= 14.5 && value <= 15) {
+                    rateText = 'Excellent';
+                    color = 'green';
+                } else if (value >= 13.9 && value <= 14.4) {
+                    rateText = 'Very Good';
+                    color = 'blue';
+                } else if (value >= 12 && value <= 13.8) {
+                    rateText = 'Good';
+                    color = 'deepskyblue';
+                } else if (value >= 11.5 && value <= 11.9) {
+                    rateText = 'Fair';
+                    color = 'orange';
+                } else if (value <= 11.4) {
+                    rateText = 'Poor';
+                    color = 'red';
+                }
+            }
+
+            if (scale === 10 && type === "Manager") {
+
+                if (value >= 9.5 && value <= 10) {
+                    rateText = 'Excellent';
+                    color = 'green';
+                } else if (value >= 9 && value <= 9.4) {
+                    rateText = 'Very Good';
+                    color = 'blue';
+                } else if (value >= 8 && value <= 8.9) {
+                    rateText = 'Good';
+                    color = 'deepskyblue';
+                } else if (value >= 7.5 && value <= 7.9) {
+                    rateText = 'Fair';
+                    color = 'orange';
+                } else {
+                    rateText = 'Poor';
+                    color = 'red';
+                }
+            }
+
+            if (scale === 10 && type === "HR") {
 
                 if (value >= 9.6 && value <= 10) {
                     rateText = 'Excellent';
@@ -712,7 +773,26 @@
                 }
             }
 
-            if (scale === 5) {
+            if (scale === 5 && type === "Manager") {
+                if (value == 5) {
+                    rateText = 'Excellent';
+                    color = 'green';
+                } else if (value >= 4.5 && value <= 4.9) {
+                    rateText = 'Very Good';
+                    color = 'blue';
+                } else if (value >= 4 && value <= 4.4) {
+                    rateText = 'Good';
+                    color = 'deepskyblue';
+                } else if (value >= 3.5 && value <= 3.9) {
+                    rateText = 'Fair';
+                    color = 'orange';
+                } else {
+                    rateText = 'Poor';
+                    color = 'red';
+                }
+            }
+
+            if (scale === 5 && type === "HR") {
                 if (value == 5) {
                     rateText = 'Excellent';
                     color = 'green';
@@ -737,8 +817,20 @@
             rateElement.style.color = color;
         }
 
-        function limitValue(element, max) {
-            scale10();
+        function limitValue(element, max, scale) {
+
+            if (scale === 15) {
+                scale15();
+            }
+
+            if (scale === 10) {
+                scale10();
+            }
+
+            if (scale === 5) {
+                scale5();
+            }
+
             if (element.value > max) {
                 element.value = max;
             } else if (element.value < 0) {
