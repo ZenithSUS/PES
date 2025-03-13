@@ -40,7 +40,7 @@ $eval_count_department = "SELECT
                                 END) AS for_eval_count
                           FROM accounts
                           WHERE active = 1 AND department = ?";
-                          
+
 
 $dept_stmt = $con->prepare($eval_count_department);
 $dept_stmt->bind_param('s', $dpt);
@@ -83,7 +83,7 @@ $result = $con->query($sql);
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $viocount = $row['violation_count'];
-} 
+}
 
 $sql = "SELECT COUNT(*) as total_records
         FROM accounts
