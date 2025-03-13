@@ -10,7 +10,7 @@ if (isset($_POST['fileName'])) {
     $fileName = $_POST['fileName'];
     $eval_role = $_POST['eval_role'];
 
-    if($eval_role == "HR") {
+    if ($eval_role == "HR") {
 
         $user_to_eval = $_POST['user_to_eval'];
         $absence = $_POST['abs'];
@@ -18,8 +18,7 @@ if (isset($_POST['fileName'])) {
         $tardiness = $_POST['tard'];
 
         $rating = $absence + $suspension + $tardiness;
-
-    } else if($eval_role == "HRM") {
+    } else if ($eval_role == "HRM") {
 
 
         $user_to_eval = $_POST['user_to_eval'];
@@ -36,9 +35,9 @@ if (isset($_POST['fileName'])) {
         $rate_comment = $_POST['rate_comment'];
 
         $rating = $absence + $suspension + $tardiness + $productivity + $knowledge + $quality + $initiative + $attitude + $communication + $creativity;
-
     } else {
 
+        $user_to_eval = $_POST['user_to_eval'];
         $productivity = $_POST['productivity'];
         $knowledge = $_POST['knowledge'];
         $quality = $_POST['quality'];
@@ -49,7 +48,6 @@ if (isset($_POST['fileName'])) {
         $rate_comment = $_POST['rate_comment'];
 
         $rating = $productivity + $knowledge + $quality + $initiative + $attitude + $communication + $creativity;
-
     }
 
     $sql = "SELECT * FROM accounts WHERE employee_id = ?";
@@ -66,13 +64,11 @@ if (isset($_POST['fileName'])) {
 
         $userRecord = $result->fetch_assoc();
 
-        $fname = $userRecord['first_name']." ".$userRecord['middle_name']." ".$userRecord['last_name'];
+        $fname = $userRecord['first_name'] . " " . $userRecord['middle_name'] . " " . $userRecord['last_name'];
         $department = $userRecord['department'];
         $position = $userRecord['position'];
         $status = $userRecord['emp_status'];
         $dateHired = $userRecord['date_hired'];
-
-
     } else {
         echo "User not found";
     }
@@ -87,16 +83,16 @@ if (isset($_POST['fileName'])) {
             $updateStatus = "UPDATE evaluation SET evaluator_manager = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare($updateStatus);
             $stmt->bind_param("ss", $_SESSION['user_id'], $fileName);
-        
+
             if ($stmt->execute()) {
-        
+
                 $updateStatus = "UPDATE accounts SET for_eval = ? WHERE current_eval = ?";
                 $changeEval = date("F d, Y", strtotime("+6 months"));
                 $stmt = $con->prepare($updateStatus);
                 $stmt->bind_param("ss", $changeEval, $fileName);
-        
+
                 if ($stmt->execute()) {
-        
+
                     $getUserId = "SELECT employee_id FROM accounts WHERE current_eval = ?";
                     $stmt = $con->prepare($getUserId);
                     $stmt->bind_param("s", $fileName);
@@ -104,13 +100,13 @@ if (isset($_POST['fileName'])) {
                     $stmt->bind_result($user_to_eval);
                     $stmt->fetch();
                     $stmt->close();
-        
+
                     if (empty($user_to_eval)) {
                         error_log("Error: No employee_id found for file: $fileName");
                         echo json_encode(['success' => false, 'message' => 'No user found for evaluation']);
                         exit;
                     }
-        
+
                     $checkExists = "SELECT COUNT(*) FROM eval_summary WHERE user_id = ?";
                     $stmt = $con->prepare($checkExists);
                     $stmt->bind_param("s", $user_to_eval);
@@ -118,39 +114,37 @@ if (isset($_POST['fileName'])) {
                     $stmt->bind_result($count);
                     $stmt->fetch();
                     $stmt->close();
-        
+
                     if ($count > 0) {
                         $sql = "UPDATE eval_summary SET rating = rating + ?, comment = ?, file = ? WHERE user_id = ?";
                         $stmt = $con->prepare($sql);
-                        $stmt->bind_param("isss", $rating, $rate_comment, $user_to_eval, $fileName);
-        
+                        $stmt->bind_param("isss", $rating, $rate_comment, $fileName, $user_to_eval);
+
                         if (!$stmt->execute()) {
                             error_log("Failed to update eval_summary: " . $stmt->error);
                             echo json_encode(['success' => false, 'message' => 'Failed to update eval_summary']);
                             exit;
                         }
                     }
-        
-                    createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $date_today , $rate_comment);
-        
+
+                    createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $date_today, $rate_comment);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Failed to update status']);
                 }
-        
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to update status']);
             }
-        
+
             break;
 
         case "HR":
-            
+
             $updateStatus = "UPDATE evaluation SET evaluator_hr = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare(query: $updateStatus);
             $stmt->bind_param("ss", $_SESSION['user_id'], $fileName);
-            
+
             if ($stmt->execute()) {
-            
+
                 $checkExists = "SELECT COUNT(*) FROM eval_summary WHERE user_id = ?";
                 $stmt = $con->prepare($checkExists);
                 $stmt->bind_param("s", $user_to_eval);
@@ -158,42 +152,39 @@ if (isset($_POST['fileName'])) {
                 $stmt->bind_result($count);
                 $stmt->fetch();
                 $stmt->close();
-            
+
                 if ($count > 0) {
 
                     $updateSummary = "UPDATE eval_summary SET rating = ? WHERE user_id = ?";
                     $stmt = $con->prepare($updateSummary);
                     $stmt->bind_param("is", $rating, $user_to_eval);
-
                 } else {
 
                     $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating) VALUES (?, ?, ?)";
                     $stmt = $con->prepare($insertSummary);
                     $stmt->bind_param("ssi", $user_to_eval, $_SESSION['user_id'], $rating);
-
                 }
-            
+
                 if ($stmt->execute()) {
                     createEvalHR($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Failed to update eval_summary']);
                 }
-                
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to update evaluation']);
             }
-                
+
 
             break;
 
         case "HRM":
-            
+
             $updateStatus = "UPDATE evaluation SET evaluator_hr = ?, evaluator_manager = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare(query: $updateStatus);
             $stmt->bind_param("sss", $_SESSION['user_id'], $_SESSION['user_id'], $fileName);
-            
+
             if ($stmt->execute()) {
-            
+
                 $checkExists = "SELECT COUNT(*) FROM eval_summary WHERE user_id = ?";
                 $stmt = $con->prepare($checkExists);
                 $stmt->bind_param("s", $user_to_eval);
@@ -201,80 +192,73 @@ if (isset($_POST['fileName'])) {
                 $stmt->bind_result($count);
                 $stmt->fetch();
                 $stmt->close();
-            
+
                 if ($count > 0) {
 
                     $updateStatus = "UPDATE accounts SET for_eval = ? WHERE current_eval = ?";
                     $changeEval = date("F d, Y", strtotime("+6 months"));
                     $stmt = $con->prepare($updateStatus);
                     $stmt->bind_param("ss", $changeEval, $fileName);
-        
+
                     if ($stmt->execute()) {
 
                         $updateSummary = "UPDATE eval_summary SET rating = ? WHERE user_id = ?";
                         $stmt = $con->prepare($updateSummary);
                         $stmt->bind_param("is", $rating, $user_to_eval);
-
                     }
-
                 } else {
 
                     $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating, comment, file) VALUES (?, ?, ?, ?, ?)";
                     $stmt = $con->prepare($insertSummary);
                     $stmt->bind_param("ssiss", $user_to_eval, $_SESSION['user_id'], $rating, $rate_comment, $fileName);
-                    
+
                     if ($stmt->execute()) {
 
                         $updateStatus = "UPDATE accounts SET for_eval = ? WHERE current_eval = ?";
                         $changeEval = date("F d, Y", strtotime("+6 months"));
                         $stmt = $con->prepare($updateStatus);
                         $stmt->bind_param("ss", $changeEval, $fileName);
-
                     }
-
                 }
-            
+
                 if ($stmt->execute()) {
                     createEvalHRM($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $rate_comment);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Failed to update eval_summary']);
                 }
-                
             } else {
                 echo json_encode(['success' => false, 'message' => 'Failed to update evaluation']);
             }
-                
+
 
             break;
 
         default:
 
             break;
-
     }
-
 } else {
 
     echo json_encode(['success' => false, 'message' => 'File name and name are required.']);
-
 }
 
-function createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $date_today, $rate_comment) {
+function createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $date_today, $rate_comment)
+{
 
     $reader = PHPExcel_IOFactory::createReaderForFile($fileName);
 
     $excel_obj = $reader->load($fileName);
-    
+
     $worksheet = $excel_obj->getActiveSheet();
 
-    
+
     $A56 = new PHPExcel_RichText();
     $boldA56 = $A56->createTextRun($_SESSION['full']);
     $boldA56->getFont()->setBold(true);
     $worksheet->getCell('A56')->setValue($A56);
-    
+
     $A56 = new PHPExcel_RichText();
-    $boldA56 = $A56->createTextRun($_SESSION['department']." Department, Manager");
+    $boldA56 = $A56->createTextRun($_SESSION['department'] . " Department, Manager");
     $worksheet->getCell('A57')->setValue($A56);
 
     $A56 = new PHPExcel_RichText();
@@ -540,7 +524,7 @@ function createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiati
             $worksheet->getCell('J31')->setValue($J31);
             break;
     }
-    
+
     $A44 = new PHPExcel_RichText();
     $boldA44 = $A44->createTextRun($rate_comment);
     $worksheet->getCell('A44')->setValue($A44);
@@ -559,15 +543,15 @@ function createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiati
     $writer->save($fileName);
 
     echo json_encode(['success' => true]);
-
 }
 
-function createEvalHR($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness) {
+function createEvalHR($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness)
+{
 
     $reader = PHPExcel_IOFactory::createReaderForFile($fileName);
 
     $excel_obj = $reader->load($fileName);
-    
+
     $worksheet = $excel_obj->getActiveSheet();
 
     $C8 = new PHPExcel_RichText();
@@ -610,7 +594,7 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
     $boldI10->getFont()->setBold(true);
     $worksheet->getCell('I10')->setValue($I10);
 
-    
+
 
     switch (true) {
         case ($absence == 10):
@@ -619,35 +603,35 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
             $boldF35->getFont()->setBold(true);
             $worksheet->getCell('F35')->setValue($F35);
             break;
-    
+
         case ($absence >= 8.6 && $absence <= 9.5):
             $G35 = new PHPExcel_RichText();
             $boldG35 = $G35->createTextRun($absence);
             $boldG35->getFont()->setBold(true);
             $worksheet->getCell('G35')->setValue($G35);
             break;
-    
+
         case ($absence >= 6 && $absence <= 8.5):
             $H35 = new PHPExcel_RichText();
             $boldH35 = $H35->createTextRun($absence);
             $boldH35->getFont()->setBold(true);
             $worksheet->getCell('H35')->setValue($H35);
             break;
-    
+
         case ($absence >= 3.5 && $absence <= 5.9):
             $I35 = new PHPExcel_RichText();
             $boldI35 = $I35->createTextRun($absence);
             $boldI35->getFont()->setBold(true);
             $worksheet->getCell('I35')->setValue($I35);
             break;
-    
+
         case ($absence == 0):
             $J35 = new PHPExcel_RichText();
             $boldJ35 = $J35->createTextRun($absence);
             $boldJ35->getFont()->setBold(true);
             $worksheet->getCell('J35')->setValue($J35);
             break;
-    
+
         default:
             break;
     }
@@ -660,35 +644,35 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
             $boldF38->getFont()->setBold(true);
             $worksheet->getCell('F38')->setValue($F38);
             break;
-    
+
         case ($suspension >= 8.6 && $suspension <= 9.5):
             $G38 = new PHPExcel_RichText();
             $boldG38 = $G38->createTextRun($suspension);
             $boldG38->getFont()->setBold(true);
             $worksheet->getCell('G38')->setValue($G38);
             break;
-    
+
         case ($suspension >= 6 && $suspension <= 8.5):
             $H38 = new PHPExcel_RichText();
             $boldH38 = $H38->createTextRun($suspension);
             $boldH38->getFont()->setBold(true);
             $worksheet->getCell('H38')->setValue($H38);
             break;
-    
+
         case ($suspension >= 3.5 && $suspension <= 5.9):
             $I38 = new PHPExcel_RichText();
             $boldI38 = $I38->createTextRun($suspension);
             $boldI38->getFont()->setBold(true);
             $worksheet->getCell('I38')->setValue($I38);
             break;
-    
+
         case ($suspension == 0):
             $J38 = new PHPExcel_RichText();
             $boldJ38 = $J38->createTextRun($suspension);
             $boldJ38->getFont()->setBold(true);
             $worksheet->getCell('J38')->setValue($J38);
             break;
-    
+
         default:
             break;
     }
@@ -700,35 +684,35 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
             $boldF41->getFont()->setBold(true);
             $worksheet->getCell('F41')->setValue($F41);
             break;
-    
+
         case ($tardiness >= 4.7 && $tardiness <= 4.9):
             $G41 = new PHPExcel_RichText();
             $boldG41 = $G41->createTextRun($tardiness);
             $boldG41->getFont()->setBold(true);
             $worksheet->getCell('G41')->setValue($G41);
             break;
-    
+
         case ($tardiness >= 4.5 && $tardiness <= 4.7):
             $H41 = new PHPExcel_RichText();
             $boldH41 = $H41->createTextRun($tardiness);
             $boldH41->getFont()->setBold(true);
             $worksheet->getCell('H41')->setValue($H41);
             break;
-    
+
         case ($tardiness >= 2.9 && $tardiness <= 4.4):
             $I41 = new PHPExcel_RichText();
             $boldI41 = $I41->createTextRun($tardiness);
             $boldI41->getFont()->setBold(true);
             $worksheet->getCell('I41')->setValue($I41);
             break;
-    
+
         case ($tardiness == 0):
             $J41 = new PHPExcel_RichText();
             $boldJ41 = $J41->createTextRun($tardiness);
             $boldJ41->getFont()->setBold(true);
             $worksheet->getCell('J41')->setValue($J41);
             break;
-    
+
         default:
             break;
     }
@@ -737,22 +721,22 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
     $writer->save($fileName);
 
     echo json_encode(['success' => true]);
-
 }
 
-function createEvalHRM($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $rate_comment) {
+function createEvalHRM($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $rate_comment)
+{
 
     $reader = PHPExcel_IOFactory::createReaderForFile($fileName);
 
     $excel_obj = $reader->load($fileName);
-    
+
     $worksheet = $excel_obj->getActiveSheet();
 
     $A56 = new PHPExcel_RichText();
     $boldA56 = $A56->createTextRun(pText: "Juan Dela Cruz"); //change to president/ceo name
     $boldA56->getFont()->setBold(true);
     $worksheet->getCell('A56')->setValue($A56);
-    
+
     $A56 = new PHPExcel_RichText();
     $boldA56 = $A56->createTextRun("President / CEO"); // change position 
     $worksheet->getCell('A57')->setValue($A56);
@@ -802,7 +786,7 @@ function createEvalHRM($fileName, $fname, $department, $position, $status, $date
     $boldI10->getFont()->setBold(true);
     $worksheet->getCell('I10')->setValue($I10);
 
-    
+
 
     switch (true) {
         case ($productivity >= 14.5 && $productivity <= 15):
@@ -1070,35 +1054,35 @@ function createEvalHRM($fileName, $fname, $department, $position, $status, $date
             $boldF35->getFont()->setBold(true);
             $worksheet->getCell('F35')->setValue($F35);
             break;
-    
+
         case ($absence >= 8.6 && $absence <= 9.5):
             $G35 = new PHPExcel_RichText();
             $boldG35 = $G35->createTextRun($absence);
             $boldG35->getFont()->setBold(true);
             $worksheet->getCell('G35')->setValue($G35);
             break;
-    
+
         case ($absence >= 6 && $absence <= 8.5):
             $H35 = new PHPExcel_RichText();
             $boldH35 = $H35->createTextRun($absence);
             $boldH35->getFont()->setBold(true);
             $worksheet->getCell('H35')->setValue($H35);
             break;
-    
+
         case ($absence >= 3.5 && $absence <= 5.9):
             $I35 = new PHPExcel_RichText();
             $boldI35 = $I35->createTextRun($absence);
             $boldI35->getFont()->setBold(true);
             $worksheet->getCell('I35')->setValue($I35);
             break;
-    
+
         case ($absence == 0):
             $J35 = new PHPExcel_RichText();
             $boldJ35 = $J35->createTextRun($absence);
             $boldJ35->getFont()->setBold(true);
             $worksheet->getCell('J35')->setValue($J35);
             break;
-    
+
         default:
             break;
     }
@@ -1111,35 +1095,35 @@ function createEvalHRM($fileName, $fname, $department, $position, $status, $date
             $boldF38->getFont()->setBold(true);
             $worksheet->getCell('F38')->setValue($F38);
             break;
-    
+
         case ($suspension >= 8.6 && $suspension <= 9.5):
             $G38 = new PHPExcel_RichText();
             $boldG38 = $G38->createTextRun($suspension);
             $boldG38->getFont()->setBold(true);
             $worksheet->getCell('G38')->setValue($G38);
             break;
-    
+
         case ($suspension >= 6 && $suspension <= 8.5):
             $H38 = new PHPExcel_RichText();
             $boldH38 = $H38->createTextRun($suspension);
             $boldH38->getFont()->setBold(true);
             $worksheet->getCell('H38')->setValue($H38);
             break;
-    
+
         case ($suspension >= 3.5 && $suspension <= 5.9):
             $I38 = new PHPExcel_RichText();
             $boldI38 = $I38->createTextRun($suspension);
             $boldI38->getFont()->setBold(true);
             $worksheet->getCell('I38')->setValue($I38);
             break;
-    
+
         case ($suspension == 0):
             $J38 = new PHPExcel_RichText();
             $boldJ38 = $J38->createTextRun($suspension);
             $boldJ38->getFont()->setBold(true);
             $worksheet->getCell('J38')->setValue($J38);
             break;
-    
+
         default:
             break;
     }
@@ -1151,35 +1135,35 @@ function createEvalHRM($fileName, $fname, $department, $position, $status, $date
             $boldF41->getFont()->setBold(true);
             $worksheet->getCell('F41')->setValue($F41);
             break;
-    
+
         case ($tardiness >= 4.7 && $tardiness <= 4.9):
             $G41 = new PHPExcel_RichText();
             $boldG41 = $G41->createTextRun($tardiness);
             $boldG41->getFont()->setBold(true);
             $worksheet->getCell('G41')->setValue($G41);
             break;
-    
+
         case ($tardiness >= 4.5 && $tardiness <= 4.7):
             $H41 = new PHPExcel_RichText();
             $boldH41 = $H41->createTextRun($tardiness);
             $boldH41->getFont()->setBold(true);
             $worksheet->getCell('H41')->setValue($H41);
             break;
-    
+
         case ($tardiness >= 2.9 && $tardiness <= 4.4):
             $I41 = new PHPExcel_RichText();
             $boldI41 = $I41->createTextRun($tardiness);
             $boldI41->getFont()->setBold(true);
             $worksheet->getCell('I41')->setValue($I41);
             break;
-    
+
         case ($tardiness == 0):
             $J41 = new PHPExcel_RichText();
             $boldJ41 = $J41->createTextRun($tardiness);
             $boldJ41->getFont()->setBold(true);
             $worksheet->getCell('J41')->setValue($J41);
             break;
-    
+
         default:
             break;
     }
@@ -1202,5 +1186,4 @@ function createEvalHRM($fileName, $fname, $department, $position, $status, $date
     $writer->save($fileName);
 
     echo json_encode(['success' => true]);
-
 }
