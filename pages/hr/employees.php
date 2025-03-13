@@ -127,7 +127,7 @@
                                                 while ($accounts = $result->fetch_assoc()) {
                                                     $forEvalValue = $accounts['for_eval'];
 
-                                                    $forEvalDate = null;
+                                                    $forEvalDate = "+ 5 months 2 weeks";
                                                     $interval = null;
 
                                                     if ($forEvalValue !== 'Evaluated') {
@@ -136,7 +136,7 @@
                                                             $today = new DateTime();
                                                             $interval = $forEvalDate->diff($today)->days;
                                                         } catch (Exception $e) {
-                                                            $forEvalDate = null;
+                                                            $forEvalDate;
                                                         }
                                                     }
 
