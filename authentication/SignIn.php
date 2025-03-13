@@ -45,7 +45,7 @@
                                 <div class="col-md-12 mb-3">
                                     
                                     <h2>Sign In</h2>
-                                    <p>Innotor Inc. Administrator and HR Login</p>
+                                    <p>Innotor Inc.</p>
                                     
                                 </div>
                                 <div class="col-md-12">

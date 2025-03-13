@@ -197,7 +197,7 @@
                                                                             </div>
                                                                         </h4>
                                                                     </div>';
-                                                            } elseif ($row['emp_status'] == "Regular") {
+                                                            } elseif ($row['emp_status'] == "Regular" || $row['emp_status'] == "Contractual") {
                                                                 $statusClass = "text-primary";
                                                                     
                                                                 echo '
