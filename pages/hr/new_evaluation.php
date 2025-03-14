@@ -202,74 +202,84 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <tr hidden>
+                                                        <td>1. PRODUCTIVITY</td>
+                                                        <td><b class="text-info">15%</b></td>
+                                                        <td>
+                                                            <input id="current_eval" class="form-control text-dark" name="" type="text" value="<?php echo $current_eval ?>">
+                                                        </td>
+                                                        <td>
+                                                            <p id="zzz"></p>
+                                                        </td>
+                                                    </tr>
                                                     <tr>
                                                         <td>1. PRODUCTIVITY</td>
                                                         <td><b class="text-info">15%</b></td>
                                                         <td>
-                                                            <input id="productivity" class="form-control text-dark" name="eval_productivity" min="0" max="15" oninput="limitValue(this, 15, 15)" type="number">
+                                                            <input id="productivity" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'prodRate', 15);" name="eval_productivity" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="prodRate"> </p>
+                                                            <p id="prodRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>2. KNOWLEDGE OF WORK</td>
                                                         <td><b class="text-info">15%</b></td>
                                                         <td>
-                                                            <input id="knowledge" class="form-control text-dark" name="eval_knowledge" min="0" max="15" oninput="limitValue(this, 15, 15)" type="number">
+                                                            <input id="knowledge" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'knowRate', 15);" name="eval_knowledge" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="knowRate"> </p>
+                                                            <p id="knowRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>3. QUALITY OF WORK</td>
                                                         <td><b class="text-info">15%</b></td>
                                                         <td>
-                                                            <input id="quality" class="form-control text-dark" name="eval_quality" min="0" max="15" oninput="limitValue(this, 15, 15)" type="number">
+                                                            <input id="quality" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'qualRate', 15);" name="eval_quality" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="qualRate"> </p>
+                                                            <p id="qualRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>4. INITIATIVE</td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="initiative" class="form-control text-dark" name="eval_initiative" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
+                                                            <input id="initiative" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'initRate', 10);" name="eval_initiative" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="initRate"> </p>
+                                                            <p id="initRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>5. WORK ATTITUDE</td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="workAttitude" class="form-control text-dark" name="eval_work_attitude" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
+                                                            <input id="workAttitude" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'attitudeRate', 10);" name="eval_work_attitude" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="attitudeRate"> </p>
+                                                            <p id="attitudeRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>6. COMMUNICATION</td>
                                                         <td><b class="text-info">5%</b></td>
                                                         <td>
-                                                            <input id="communication" class="form-control text-dark" name="eval_communication" min="0" max="5" oninput="limitValue(this, 5, 5)" type="number">
+                                                            <input id="communication" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'commRate', 5);" name="eval_communication" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="commRate"> </p>
+                                                            <p id="commRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>7. CREATIVITY</td>
                                                         <td><b class="text-info">5%</b></td>
                                                         <td>
-                                                            <input id="creativity" class="form-control text-dark" name="eval_creativity" min="0" max="5" oninput="limitValue(this, 5, 5)" type="number">
+                                                            <input id="creativity" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'creativityRate', 5);" name="eval_creativity" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
                                                         </td>
                                                         <td>
-                                                            <p id="creativityRate"> </p>
+                                                            <p id="creativityRate"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -301,41 +311,39 @@
                                                         <td><i>ABSENCES</i></td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="eval_hr_abs" class="form-control text-dark" name="eval_hr_abs" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
+                                                            <input id="eval_hr_abs" class="form-control text-dark" name="eval_hr_abs" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'hrAbs', 10);" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10<br>VERY GOOD: 9.5-8.6<br>GOOD: 8.5-6<br>FAIR: 5.9-3.5<br>POOR: 0">
                                                         </td>
                                                         <td>
-                                                            <p id="hrAbs"> </p>
+                                                            <p id="hrAbs"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><i>DISCIPLINARY ACTION</i></td>
                                                         <td><b class="text-info">10%</b></td>
                                                         <td>
-                                                            <input id="eval_hr_sus" class="form-control text-dark" name="eval_hr_sus" min="0" max="10" oninput="limitValue(this, 10, 10)" type="number">
+                                                            <input id="eval_hr_sus" class="form-control text-dark" name="eval_hr_sus" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'hrSus', 10);" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10<br>VERY GOOD: 9.5-8.6<br>GOOD: 8.5-6<br>FAIR: 5.9-3.5<br>POOR: 0">
                                                         </td>
                                                         <td>
-                                                            <p id="hrSus"> </p>
+                                                            <p id="hrSus"></p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><i>TARDINESS / UNDERTIME</i></td>
                                                         <td><b class="text-info">5%</b></td>
                                                         <td>
-                                                            <input id="eval_hr_tard" class="form-control text-dark" name="eval_hr_tard" min="0" max="5" oninput="limitValue(this, 5, 5)" type="number">
+                                                            <input id="eval_hr_tard" class="form-control text-dark" name="eval_hr_tard" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'hrTard', 5);" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.7-4.5<br>GOOD: 4.4-3.5<br>FAIR: 3.4-2<br>POOR: 0">
                                                         </td>
                                                         <td>
-                                                            <p id="hrTard"> </p>
+                                                            <p id="hrTard"></p>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
 
-                                    </form>
-
-                                    <div class="modal-footer mt-4">
-                                        <button type="submit" class="btn btn-success m-3" id="submitEvaluation">Submit Evaluation</button>
-                                    </div>
+                                        <div class="modal-footer mt-4">
+                                            <button type="submit" class="btn btn-success m-3" id="submitEvaluation">Submit Evaluation</button>
+                                        </div>
 
                                 </div>
                             </div>
@@ -852,6 +860,91 @@
             }
         }
     </script>
+
+    <script>
+        // Initialize Bootstrap popovers
+        document.addEventListener('DOMContentLoaded', function() {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl, {
+                    html: true, // Allow HTML content
+                    trigger: 'focus', // Show on focus
+                });
+            });
+        });
+
+        function updateRating(value, rateId, scale) {
+            let rateText = '';
+            let color = '';
+            value = parseFloat(value);
+
+            if (scale === 15) {
+                if (value >= 14.5 && value <= 15) {
+                    rateText = 'Excellent';
+                    color = 'green';
+                } else if (value >= 13.9 && value <= 14.4) {
+                    rateText = 'Very Good';
+                    color = 'blue';
+                } else if (value >= 12 && value <= 13.8) {
+                    rateText = 'Good';
+                    color = 'deepskyblue';
+                } else if (value >= 11.5 && value <= 11.9) {
+                    rateText = 'Fair';
+                    color = 'orange';
+                } else if (value <= 11.4) {
+                    rateText = 'Poor';
+                    color = 'red';
+                }
+            } else if (scale === 10) {
+                if (value >= 9.5 && value <= 10) {
+                    rateText = 'Excellent';
+                    color = 'green';
+                } else if (value >= 9 && value <= 9.4) {
+                    rateText = 'Very Good';
+                    color = 'blue';
+                } else if (value >= 8 && value <= 8.9) {
+                    rateText = 'Good';
+                    color = 'deepskyblue';
+                } else if (value >= 7.5 && value <= 7.9) {
+                    rateText = 'Fair';
+                    color = 'orange';
+                } else if (value <= 7.4) {
+                    rateText = 'Poor';
+                    color = 'red';
+                }
+            } else if (scale === 5) {
+                if (value == 5) {
+                    rateText = 'Excellent';
+                    color = 'green';
+                } else if (value >= 4.5 && value <= 4.9) {
+                    rateText = 'Very Good';
+                    color = 'blue';
+                } else if (value >= 4 && value <= 4.4) {
+                    rateText = 'Good';
+                    color = 'deepskyblue';
+                } else if (value >= 3.5 && value <= 3.9) {
+                    rateText = 'Fair';
+                    color = 'orange';
+                } else if (value <= 3.4) {
+                    rateText = 'Poor';
+                    color = 'red';
+                }
+            }
+
+            let rateElement = document.getElementById(rateId);
+            rateElement.textContent = rateText;
+            rateElement.style.color = color;
+        }
+
+        function limitValue(input, max) {
+            if (input.value > max) {
+                input.value = max;
+            } else if (input.value < 0) {
+                input.value = 0;
+            }
+        }
+    </script>
+
 
 </body>
 
