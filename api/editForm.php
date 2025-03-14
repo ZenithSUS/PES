@@ -3,23 +3,21 @@ require_once "../Classes/PHPExcel.php";
 include('database.php');
 session_start();
 
-header('Content-Type: application/json');
-
+header('Content-Type: application/x-www-form-urlencoded');
 if (isset($_POST['fileName'])) {
-
+    
     $fileName = $_POST['fileName'];
     $eval_role = $_POST['eval_role'];
-
+    
     if ($eval_role == "HR") {
 
         $user_to_eval = $_POST['user_to_eval'];
         $absence = $_POST['abs'];
         $suspension = $_POST['sus'];
         $tardiness = $_POST['tard'];
-
         $rating = $absence + $suspension + $tardiness;
+        
     } else if ($eval_role == "HRM") {
-
 
         $user_to_eval = $_POST['user_to_eval'];
         $absence = $_POST['abs'];
@@ -70,10 +68,10 @@ if (isset($_POST['fileName'])) {
         $status = $userRecord['emp_status'];
         $dateHired = $userRecord['date_hired'];
     } else {
-        echo "User not found";
+        echo json_encode(['success' => false, 'message' => 'User not exists']);
     }
 
-
+    
     $date_today = date('F j, Y');
 
     switch ($eval_role) {
@@ -126,7 +124,7 @@ if (isset($_POST['fileName'])) {
                             exit;
                         }
                     }
-
+                    
                     createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $date_today, $rate_comment);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Failed to update status']);
@@ -182,7 +180,7 @@ if (isset($_POST['fileName'])) {
             $updateStatus = "UPDATE evaluation SET evaluator_hr = ?, evaluator_manager = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare(query: $updateStatus);
             $stmt->bind_param("sss", $_SESSION['user_id'], $_SESSION['user_id'], $fileName);
-
+            
             if ($stmt->execute()) {
 
                 $checkExists = "SELECT COUNT(*) FROM eval_summary WHERE user_id = ?";
@@ -725,9 +723,8 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
 
 function createEvalHRM($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $rate_comment)
 {
-
+    
     $reader = PHPExcel_IOFactory::createReaderForFile($fileName);
-
     $excel_obj = $reader->load($fileName);
 
     $worksheet = $excel_obj->getActiveSheet();

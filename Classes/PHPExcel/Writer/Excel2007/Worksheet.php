@@ -1112,7 +1112,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
                         }
 
                         break;
-                    case 'f':            // Formula
+                    case 'f':       
                         $attributes = $pCell->getFormulaAttributes();
                         if ($attributes['t'] == 'array') {
                             $objWriter->startElement('f');

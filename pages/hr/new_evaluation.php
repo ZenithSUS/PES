@@ -394,7 +394,7 @@
             const evaluationForm = document.getElementById('evaluationForm');
             const submitButton = document.getElementById('submitEvaluation');
 
-            evaluationForm.addEventListener('submit', function(event) {
+            evaluationForm.addEventListener('submit', async function(event) {
 
                 event.preventDefault();
 
@@ -467,7 +467,6 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-
                                 insertHrEvaluation2(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, productivity, knowledge, quality, initiative, attitude, communication, creativity, rate_comment);
                                 console.log(data.newFileName);
                                 console.log("success");
@@ -515,7 +514,7 @@
 
         async function insertHrEvaluation2(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, productivity, knowledge, quality, initiative, attitude, communication, creativity, rate_comment) {
             const formData = new FormData();
-
+            console.log(fileName)
             formData.append('fileName', fileName);
             formData.append('abs', eval_hr_abs);
             formData.append('sus', eval_hr_sus);
@@ -530,29 +529,38 @@
             formData.append('communication', communication);
             formData.append('creativity', creativity);
             formData.append('rate_comment', rate_comment);
-            console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
+            // console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
-            fetch('../../api/editForm.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    return response.text();
-                })
-                .then(data => {
-                    try {
-                        JSON.parse(data);
-                        alert('Evaluation Form Created');
-                    } catch (error) {
-                        alert('Evaluation Form Created');
-                    }
-                    window.location.href = "employees.php";
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    alert(`An error occurred: ${error.message}. Please check the console for details.`);
-                });
+
+            const response = await fetch("../../api/editForm.php", {
+                method: "POST",
+                body: formData
+            })
+
+            const data = await response.json()
+
+            console.log(data);
+            alert("Evaluated");
+            window.location.href = 'employees.php';
+            // fetch('../../api/editForm.php', {
+            //         method: 'POST',
+            //         body: formData,
+            //     })
+            //     .then(response => {
+            //         console.log("Response:", response);
+            //         console.log('Response status:', response.status);
+            //         return response.text();
+            //     })
+            //     .then(data => {
+            //         console.log("Data:", data);
+            //         JSON.parse(data);
+            //         alert('Evaluation Form Created');
+            //         window.location.href = "employees.php";
+            //     })
+            //     .catch(error => {
+            //         console.error('Fetch error:', error);
+            //         alert(`An error occurred: ${error.message}. Please check the console for details.`);
+            //     });
         }
 
         async function insertHrEvaluation(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval) {
@@ -567,46 +575,52 @@
             formData.append('eval_role', evalRole);
             console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
+            const response = await fetch("../../api/editForm.php", {
+                method: "POST",
+                body: formData
+            })
 
-            fetch('../../api/editForm.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    return response.text();
-                })
-                .then(data => {
-                    let jsonResponse;
-                    try {
-                        jsonResponse = JSON.parse(data);
-                    } catch (error) {
-                        alert('Evaluation Form Created');
+            const data = await response.json()
 
-                        const userEvalData = new FormData();
-                        userEvalData.append('user_to_eval', user_to_eval);
+            console.log(data);
+            alert("Evaluated");
+            window.location.href = 'employees.php';
 
-                        return fetch('../../api/sendEmail.php', {
-                            method: 'POST',
-                            body: userEvalData,
-                        });
-                    }
-                })
-                .then(emailResponse => {
-                    if (emailResponse) {
-                        console.log('Email response status:', emailResponse.status);
-                        return emailResponse.text();
-                    }
-                })
-                .then(emailData => {
-                    console.log('Email send response:', emailData);
-                    window.location.href = "employees.php";
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    alert(`An error occurred: ${error.message}. Please check the console for details.`);
-                });
+            // fetch('../../api/editForm.php', {
+            //         method: 'POST',
+            //         body: formData,
+            //     })
+            //     .then(response => {
+            //         console.log('Response status:', response.status);
+            //         return response.text();
+            //     })
+            //     .then(data => {
+            //         let jsonResponse;
 
+            //         jsonResponse = JSON.parse(data);
+            //         alert('Evaluation Form Created');
+            //         const userEvalData = new FormData();
+            //         userEvalData.append('user_to_eval', user_to_eval);
+
+            //         return fetch('../../api/sendEmail.php', {
+            //             method: 'POST',
+            //             body: userEvalData,
+            //         });
+            //     })
+            //     .then(emailResponse => {
+            //         if (emailResponse) {
+            //             console.log('Email response status:', emailResponse.status);
+            //             return emailResponse.text();
+            //         }
+            //     })
+            //     .then(emailData => {
+            //         console.log('Email send response:', emailData);
+            //         window.location.href = "employees.php";
+            //     })
+            //     .catch(error => {
+            //         console.error('Fetch error:', error);
+            //         alert(`An error occurred: ${error.message}. Please check the console for details.`);
+            //     });
         }
 
         function generateRandomCode(length = 10) {
