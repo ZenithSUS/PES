@@ -182,183 +182,189 @@
                                                 <input id="" class="form-control text-dark" name="eval_empstat" type="text" value="<?php echo $empstat ?>" readonly>
                                             </div>
                                         </div>
-                                        <table class="table table-bordered table-hover" id="managerEvaluation">
-                                            <thead class="table-info">
-                                                <tr>
-                                                    <th scope="col">Criteria</th>
-                                                    <th scope="col">Weight</th>
-                                                    <th scope="col">Rating</th>
-                                                    <th scope="col">Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr hidden>
-                                                    <td>1. PRODUCTIVITY</td>
-                                                    <td><b class="text-info">15%</b></td>
-                                                    <td>
-                                                        <input id="current_eval" class="form-control text-dark" name="" type="text" value="<?php echo $current_eval ?>">
-                                                    </td>
-                                                    <td>
-                                                        <p id="zzz"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1. PRODUCTIVITY</td>
-                                                    <td><b class="text-info">15%</b></td>
-                                                    <td>
-                                                        <input id="productivity" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'prodRate', 15);" name="eval_productivity" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="prodRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2. KNOWLEDGE OF WORK</td>
-                                                    <td><b class="text-info">15%</b></td>
-                                                    <td>
-                                                        <input id="knowledge" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'knowRate', 15);" name="eval_knowledge" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="knowRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3. QUALITY OF WORK</td>
-                                                    <td><b class="text-info">15%</b></td>
-                                                    <td>
-                                                        <input id="quality" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'qualRate', 15);" name="eval_quality" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="qualRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4. INITIATIVE</td>
-                                                    <td><b class="text-info">10%</b></td>
-                                                    <td>
-                                                        <input id="initiative" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'initRate', 10);" name="eval_initiative" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="initRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5. WORK ATTITUDE</td>
-                                                    <td><b class="text-info">10%</b></td>
-                                                    <td>
-                                                        <input id="workAttitude" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'attitudeRate', 10);" name="eval_work_attitude" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="attitudeRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6. COMMUNICATION</td>
-                                                    <td><b class="text-info">5%</b></td>
-                                                    <td>
-                                                        <input id="communication" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'commRate', 5);" name="eval_communication" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="commRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>7. CREATIVITY</td>
-                                                    <td><b class="text-info">5%</b></td>
-                                                    <td>
-                                                        <input id="creativity" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'creativityRate', 5);" name="eval_creativity" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
-                                                    </td>
-                                                    <td>
-                                                        <p id="creativityRate"></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Rater's Comment</td>
-                                                    <td colspan="4">
-                                                        <textarea id="rate_comment" class="form-control text-dark" name="rate_comment" rows="4" style="resize: none;" placeholder="Write a brief comment about the employee"></textarea>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                </div>
+                                        <div class="container mt-4">
+                                            <div class="row mb-2">
+                                                <h4>Manager Evaluation</h4>
+                                            </div>
 
-                                <div class="container mt-4">
-                                    <div class="row mb-2">
-                                        <h4>Human Resource Evaluation</h4>
+                                            <table class="table table-bordered table-hover" id="managerEvaluation">
+                                                <thead class="table-info">
+                                                    <tr>
+                                                        <th scope="col">Criteria</th>
+                                                        <th scope="col">Weight</th>
+                                                        <th scope="col">Rating</th>
+                                                        <th scope="col">Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr hidden>
+                                                        <td>1. PRODUCTIVITY</td>
+                                                        <td><b class="text-info">15%</b></td>
+                                                        <td>
+                                                            <input id="current_eval" class="form-control text-dark" name="" type="text" value="<?php echo $current_eval ?>">
+                                                        </td>
+                                                        <td>
+                                                            <p id="zzz"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1. PRODUCTIVITY</td>
+                                                        <td><b class="text-info">15%</b></td>
+                                                        <td>
+                                                            <input id="productivity" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15)" name="eval_productivity" type="number" onkeyup="scale15()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="prodRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2. KNOWLEDGE OF WORK</td>
+                                                        <td><b class="text-info">15%</b></td>
+                                                        <td>
+                                                            <input id="knowledge" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15)" name="eval_knowledge" type="number" onkeyup="scale15()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="knowRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3. QUALITY OF WORK</td>
+                                                        <td><b class="text-info">15%</b></td>
+                                                        <td>
+                                                            <input id="quality" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15)" name="eval_quality" type="number" onkeyup="scale15()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="qualRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4. INITIATIVE</td>
+                                                        <td><b class="text-info">10%</b></td>
+                                                        <td>
+                                                            <input id="initiative" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10)" name="eval_initiative" type="number" onkeyup="scale10()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="initRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5. WORK ATTITUDE</td>
+                                                        <td><b class="text-info">10%</b></td>
+                                                        <td>
+                                                            <input id="workAttitude" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10)" name="eval_work_attitude" type="number" onkeyup="scale10()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="attitudeRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>6. COMMUNICATION</td>
+                                                        <td><b class="text-info">5%</b></td>
+                                                        <td>
+                                                            <input id="communication" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5)" name="eval_communication" type="number" onkeyup="scale5()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="commRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>7. CREATIVITY</td>
+                                                        <td><b class="text-info">5%</b></td>
+                                                        <td>
+                                                            <input id="creativity" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5)" name="eval_creativity" type="number" onkeyup="scale5()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="creativityRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Rater's Comment</td>
+                                                        <td colspan="4">
+                                                            <textarea id="rate_comment" class="form-control text-dark" name="rate_comment" rows="4" style="resize: none;" placeholder="Write a brief comment about the employee"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="container mt-4">
+                                            <div class="row mb-2">
+                                                <h4>Human Resource Evaluation</h4>
+                                            </div>
+
+                                            <table class="table table-bordered table-hover" id="hrEvaluation">
+                                                <thead class="table-info">
+                                                    <tr>
+                                                        <th scope="col">Criteria</th>
+                                                        <th scope="col">Weight</th>
+                                                        <th scope="col">Rating</th>
+                                                        <th scope="col">Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><i>ABSENCES</i></td>
+                                                        <td><b class="text-info">10%</b></td>
+                                                        <td>
+                                                            <input id="hr_initiative" class="form-control text-dark" name="eval_hr_initiative" type="number" onkeyup="scale10()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="hrInitRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i>SUSPENSION / DISCIPLINARY ACTION</i></td>
+                                                        <td><b class="text-info">10%</b></td>
+                                                        <td>
+                                                            <input id="hr_workAttitude" class="form-control text-dark" name="eval_hr_work_attitude" type="number" onkeyup="scale10()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="hrAttitudeRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i>TARDINESS / UNDERTIME</i></td>
+                                                        <td><b class="text-info">5%</b></td>
+                                                        <td>
+                                                            <input id="hr_communication" class="form-control text-dark" name="eval_hr_communication" type="number" onkeyup="scale5()">
+                                                        </td>
+                                                        <td>
+                                                            <p id="hrCommRate"> </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </form>
+
+                                    <div class="modal-footer mt-4">
+                                        <button type="submit" class="btn btn-success m-3" id="submitEvaluation">Submit Evaluation</button>
                                     </div>
 
-                                    <table class="table table-bordered table-hover" id="hrEvaluation">
-                                        <thead class="table-info">
-                                            <tr>
-                                                <th scope="col">Criteria</th>
-                                                <th scope="col">Weight</th>
-                                                <th scope="col">Rating</th>
-                                                <th scope="col">Remarks</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><i>ABSENCES</i></td>
-                                                <td><b class="text-info">10%</b></td>
-                                                <td>
-                                                    <input id="hr_initiative" class="form-control text-dark" name="eval_hr_initiative" type="number" onkeyup="scale10()">
-                                                </td>
-                                                <td>
-                                                    <p id="hrInitRate"> </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><i>SUSPENSION / DISCIPLINARY ACTION</i></td>
-                                                <td><b class="text-info">10%</b></td>
-                                                <td>
-                                                    <input id="hr_workAttitude" class="form-control text-dark" name="eval_hr_work_attitude" type="number" onkeyup="scale10()">
-                                                </td>
-                                                <td>
-                                                    <p id="hrAttitudeRate"> </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><i>TARDINESS / UNDERTIME</i></td>
-                                                <td><b class="text-info">5%</b></td>
-                                                <td>
-                                                    <input id="hr_communication" class="form-control text-dark" name="eval_hr_communication" type="number" onkeyup="scale5()">
-                                                </td>
-                                                <td>
-                                                    <p id="hrCommRate"> </p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
-
-                                </form>
-
-                                <div class="modal-footer mt-4">
-                                    <button type="submit" class="btn btn-success m-3" id="submitEvaluation">Submit Evaluation</button>
-                                </div>
-
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
-
-        </div>
-        <!--  BEGIN FOOTER  -->
-        <div class="footer-wrapper">
-            <div class="footer-section f-section-1">
-                <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
+            <!--  BEGIN FOOTER  -->
+            <div class="footer-wrapper">
+                <div class="footer-section f-section-1">
+                    <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
+                </div>
+                <div class="footer-section f-section-2">
+                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg></p>
+                </div>
             </div>
-            <div class="footer-section f-section-2">
-                <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg></p>
-            </div>
+            <!--  END FOOTER  -->
         </div>
-        <!--  END FOOTER  -->
-    </div>
-    <!--  END CONTENT AREA  -->
+        <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
@@ -388,7 +394,7 @@
     <script>
         const userRole = <?php echo $_SESSION['role']; ?>;
         const user_to_eval = <?php echo $employee_id ?>;
-
+                                            
 
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -523,17 +529,6 @@
             updateRating(creativity, 'creativityRate', 5);
         }
 
-        // Initialize Bootstrap popovers
-        document.addEventListener('DOMContentLoaded', function() {
-            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-            var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl, {
-                    html: true, // Allow HTML content
-                    trigger: 'focus', // Show on focus
-                });
-            });
-        });
-
         function updateRating(value, rateId, scale) {
             let rateText = '';
             let color = '';
@@ -597,11 +592,12 @@
             rateElement.style.color = color;
         }
 
-        function limitValue(input, max) {
-            if (input.value > max) {
-                input.value = max;
-            } else if (input.value < 0) {
-                input.value = 0;
+
+        function limitValue(element, max) {
+            if (element.value > max) {
+                element.value = max;
+            } else if (element.value < 0) {
+                element.value = 0;
             }
         }
     </script>
