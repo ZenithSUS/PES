@@ -235,6 +235,7 @@
         window.location.href = '../../authentication/SignIn.php';
     }
 </script>
+<!--  -->
 
 <script>
     const authData = localStorage.getItem("users-data");
