@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title>OAS | Dashboard</title>
-    <link rel="icon" type="image/x-icon" href="../../src/assets/img/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="../../src/assets/img/favicon.ico" />
     <link href="../../layouts/modern-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../../layouts/modern-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../../layouts/modern-light-menu/loader.js"></script>
@@ -24,11 +25,16 @@
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
 </head>
+
 <body class="layout-boxed">
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -37,10 +43,10 @@
 
             <ul class="navbar-item flex-row ms-lg-auto ms-0">
 
-                <?php 
-                    include('../../components/nav-dropdown.php');
-                    include('../../api/counter.php');
-            
+                <?php
+                include('../../components/nav-dropdown.php');
+                include('../../api/counter.php');
+
                 ?>
 
             </ul>
@@ -85,7 +91,12 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="9" cy="7" r="4"></circle>
+                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                    </svg>
                                                 </div>
                                                 <div class="">
                                                     <p class="w-value"><?php echo $user_count ?></p>
@@ -100,7 +111,12 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="9" cy="7" r="4"></circle>
+                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                    </svg>
                                                 </div>
                                                 <div class="">
                                                     <p class="w-value"><?php echo $hr_count ?></p>
@@ -115,7 +131,12 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="9" cy="7" r="4"></circle>
+                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                    </svg>
                                                 </div>
                                                 <div class="">
                                                     <p class="w-value"><?php echo $totalRecords2 ?></p>
@@ -129,7 +150,7 @@
                             </div>
                         </div>
                         <!-- counter -->
-                         
+
                         <!-- counter -->
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="row widget-statistic">
@@ -138,7 +159,10 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                                    </svg>
                                                 </div>
                                                 <div class="">
                                                     <p class="w-value"><?php echo $totalRecords ?></p>
@@ -152,7 +176,7 @@
                             </div>
                         </div>
                         <!-- counter -->
-                         
+
 
                     </div>
 
@@ -165,7 +189,9 @@
                     <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
                 </div>
                 <div class="footer-section f-section-2">
-                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
+                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg></p>
                 </div>
             </div>
             <!--  END FOOTER  -->
@@ -189,17 +215,17 @@
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>
+
 </html>
 
 <script>
-        
     var storedData = localStorage.getItem('users-data');
 
     if (storedData) {
         var userData = JSON.parse(storedData);
 
         if (userData.login === true) {
-            
+
             console.log('User is logged in');
 
         } else {
@@ -208,5 +234,30 @@
     } else {
         window.location.href = '../../authentication/SignIn.php';
     }
+</script>
+<!--  -->
 
+<script>
+    const authData = localStorage.getItem("users-data");
+
+    if (authData) {
+        let data = JSON.parse(authData);
+        let role = parseInt(data.role);
+
+        if (role !== 0) {
+            if (role === 1) {
+                window.location.href = '../hr/dashboard.php';
+            }
+
+            if (role === 2) {
+                window.location.href = '../manager/dashboard.php';
+            }
+
+            if (role === 3) {
+                window.location.href = '../user/dashboard.php';
+            }
+        }
+    } else {
+        console.log("No data");
+    }
 </script>
