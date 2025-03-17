@@ -464,9 +464,10 @@
                     let jsonResponse;
                     try {
                         jsonResponse = JSON.parse(data);
-                    } catch (error) {
                         alert('Employee Evaluated:');
                         window.location.href = 'employees.php';
+                    } catch (error) {
+                        console.error("There is something wrong:", error)
                     }
                 })
                 .catch(error => {

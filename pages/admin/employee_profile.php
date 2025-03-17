@@ -121,7 +121,7 @@
                                                             // echo "<script>alert('".$row['employee_id']."')</script>";
                                                             // echo "<script>alert('".$employeeData."')</script>";
                                                             $statusClass = "";
-                                                            if ($row['emp_status'] == "Probationary") {
+                                                            if ($row['emp_status'] == "Probationary" || $row['emp_status'] == "Contractual") {
                                                                 $statusClass = "text-success";
 
                                                                 // echo '<div class="d-flex justify-content-end">
@@ -142,10 +142,6 @@
                                                                                     </svg>
                                                                                 </a>
                                                                                 <div class="dropdown-menu left">
-                                                                                    <a class="dropdown-item" href="./update_employee.php?id='.$row['employee_id'].'">
-                                                                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
-                                                                                        <span>Update Information</span>
-                                                                                    </a>
                                                                                     <a class="dropdown-item" data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#vioModal" data-id="'. htmlspecialchars($row['employee_id']) .'">
                                                                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                                                                                         <span>Add Violation</span>
@@ -185,10 +181,6 @@
                                                                                     </svg>
                                                                                 </a>
                                                                                 <div class="dropdown-menu left">
-                                                                                    <a class="dropdown-item" href="./update_employee.php?id='.htmlspecialchars($row['employee_id']).'">
-                                                                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
-                                                                                        <span>Update Information</span>
-                                                                                    </a>
                                                                                     <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#arcModal"  data-id="'. htmlspecialchars($row['employee_id']) .'" data-bs-placement="top" title="Deactivate Account" data-original-title="Delete">
                                                                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
                                                                                         <span>Archive</span>
@@ -212,10 +204,6 @@
                                                                                     </svg>
                                                                                 </a>
                                                                                 <div class="dropdown-menu left">
-                                                                                    <a class="dropdown-item" href="./update_employee.php?id='.htmlspecialchars($row['employee_id']).'">
-                                                                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
-                                                                                        <span>Update Information</span>
-                                                                                    </a>
                                                                                     <a class="dropdown-item" data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#vioModal"  data-id='. htmlspecialchars($row['employee_id']) .'  data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate Account" data-original-title="Delete">
                                                                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                                                                                         <span>Add Violation</span>

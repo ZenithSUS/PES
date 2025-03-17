@@ -23,6 +23,30 @@
     <link href="../../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <link href="../../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+     <script>
+        const authData = localStorage.getItem("users-data");
+
+        if(authData) {
+            let data = JSON.parse(authData);
+            let role = parseInt(data.role);
+            
+            if(role !== 1) {
+                if(role === 0) {
+                    window.location.href = '../admin/dashboard.php';
+                }
+
+                if(role === 2) {
+                    window.location.href = '../manager/dashboard.php';
+                }
+
+                if (role === 3) {
+                    window.location.href = '../user/dashboard.php';
+                }
+            }
+        } else {
+            console.log("No data");
+        }
+    </script>
 
 </head>
 

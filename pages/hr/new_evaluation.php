@@ -590,7 +590,7 @@
             const data = await response.json()
 
             console.log(data);
-            alert("Evaluated");
+            alert("Employee Evaluated");
             window.location.href = 'employees.php';
 
             // fetch('../../api/editForm.php', {
