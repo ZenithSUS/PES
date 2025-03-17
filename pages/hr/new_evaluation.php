@@ -397,13 +397,14 @@
         const user_to_eval = <?php echo $employee_id ?>;
 
         document.addEventListener('DOMContentLoaded', function() {
-
+            console.log(to_eval_position);
             const evaluationForm = document.getElementById('evaluationForm');
             const submitButton = document.getElementById('submitEvaluation');
 
             evaluationForm.addEventListener('submit', async function(event) {
 
                 event.preventDefault();
+                submitButton.disabled = true;
 
                 const formData = new FormData(evaluationForm);
                 const productivity = document.getElementById('productivity').value;
@@ -444,16 +445,12 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-
                                 insertHrEvaluation(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval);
                                 console.log(data.newFileName);
                                 console.log("success");
-
                             } else {
-
                                 console.log(data.success);
                                 console.log("failed");
-
                             }
                         })
                         .catch(error => {
@@ -538,17 +535,20 @@
             formData.append('rate_comment', rate_comment);
             // console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
+            try {
+                const response = await fetch("../../api/editForm.php", {
+                    method: "POST",
+                    body: formData
+                })
 
-            const response = await fetch("../../api/editForm.php", {
-                method: "POST",
-                body: formData
-            })
+                const data = await response.json()
 
-            const data = await response.json()
+                alert("Evaluated Successfully!");
+                return window.location.href = 'employees.php';
+            } catch (error) {
+                console.error("Failed to evaluate:", error);
+            }
 
-            console.log(data);
-            alert("Evaluated Successfully!");
-            window.location.href = 'employees.php';
             // fetch('../../api/editForm.php', {
             //         method: 'POST',
             //         body: formData,
@@ -582,16 +582,38 @@
             formData.append('eval_role', evalRole);
             console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
-            const response = await fetch("../../api/editForm.php", {
-                method: "POST",
-                body: formData
-            })
+            try {
+                // Step 1: Send form data to editForm.php
+                const response = await fetch('../../api/editForm.php', {
+                    method: 'POST',
+                    body: formData,
+                });
 
-            const data = await response.json()
+                console.log('Response status:', response.status);
+                const data = await response.json(); // Assuming the response is JSON
+                console.log(data);
+                
 
-            console.log(data);
-            alert("Employee Evaluated");
-            window.location.href = 'employees.php';
+                // Step 2: Prepare and send user evaluation data to sendEmail.php
+                const userEvalData = new FormData();
+                userEvalData.append('user_to_eval', user_to_eval);
+
+                const emailResponse = await fetch('../../api/sendEmail.php', {
+                    method: 'POST',
+                    body: userEvalData,
+                });
+
+                console.log('Email response status:', emailResponse.status);
+                const emailData = await emailResponse.text();
+                console.log('Email send response:', emailData);
+
+                // Step 3: Redirect to employees.php
+                alert('Evaluated Successfully!');
+                // window.location.href = 'employees.php';
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert(`An error occurred: ${error.message}. Please check the console for details.`);
+            }
 
             // fetch('../../api/editForm.php', {
             //         method: 'POST',
@@ -774,7 +796,7 @@
                 }
             }
             if (scale === 10 && type === "HR") {
-                
+
                 if (value >= 9.6 && value <= 10) {
                     rateText = 'Excellent';
                     color = 'green';
@@ -915,7 +937,7 @@
                 }
             }
             if (scale === 10 && type === "HR") {
-                
+
                 if (value >= 9.6 && value <= 10) {
                     rateText = 'Excellent';
                     color = 'green';
