@@ -206,7 +206,7 @@
                                                     <td>1. PRODUCTIVITY</td>
                                                     <td><b class="text-info">15%</b></td>
                                                     <td>
-                                                        <input id="productivity" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'prodRate', 15);" name="eval_productivity" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
+                                                        <input id="productivity" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'prodRate', 15);" name="eval_productivity" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="prodRate"></p>
@@ -216,7 +216,7 @@
                                                     <td>2. KNOWLEDGE OF WORK</td>
                                                     <td><b class="text-info">15%</b></td>
                                                     <td>
-                                                        <input id="knowledge" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'knowRate', 15);" name="eval_knowledge" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
+                                                        <input id="knowledge" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'knowRate', 15);" name="eval_knowledge" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="knowRate"></p>
@@ -226,7 +226,7 @@
                                                     <td>3. QUALITY OF WORK</td>
                                                     <td><b class="text-info">15%</b></td>
                                                     <td>
-                                                        <input id="quality" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'qualRate', 15);" name="eval_quality" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
+                                                        <input id="quality" class="form-control text-dark" min="0" max="15" oninput="limitValue(this, 15); updateRating(this.value, 'qualRate', 15);" name="eval_quality" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 15-14.5<br>VERY GOOD: 14.4-13.9<br>GOOD: 13.8-12<br>FAIR: 11.9-11.5<br>POOR: 11.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="qualRate"></p>
@@ -236,7 +236,7 @@
                                                     <td>4. INITIATIVE</td>
                                                     <td><b class="text-info">10%</b></td>
                                                     <td>
-                                                        <input id="initiative" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'initRate', 10);" name="eval_initiative" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
+                                                        <input id="initiative" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'initRate', 10);" name="eval_initiative" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="initRate"></p>
@@ -246,7 +246,7 @@
                                                     <td>5. WORK ATTITUDE</td>
                                                     <td><b class="text-info">10%</b></td>
                                                     <td>
-                                                        <input id="workAttitude" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'attitudeRate', 10);" name="eval_work_attitude" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
+                                                        <input id="workAttitude" class="form-control text-dark" min="0" max="10" oninput="limitValue(this, 10); updateRating(this.value, 'attitudeRate', 10);" name="eval_work_attitude" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 10-9.5<br>VERY GOOD: 9.4-9<br>GOOD: 8.9-8<br>FAIR: 7.9-7.5<br>POOR: 7.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="attitudeRate"></p>
@@ -256,7 +256,7 @@
                                                     <td>6. COMMUNICATION</td>
                                                     <td><b class="text-info">5%</b></td>
                                                     <td>
-                                                        <input id="communication" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'commRate', 5);" name="eval_communication" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
+                                                        <input id="communication" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'commRate', 5);" name="eval_communication" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="commRate"></p>
@@ -266,7 +266,7 @@
                                                     <td>7. CREATIVITY</td>
                                                     <td><b class="text-info">5%</b></td>
                                                     <td>
-                                                        <input id="creativity" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'creativityRate', 5);" name="eval_creativity" type="number" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
+                                                        <input id="creativity" class="form-control text-dark" min="0" max="5" oninput="limitValue(this, 5); updateRating(this.value, 'creativityRate', 5);" name="eval_creativity" type="number" step="0.01" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="right" data-bs-content="EXCELLENT: 5<br>VERY GOOD: 4.9-4.5<br>GOOD: 4.4-4<br>FAIR: 3.9-3.5<br>POOR: 3.4-0">
                                                     </td>
                                                     <td>
                                                         <p id="creativityRate"></p>
@@ -301,7 +301,7 @@
                                                 <td><i>ABSENCES</i></td>
                                                 <td><b class="text-info">10%</b></td>
                                                 <td>
-                                                    <input id="hr_initiative" class="form-control text-dark" name="eval_hr_initiative" type="number" onkeyup="scale10()">
+                                                    <input id="hr_initiative" class="form-control text-dark" name="eval_hr_initiative" type="number" step="0.01" onkeyup="scale10()">
                                                 </td>
                                                 <td>
                                                     <p id="hrInitRate"> </p>
@@ -311,7 +311,7 @@
                                                 <td><i>SUSPENSION / DISCIPLINARY ACTION</i></td>
                                                 <td><b class="text-info">10%</b></td>
                                                 <td>
-                                                    <input id="hr_workAttitude" class="form-control text-dark" name="eval_hr_work_attitude" type="number" onkeyup="scale10()">
+                                                    <input id="hr_workAttitude" class="form-control text-dark" name="eval_hr_work_attitude" type="number" step="0.01" onkeyup="scale10()">
                                                 </td>
                                                 <td>
                                                     <p id="hrAttitudeRate"> </p>
@@ -321,7 +321,7 @@
                                                 <td><i>TARDINESS / UNDERTIME</i></td>
                                                 <td><b class="text-info">5%</b></td>
                                                 <td>
-                                                    <input id="hr_communication" class="form-control text-dark" name="eval_hr_communication" type="number" onkeyup="scale5()">
+                                                    <input id="hr_communication" class="form-control text-dark" name="eval_hr_communication" type="number" step="0.01" onkeyup="scale5()">
                                                 </td>
                                                 <td>
                                                     <p id="hrCommRate"> </p>
