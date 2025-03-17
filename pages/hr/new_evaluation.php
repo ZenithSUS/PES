@@ -604,12 +604,10 @@
                 });
 
                 console.log('Email response status:', emailResponse.status);
-                const emailData = await emailResponse.text();
-                console.log('Email send response:', emailData);
 
                 // Step 3: Redirect to employees.php
                 alert('Evaluated Successfully!');
-                // window.location.href = 'employees.php';
+                window.location.href = 'employees.php';
             } catch (error) {
                 console.error('Fetch error:', error);
                 alert(`An error occurred: ${error.message}. Please check the console for details.`);
