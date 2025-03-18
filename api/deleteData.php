@@ -29,8 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_GET['id'];
             $vio = $_GET['vio'];
             $stat = $_GET['stat'];
+            $dept = $_GET['dept'];
             $dateNow = date("F j, Y");
-            $sql = "INSERT INTO user_violations (employee_id, violation_id, vdate, status) VALUES ($id, $vio, '$dateNow', '$stat')";
+            $sql = "INSERT INTO user_violations (employee_id, violation_id, department, vdate, status) VALUES ($id, $vio, '$dept', '$dateNow', '$stat')";
 
             break;
 

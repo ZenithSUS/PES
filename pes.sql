@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2025 at 11:42 AM
--- Server version: 8.0.32
--- PHP Version: 8.2.4
+-- Generation Time: Mar 18, 2025 at 02:18 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `oas`
+-- Database: `pes`
 --
 
 -- --------------------------------------------------------
@@ -28,28 +28,28 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accounts` (
-  `account_id` int NOT NULL,
-  `employee_id` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `first_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `middle_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `last_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `department` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `emp_status` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `position` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `date_hired` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `username` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `img` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `active` int DEFAULT NULL,
-  `archived` int DEFAULT NULL,
-  `otp` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_level` int DEFAULT NULL,
-  `for_eval` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `current_eval` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `bio_userid` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `account_id` int(11) NOT NULL,
+  `employee_id` varchar(30) DEFAULT NULL,
+  `first_name` varchar(40) DEFAULT NULL,
+  `middle_name` varchar(40) DEFAULT NULL,
+  `last_name` varchar(40) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `department` varchar(35) DEFAULT NULL,
+  `emp_status` varchar(35) DEFAULT NULL,
+  `position` varchar(35) DEFAULT NULL,
+  `date_hired` varchar(25) DEFAULT NULL,
+  `username` varchar(25) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `img` varchar(100) DEFAULT NULL,
+  `active` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT NULL,
+  `otp` varchar(11) DEFAULT NULL,
+  `user_level` int(11) DEFAULT NULL,
+  `for_eval` varchar(20) DEFAULT NULL,
+  `current_eval` text DEFAULT NULL,
+  `bio_userid` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -78,11 +78,11 @@ INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`
 --
 
 CREATE TABLE `attendances` (
-  `userid` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `userid` varchar(20) NOT NULL,
   `attn_timestamp` datetime NOT NULL,
-  `attn_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `attn_date` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `attn_time` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `attn_type` varchar(50) NOT NULL,
+  `attn_date` varchar(10) DEFAULT NULL,
+  `attn_time` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -990,12 +990,12 @@ INSERT INTO `attendances` (`userid`, `attn_timestamp`, `attn_type`, `attn_date`,
 --
 
 CREATE TABLE `evaluation` (
-  `evaluation_id` int NOT NULL,
-  `account_id` int NOT NULL,
-  `evaluation_date` text COLLATE utf8mb4_general_ci NOT NULL,
-  `evaluator_hr` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `evaluator_manager` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `evaluation_file` text COLLATE utf8mb4_general_ci NOT NULL
+  `evaluation_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `evaluation_date` text NOT NULL,
+  `evaluator_hr` varchar(30) DEFAULT NULL,
+  `evaluator_manager` varchar(30) DEFAULT NULL,
+  `evaluation_file` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1008,7 +1008,8 @@ INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `eva
 (113, 16627, 'March 4, 2025', '16625', '16625', '../forms/evaluation/8AEQ8ULX12.xlsx'),
 (114, 16632, 'March 11, 2025', '16625', '16629', '../forms/evaluation/GIZ91Y08G2.xlsx'),
 (115, 16633, 'March 11, 2025', '16625', '16627', '../forms/evaluation/UZ9GCMRQYL.xlsx'),
-(116, 16634, 'March 12, 2025', '16625', '16624', '../forms/evaluation/87XVUE0W6V.xlsx');
+(116, 16634, 'March 12, 2025', '16625', '16624', '../forms/evaluation/87XVUE0W6V.xlsx'),
+(117, 16635, 'March 18, 2025', '16625', NULL, '../forms/evaluation/F8GUHFVHL3.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1017,12 +1018,12 @@ INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `eva
 --
 
 CREATE TABLE `eval_summary` (
-  `esid` int NOT NULL,
-  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `hr_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `rating` int DEFAULT NULL,
-  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `file` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `esid` int(11) NOT NULL,
+  `user_id` varchar(100) DEFAULT NULL,
+  `hr_id` varchar(100) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `file` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1035,7 +1036,8 @@ INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `rating`, `comment`, `fi
 (12, '16627', '16625', 89, 'best manager', '../forms/evaluation/8AEQ8ULX12.xlsx'),
 (13, '16632', '16625', 19, NULL, NULL),
 (14, '16633', '16625', 13, NULL, NULL),
-(15, '16634', '16625', 22, NULL, NULL);
+(15, '16634', '16625', 22, NULL, NULL),
+(16, '16635', '16625', 21, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1044,9 +1046,9 @@ INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `rating`, `comment`, `fi
 --
 
 CREATE TABLE `hr_violation_list` (
-  `violation_id` int NOT NULL,
-  `violation_title` text COLLATE utf8mb4_general_ci NOT NULL,
-  `violation_desc` text COLLATE utf8mb4_general_ci NOT NULL
+  `violation_id` int(11) NOT NULL,
+  `violation_title` text NOT NULL,
+  `violation_desc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1068,21 +1070,23 @@ INSERT INTO `hr_violation_list` (`violation_id`, `violation_title`, `violation_d
 --
 
 CREATE TABLE `user_violations` (
-  `record_id` int NOT NULL,
-  `employee_id` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `violation_id` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `vdate` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `status` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `record_id` int(11) NOT NULL,
+  `employee_id` varchar(11) NOT NULL,
+  `violation_id` varchar(11) NOT NULL,
+  `department` varchar(255) NOT NULL,
+  `vdate` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_violations`
 --
 
-INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `vdate`, `status`) VALUES
-(1, '16624', '2', 'February 18, 2025', 'Under Review'),
-(2, '16626', '3', 'February 24, 2025', 'Resolved'),
-(3, '16627', '8', 'March 8, 2025', 'Pending');
+INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `department`, `vdate`, `status`) VALUES
+(1, '16624', '2', 'MIS', 'February 18, 2025', 'Under Review'),
+(2, '16626', '3', 'MIS', 'February 24, 2025', 'Resolved'),
+(3, '16627', '8', 'MIS', 'March 8, 2025', 'Pending'),
+(4, '16634', '1', 'MIS', 'March 18, 2025', 'Under Review');
 
 --
 -- Indexes for dumped tables
@@ -1132,31 +1136,31 @@ ALTER TABLE `user_violations`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluation_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT for table `eval_summary`
 --
 ALTER TABLE `eval_summary`
-  MODIFY `esid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `hr_violation_list`
 --
 ALTER TABLE `hr_violation_list`
-  MODIFY `violation_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `violation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user_violations`
 --
 ALTER TABLE `user_violations`
-  MODIFY `record_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

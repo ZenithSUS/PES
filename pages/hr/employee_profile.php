@@ -122,6 +122,7 @@
                                                 $stmt->execute();
                                                 $result = $stmt->get_result();
 
+
                                                 if ($result->num_rows > 0) {
                                                     $row = $result->fetch_assoc();
                                                     // echo "<script>alert('".$row['employee_id']."')</script>";
@@ -443,7 +444,37 @@
                                     <label for="department">
                                         <p>Violation</p>
                                     </label>
-                                    <select name="vio" id="vio" class="form-select">
+                                    <?php
+                                    try {
+                                        // Ensure $con is initialized before using it
+                                        if (!isset($con) || !$con) {
+                                            throw new Exception("Database connection not established");
+                                        }
+
+                                        $bioId = isset($_GET['employee']) ? $_GET['employee'] : '';
+
+                                        // Validate that we have an employee ID
+                                        if (empty($bioId)) {
+                                            throw new Exception("No employee ID provided");
+                                        }
+
+                                        $sql = "SELECT department FROM accounts WHERE bio_userid = ?";
+                                        $stmt = $con->prepare($sql);
+                                        $stmt->bind_param('s', $bioId);
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+
+                                        if ($result && $row = $result->fetch_assoc()) {
+                                            $department = htmlspecialchars($row['department'], ENT_QUOTES, 'UTF-8');
+                                        } else {
+                                            $department = ''; 
+                                        }
+                                    } catch (Exception $e) {
+                                        $department = '';
+                                    }
+                                    ?>
+                                    <input type="text" value="<?php echo $department; ?>" id="dept-val" hidden>
+                                    <select name="vio" id="vio" class="form-select" id="">
                                         <option value="" selected disabled>---Select Violation---</option>
                                         <?php
 
@@ -662,12 +693,14 @@
                 const idd = formData.get('emp_id2');
                 const vio = formData.get('vio');
                 const stat = formData.get('stat');
+                const dept = document.getElementById('dept-val').value;
+                console.log(dept)
 
                 console.log(idd);
                 console.log(vio);
                 console.log(stat);
 
-                fetch(`../../api/deleteData.php?delete=violation&id=${idd}&vio=${vio}&stat=${stat}`, {
+                fetch(`../../api/deleteData.php?delete=violation&id=${idd}&vio=${vio}&stat=${stat}&dept=${dept}`, {
                         method: 'POST',
                         body: formData
                     })
