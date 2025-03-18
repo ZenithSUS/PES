@@ -148,6 +148,49 @@
                                                 ?>
                                             </div>
                                         </div>
+
+                                        <div class="container mt-4">
+                                            <div class="row mb-2">
+                                                <h4>Employee Violations</h4>
+                                            </div>
+                                            <table class="table table-bordered table-hover" id="violationTable">
+                                                <thead class="table-info">
+                                                    <tr>
+                                                        <th scope="col">Violation</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    // Fetch violation data for the employee
+                                                    $violationSql = " SELECT uv.*, hvl.violation_title 
+                                                    FROM user_violations uv JOIN hr_violation_list hvl ON uv.violation_id = hvl.violation_id WHERE uv.employee_id = ? ORDER BY uv.vdate DESC";
+                                                    $violationStmt = $con->prepare($violationSql);
+                                                    $violationStmt->bind_param("s", $employee_id);
+                                                    $violationStmt->execute();
+                                                    $violationResult = $violationStmt->get_result();
+                                                    $violations = [];
+                                                    while ($violation = $violationResult->fetch_assoc()) {
+                                                        $violations[] = $violation;
+                                                    }
+                                                    if (!empty($violations)): ?>
+                                                        <?php foreach ($violations as $violation): ?>
+                                                            <tr>
+                                                                <td><?php echo htmlspecialchars($violation['violation_title']); ?></td>
+                                                                <td><?php echo htmlspecialchars($violation['vdate']); ?></td>
+                                                                <td><?php echo htmlspecialchars($violation['status']); ?></td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    <?php else: ?>
+                                                        <tr>
+                                                            <td colspan="3" class="text-center">No violations found</td>
+                                                        </tr>
+                                                    <?php endif; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         <div class="row mb-4">
                                             <div class="col-12">
                                                 <label for="eval_name">
@@ -398,6 +441,8 @@
             evaluationForm.addEventListener('submit', function(event) {
 
                 event.preventDefault();
+
+                submitButton.disabled = true;
 
                 const formData = new FormData(evaluationForm);
                 const productivity = document.getElementById('productivity').value;
