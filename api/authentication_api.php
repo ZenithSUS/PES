@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $userName = $userData['username'];
                 $userPassword = $userData['password'];
                 $_SESSION['role'] = $userData['user_level'];
-
+                $_SESSION['department'] = $userData['department'];
                 $_SESSION['user_id'] = $userData['employee_id'];
                 $_SESSION['department'] = $userData['department'];
 
