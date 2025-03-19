@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>OAS | Profile</title>
+    <title>PES | Profile</title>
     <link rel="icon" type="image/x-icon" href="../../src/assets/img/favicon.ico"/>
     <link href="../../layouts/modern-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../../layouts/modern-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
@@ -147,6 +147,8 @@
                                                         echo '<p>Department: <b>' . htmlspecialchars($row['department']) . '</b></p>';
                                                         echo '<p>Position: <b>' . htmlspecialchars($row['position']) . '</b></p>';
                                                         echo '<p>Status: <b class="'.$statusClass.'">' . htmlspecialchars($row['emp_status']) . '</b></p>';
+                                                        echo '<p>Employee ID: <b>' . htmlspecialchars($row['employee_id']) . '</b></p>';
+                                                        echo '<p>Date Hired: <b>' . htmlspecialchars($row['date_hired']) . '</b></p>';
                                                         echo '</div>';
                                                     }
                                                 ?>
