@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2025 at 02:18 AM
+-- Generation Time: Mar 19, 2025 at 02:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,7 +69,7 @@ INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`
 (37, '16631', 'Marvin', 'Ramos', 'Montoya', 'Male', 'Quality Control', 'Contractual', 'Technician', 'October 10, 2024', 'mrmontoya', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '09962563251', 'uploads/16631_winicon.png', 1, 0, NULL, 3, 'April 10, 2025', NULL, '11'),
 (38, '16632', 'Klein', 'Corpuz', 'Castillo', 'Female', 'Quality Control', 'Contractual', 'QC Inspector', 'September 5, 2024', 'kccastillo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09846278176', 'uploads/16632_3.jpg', 1, 0, NULL, 3, 'September 11, 2025', '../forms/evaluation/GIZ91Y08G2.xlsx', '12'),
 (39, '16633', 'Cecille', 'Medina', 'Ortis', 'Female', 'Engineering', 'Contractual', 'Engineer', 'March 9, 2024', 'cmortis', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '09953800662', 'uploads/16633_hcm13.jpg', 1, 0, NULL, 3, 'September 11, 2025', '../forms/evaluation/UZ9GCMRQYL.xlsx', '13'),
-(40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'September 12, 2025', '../forms/evaluation/87XVUE0W6V.xlsx', '14');
+(40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/HN56EA4M3A.xlsx', '14');
 
 -- --------------------------------------------------------
 
@@ -1008,8 +1008,7 @@ INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `eva
 (113, 16627, 'March 4, 2025', '16625', '16625', '../forms/evaluation/8AEQ8ULX12.xlsx'),
 (114, 16632, 'March 11, 2025', '16625', '16629', '../forms/evaluation/GIZ91Y08G2.xlsx'),
 (115, 16633, 'March 11, 2025', '16625', '16627', '../forms/evaluation/UZ9GCMRQYL.xlsx'),
-(116, 16634, 'March 12, 2025', '16625', '16624', '../forms/evaluation/87XVUE0W6V.xlsx'),
-(117, 16635, 'March 18, 2025', '16625', NULL, '../forms/evaluation/F8GUHFVHL3.xlsx');
+(120, 16634, 'March 19, 2025', '16625', '16624', '../forms/evaluation/HN56EA4M3A.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1021,7 +1020,7 @@ CREATE TABLE `eval_summary` (
   `esid` int(11) NOT NULL,
   `user_id` varchar(100) DEFAULT NULL,
   `hr_id` varchar(100) DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL,
+  `rating` varchar(10) DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `file` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1031,13 +1030,12 @@ CREATE TABLE `eval_summary` (
 --
 
 INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `rating`, `comment`, `file`) VALUES
-(10, '16629', '16625', 100, 'asdadsa asdasdsad asdadsada asdadsadsad asdadsadsa', '../forms/evaluation/9EV4DDEXPI.xlsx'),
-(11, '16623', '16625', 21, NULL, NULL),
-(12, '16627', '16625', 89, 'best manager', '../forms/evaluation/8AEQ8ULX12.xlsx'),
-(13, '16632', '16625', 19, NULL, NULL),
-(14, '16633', '16625', 13, NULL, NULL),
-(15, '16634', '16625', 22, NULL, NULL),
-(16, '16635', '16625', 21, NULL, NULL);
+(10, '16629', '16625', '100', 'asdadsa asdasdsad asdadsada asdadsadsad asdadsadsa', '../forms/evaluation/9EV4DDEXPI.xlsx'),
+(11, '16623', '16625', '21', NULL, NULL),
+(12, '16627', '16625', '89', 'best manager', '../forms/evaluation/8AEQ8ULX12.xlsx'),
+(13, '16632', '16625', '19', NULL, NULL),
+(14, '16633', '16625', '13', NULL, NULL),
+(19, '16634', '16625', '96.5', 'Very Diligent Employee', '../forms/evaluation/HN56EA4M3A.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1085,8 +1083,7 @@ CREATE TABLE `user_violations` (
 INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `department`, `vdate`, `status`) VALUES
 (1, '16624', '2', 'MIS', 'February 18, 2025', 'Under Review'),
 (2, '16626', '3', 'MIS', 'February 24, 2025', 'Resolved'),
-(3, '16627', '8', 'MIS', 'March 8, 2025', 'Pending'),
-(4, '16634', '1', 'MIS', 'March 18, 2025', 'Under Review');
+(3, '16627', '8', 'MIS', 'March 8, 2025', 'Pending');
 
 --
 -- Indexes for dumped tables
@@ -1136,19 +1133,19 @@ ALTER TABLE `user_violations`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `eval_summary`
 --
 ALTER TABLE `eval_summary`
-  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `hr_violation_list`
@@ -1160,7 +1157,7 @@ ALTER TABLE `hr_violation_list`
 -- AUTO_INCREMENT for table `user_violations`
 --
 ALTER TABLE `user_violations`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
