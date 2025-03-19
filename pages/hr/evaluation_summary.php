@@ -144,7 +144,7 @@
                                             if ($result && $result->num_rows > 0) {
                                                 while ($accounts = $result->fetch_assoc()) {
 
-                                                    $rating = $accounts['rating'];
+                                                    $rating = (int)$accounts['rating'];
 
                                                     if ($rating >= 97 && $rating <= 100) {
                                                         $remark = "Excellent";

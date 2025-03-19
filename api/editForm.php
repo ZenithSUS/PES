@@ -116,7 +116,7 @@ if (isset($_POST['fileName'])) {
                     if ($count > 0) {
                         $sql = "UPDATE eval_summary SET rating = rating + ?, comment = ?, file = ? WHERE user_id = ?";
                         $stmt = $con->prepare($sql);
-                        $stmt->bind_param("isss", $rating, $rate_comment, $fileName, $user_to_eval);
+                        $stmt->bind_param("ssss", $rating, $rate_comment, $fileName, $user_to_eval);
 
                         if (!$stmt->execute()) {
                             error_log("Failed to update eval_summary: " . $stmt->error);
@@ -155,12 +155,12 @@ if (isset($_POST['fileName'])) {
 
                     $updateSummary = "UPDATE eval_summary SET rating = ? WHERE user_id = ?";
                     $stmt = $con->prepare($updateSummary);
-                    $stmt->bind_param("is", $rating, $user_to_eval);
+                    $stmt->bind_param("ss", $rating, $user_to_eval);
                 } else {
 
                     $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating) VALUES (?, ?, ?)";
                     $stmt = $con->prepare($insertSummary);
-                    $stmt->bind_param("ssi", $user_to_eval, $_SESSION['user_id'], $rating);
+                    $stmt->bind_param("sss", $user_to_eval, $_SESSION['user_id'], $rating);
                 }
 
                 if ($stmt->execute()) {
@@ -202,13 +202,13 @@ if (isset($_POST['fileName'])) {
 
                         $updateSummary = "UPDATE eval_summary SET rating = ? WHERE user_id = ?";
                         $stmt = $con->prepare($updateSummary);
-                        $stmt->bind_param("is", $rating, $user_to_eval);
+                        $stmt->bind_param("ss", $rating, $user_to_eval);
                     }
                 } else {
 
                     $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating, comment, file) VALUES (?, ?, ?, ?, ?)";
                     $stmt = $con->prepare($insertSummary);
-                    $stmt->bind_param("ssiss", $user_to_eval, $_SESSION['user_id'], $rating, $rate_comment, $fileName);
+                    $stmt->bind_param("sssss", $user_to_eval, $_SESSION['user_id'], $rating, $rate_comment, $fileName);
 
                     if ($stmt->execute()) {
 
