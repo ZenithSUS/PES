@@ -195,7 +195,7 @@ try {
                                             <td data-label='Department'>$department</td>
                                             <td data-label='Position'>$position</td>
                                             <td data-label='Status'>$status</td>
-                                            <td data-label='Period Covered'>5th month Regularization</td>
+                                            <td data-label='Period Covered'>5th month Evaluation</td>
                                         </tr>
                                     </tbody>
                                 </table>
