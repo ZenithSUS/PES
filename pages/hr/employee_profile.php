@@ -244,6 +244,8 @@
                                                     echo '<p>Department: <b>' . htmlspecialchars($row['department']) . '</b></p>';
                                                     echo '<p>Position: <b>' . htmlspecialchars($row['position']) . '</b></p>';
                                                     echo '<p>Status: <b class="' . $statusClass . '">' . htmlspecialchars($row['emp_status']) . '</b></p>';
+                                                    echo '<p>Employee ID: <b>' . htmlspecialchars($row['employee_id']) . '</b></p>';
+                                                    echo '<p>Date Hired: <b>' . htmlspecialchars($row['date_hired']) . '</b></p>';
                                                     echo '</div>';
                                                 }
                                                 ?>
@@ -467,7 +469,7 @@
                                         if ($result && $row = $result->fetch_assoc()) {
                                             $department = htmlspecialchars($row['department'], ENT_QUOTES, 'UTF-8');
                                         } else {
-                                            $department = ''; 
+                                            $department = '';
                                         }
                                     } catch (Exception $e) {
                                         $department = '';
