@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>OAS | Dashboard</title>
+    <title>PES | Dashboard</title>
     <link rel="icon" type="image/x-icon" href="../../src/assets/img/favicon.ico" />
     <link href="../../layouts/modern-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../../layouts/modern-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
@@ -23,19 +23,19 @@
     <link href="../../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <link href="../../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-     <script>
+    <script>
         const authData = localStorage.getItem("users-data");
 
-        if(authData) {
+        if (authData) {
             let data = JSON.parse(authData);
             let role = parseInt(data.role);
-            
-            if(role !== 1) {
-                if(role === 0) {
+
+            if (role !== 1) {
+                if (role === 0) {
                     window.location.href = '../admin/dashboard.php';
                 }
 
-                if(role === 2) {
+                if (role === 2) {
                     window.location.href = '../manager/dashboard.php';
                 }
 
