@@ -1,18 +1,17 @@
 <?php
 
-$eid = $_GET['id'];
+    $eid = $_GET['id'];
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>PES | Accounts</title>
-    <link rel="icon" type="image/x-icon" href="../../src/assets/img/favicon.ico" />
+    <title>OAS | Accounts</title>
+    <link rel="icon" type="image/x-icon" href="../../src/assets/img/favicon.ico"/>
     <link href="../../layouts/modern-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../../layouts/modern-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
     <script src="../../layouts/modern-light-menu/loader.js"></script>
@@ -29,7 +28,7 @@ $eid = $_GET['id'];
     <link href="../../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <link href="../../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
 
-
+    
     <link href="../../src/plugins/css/light/flatpickr/custom-flatpickr.css" rel="stylesheet" type="text/css">
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
@@ -43,10 +42,10 @@ $eid = $_GET['id'];
     <link rel="stylesheet" type="text/css" href="../../src/plugins/css/dark/table/datatable/custom_dt_custom.css">
     <link href="../../src/assets/css/light/elements/tooltip.css" rel="stylesheet" type="text/css" />
     <link href="../../src/assets/css/dark/elements/tooltip.css" rel="stylesheet" type="text/css" />
-
+    
     <link href="../../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css" />
     <link href="../../src/assets/css/light/components/modal.css" rel="stylesheet" type="text/css" />
-
+    
     <link href="../../src/plugins/css/light/filepond/custom-filepond.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../../src/plugins/src/filepond/filepond.min.css">
     <link rel="stylesheet" href="../../src/plugins/src/filepond/FilePondPluginImagePreview.min.css">
@@ -57,16 +56,11 @@ $eid = $_GET['id'];
     <!-- END PAGE LEVEL CUSTOM STYLES -->
 
 </head>
-
 <body class="layout-boxed">
     <!-- BEGIN LOADER -->
-    <div id="load_screen">
-        <div class="loader">
-            <div class="loader-content">
-                <div class="spinner-grow align-self-center"></div>
-            </div>
-        </div>
-    </div>
+    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+        <div class="spinner-grow align-self-center"></div>
+    </div></div></div>
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -76,7 +70,7 @@ $eid = $_GET['id'];
             <ul class="navbar-item flex-row ms-lg-auto ms-0">
 
                 <?php include('../../components/nav-dropdown.php'); ?>
-
+                
             </ul>
         </header>
     </div>
@@ -118,41 +112,31 @@ $eid = $_GET['id'];
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-4">
-                                                <label for="firstname">
-                                                    <p>First Name</p>
-                                                </label>
+                                                <label for="firstname"><p>First Name</p></label>
                                                 <input type="text" class="form-control" name="firstname" id="firstname" placeholder="e.g. Juan" onkeyup=generateUsername()>
                                             </div>
                                             <div class="col-4">
-                                                <label for="middlename">
-                                                    <p>Middle Name</p>
-                                                </label>
+                                                <label for="middlename"><p>Middle Name</p></label>
                                                 <input type="text" class="form-control" name="middlename" id="middlename" placeholder="e.g. Santos" onkeyup=generateUsername()>
                                             </div>
                                             <div class="col-4">
-                                                <label for="lastname">
-                                                    <p>Last Name</p>
-                                                </label>
+                                                <label for="lastname"><p>Last Name</p></label>
                                                 <input type="text" class="form-control" name="lastname" id="lastname" placeholder="e.g. Dela Cruz" onkeyup=generateUsername()>
                                             </div>
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-4">
-                                                <label for="gender">
-                                                    <p>Gender</p>
-                                                </label>
+                                                <label for="gender"><p>Gender</p></label>
                                                 <select name="gender" id="gender" class="form-select">
-                                                    <option value="" disabled>---Select Gender---</option>
+                                                    <option value=""  disabled>---Select Gender---</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
                                                 </select>
                                             </div>
                                             <div class="col-4">
-                                                <label for="department">
-                                                    <p>Department</p>
-                                                </label>
+                                                <label for="department"><p>Department</p></label>
                                                 <select name="department" id="department" class="form-select">
-                                                    <option value="" disabled>---Select Department---</option>
+                                                    <option value=""  disabled>---Select Department---</option>
                                                     <option value="Human Resource">Human Resource</option>
                                                     <option value="Finance">Finance</option>
                                                     <option value="Purchasing">Purchasing</option>
@@ -165,11 +149,9 @@ $eid = $_GET['id'];
                                                 </select>
                                             </div>
                                             <div class="col-4">
-                                                <label for="position">
-                                                    <p>Position</p>
-                                                </label>
+                                                <label for="position"><p>Position</p></label>
                                                 <select name="position" id="position" class="form-select">
-                                                    <option value="" disabled>---Select Position---</option>
+                                                    <option value=""  disabled>---Select Position---</option>
                                                     <option value="Staff">Staff</option>
                                                     <option value="Operator">Operator</option>
                                                     <option value="Performance">Performance</option>
@@ -186,34 +168,26 @@ $eid = $_GET['id'];
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-3">
-                                                <label for="">
-                                                    <p>Employee ID</p>
-                                                </label>
+                                                <label for=""><p>Employee ID</p></label>
                                                 <input type="text" class="form-control text-dark" name="employee_id" id="employee_id" readonly>
                                             </div>
                                             <div class="col-3">
-                                                <label for="">
-                                                    <p>Employee RFID</p>
-                                                </label>
+                                                <label for=""><p>Employee RFID</p></label>
                                                 <input type="text" class="form-control text-dark" name="rfid" id="rfid" readonly>
                                             </div>
                                             <div class="col-3">
-                                                <label for="">
-                                                    <p>Employment Status</p>
-                                                </label>
+                                                <label for=""><p>Employment Status</p></label>
                                                 <select name="emps" id="emps" class="form-select">
-                                                    <option value="" disabled>---Select Status---</option>
+                                                    <option value=""  disabled>---Select Status---</option>
                                                     <option value="Regular">Regular</option>
                                                     <option value="Probationary">Probationary</option>
                                                     <option value="Intern">Intern</option>
                                                 </select>
                                             </div>
                                             <div class="col-3">
-                                                <label for="">
-                                                    <p>User Level</p>
-                                                </label>
+                                                <label for=""><p>User Level</p></label>
                                                 <select name="role" id="role" class="form-select">
-                                                    <option value="" disabled>---Select Position---</option>
+                                                    <option value=""  disabled>---Select Position---</option>
                                                     <option value="0">Admin</option>
                                                     <option value="1">Human Resource</option>
                                                     <option value="2">Manager</option>
@@ -224,52 +198,40 @@ $eid = $_GET['id'];
                                         <div class="row profile-image  mt-4">
 
                                             <div class="img-uploader-content">
-                                                <label for="filepond">
-                                                    <p>Employee Photo</p>
-                                                </label><br>
+                                                <label for="filepond"><p>Employee Photo</p></label><br>
                                                 <input type="file" class="bg-dark w-100 rounded p-2"
-                                                    name="filepond" accept="image/png, image/jpeg, image/gif" />
+                                                    name="filepond" accept="image/png, image/jpeg, image/gif"/>
                                             </div>
-
+                        
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-4 mt-3">
-                                                <label for="email">
-                                                    <p class="">Email Address</p>
-                                                </label>
+                                                <label for="email"><p class="">Email Address</p></label>
                                                 <input type="text" class="form-control" name="email" id="email" placeholder="example@provider.com">
                                             </div>
                                             <div class="col-4 mt-3">
-                                                <label for="phone">
-                                                    <p>Phone Number</p>
-                                                </label>
+                                                <label for="phone"><p>Phone Number</p></label>
                                                 <input type="text" class="form-control" name="phone" id="phone" placeholder="09XXXXXXXXX">
                                             </div>
                                             <div class="col-4 mt-3">
-                                                <label for="lastname">
-                                                    <p>Date Hired</p>
-                                                </label>
+                                                <label for="lastname"><p>Date Hired</p></label>
                                                 <input id="dateHired" class="form-control" name="dateHired" type="date" placeholder="Select Date..">
-
+                                                
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <input type="hidden" class="form-control" name="status" id="status" placeholder="status" value="1">
-                                        </div>
-                                        <div class="col">
-                                            <label for="password">
-                                                <p>Username</p>
-                                            </label>
-                                            <input type="text" class="form-control" name="username" id="username" value="" readonly>
-                                        </div>
-                                        <div class="col">
-                                            <label for="password">
-                                                <p>Password( default: <b class="text-danger">innotor2024</b>)</p>
-                                            </label>
-                                            <input type="password" class="form-control" name="password" id="password" placeholder="status" value="innotor2024" readonly>
-                                        </div>
+                                            <div class="col">
+                                                <input type="hidden" class="form-control" name="status" id="status" placeholder="status" value="1">
+                                            </div>
+                                            <div class="col">
+                                                <label for="password"><p>Username</p></label>
+                                                <input type="text" class="form-control" name="username" id="username" value="" readonly>
+                                            </div>
+                                            <div class="col">
+                                                <label for="password"><p>Password( default: <b class="text-danger">innotor2024</b>)</p></label>
+                                                <input type="password" class="form-control" name="password" id="password" placeholder="status" value="innotor2024" readonly>
+                                            </div>
                                     </form>
-
+                                    
                                     <div class="modal-footer mt-4">
                                         <button type="submit" class="btn btn-info m-3" id="submitEmployeeForm">Update Employee</button>
                                     </div>
@@ -288,9 +250,7 @@ $eid = $_GET['id'];
                     <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
                 </div>
                 <div class="footer-section f-section-2">
-                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg></p>
+                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
                 </div>
             </div>
             <!--  END FOOTER  -->
@@ -313,7 +273,7 @@ $eid = $_GET['id'];
     <script src="../../src/plugins/src/table/datatable/datatables.js"></script>
     <script src="../../src/assets/js/custom.js"></script>
 
-
+    
     <script src="../../src/plugins/src/filepond/filepond.min.js"></script>
     <script src="../../src/plugins/src/filepond/FilePondPluginFileValidateType.min.js"></script>
     <script src="../../src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js"></script>
@@ -322,7 +282,7 @@ $eid = $_GET['id'];
     <script src="../../src/plugins/src/filepond/FilePondPluginImageResize.min.js"></script>
     <script src="../../src/plugins/src/filepond/FilePondPluginImageTransform.min.js"></script>
     <script src="../../src/plugins/src/filepond/filepondPluginFileValidateSize.min.js"></script>
-
+    
     <script src="../../src/plugins/src/flatpickr/flatpickr.js"></script>
 
     <script src="../../src/plugins/src/flatpickr/custom-flatpickr.js"></script>
@@ -330,166 +290,168 @@ $eid = $_GET['id'];
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
     <script>
-        function getLastEmployeeIdAndIncrement() {
-            fetch('http://localhost/PES/api/fetch_record_api.php?action=getLastID')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.last_employee_id) {
-                        let lastEmployeeId = parseInt(data.last_employee_id, 10);
-                        let newEmployeeId = lastEmployeeId + 1;
+    
+    function getLastEmployeeIdAndIncrement() {
+        fetch('http://localhost/PES/api/fetch_record_api.php?action=getLastID')
+            .then(response => response.json())
+            .then(data => {
+                if (data.last_employee_id) {
+                    let lastEmployeeId = parseInt(data.last_employee_id, 10);
+                    let newEmployeeId = lastEmployeeId + 1; 
 
-                        document.getElementById('employee_id').value = newEmployeeId;
-                    } else {
-                        console.error('Error retrieving the last employee ID.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-
-
-        function getLastRFIDAndIncrement() {
-            fetch('http://localhost/PES/api/fetch_record_api.php?action=getLastRFID')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.last_employee_id) {
-                        let lastEmployeeRFId = parseInt(data.last_employee_id, 10);
-                        let newEmployeeRFId = lastEmployeeRFId + 1;
-
-                        document.getElementById('rfid').value = newEmployeeRFId;
-                    } else {
-                        console.error('Error retrieving the last employee ID.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            document.getElementById('addNewEmployeeForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const formData = new FormData(this);
-
-                for (const [key, value] of formData.entries()) {
-                    console.log(`${key}:`, value);
+                    document.getElementById('employee_id').value = newEmployeeId;
+                } else {
+                    console.error('Error retrieving the last employee ID.');
                 }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
-                fetch('../../api/addData.php?insertion=updEmployee', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
+    
+    
+    function getLastRFIDAndIncrement() {
+        fetch('http://localhost/PES/api/fetch_record_api.php?action=getLastRFID')
+            .then(response => response.json())
+            .then(data => {
+                if (data.last_employee_id) {
+                    let lastEmployeeRFId = parseInt(data.last_employee_id, 10);
+                    let newEmployeeRFId = lastEmployeeRFId + 1; 
+
+                    document.getElementById('rfid').value = newEmployeeRFId;
+                } else {
+                    console.error('Error retrieving the last employee ID.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.getElementById('addNewEmployeeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            for (const [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
+            fetch('../../api/addData.php?insertion=updEmployee', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    console.log(data.message);
+                    alert('Employee Information Updated');
+                    window.location.href = 'employees.php';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('submitEmployeeForm').addEventListener('click', function() {
+
+            document.getElementById('addNewEmployeeForm').dispatchEvent(new Event('submit'));
+
+        });
+
+    });
+
+    function generateUsername() {
+        const firstname = document.getElementById('firstname').value.trim();
+        const middlename = document.getElementById('middlename').value.trim();
+        const lastname = document.getElementById('lastname').value.trim();
+
+        let username = '';
+        if (firstname.length > 0) {
+            username += firstname.charAt(0).toLowerCase();
+        }
+        if (middlename.length > 0) {
+            username += middlename.charAt(0).toLowerCase();
+        }
+        if (lastname.length > 0) {
+            username += lastname.replace(/\s+/g, '').toLowerCase();
+        }
+
+        document.getElementById('username').value = username;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+    let employeeId = "<?php echo $_GET['id']; ?>";
+
+        if (employeeId) {
+            fetch(`../../api/fetch_employee.php?id=${employeeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error("Error:", data.error);
+                        return;
+                    }
+
+                    document.getElementById("firstname").value = data.first_name || "";
+                    document.getElementById("middlename").value = data.middle_name || "";
+                    document.getElementById("lastname").value = data.last_name || "";
+                    document.getElementById("email").value = data.email || "";
+                    document.getElementById("phone").value = data.phone || "";
+                    document.getElementById("employee_id").value = data.employee_id || "";
+                    document.getElementById("rfid").value = data.bio_userid || "";
+                    document.getElementById("username").value = data.username || "";
+
+                    if (data.date_hired) {
+                        // Convert to JavaScript Date object
+                        let date = new Date(data.date_hired);
+
+                        // Check if the conversion is valid
+                        if (!isNaN(date.getTime())) {
+                            let formattedDate = date.toISOString().split('T')[0];
+
+                            console.log("Formatted Date for Date Picker:", formattedDate);
+
+                            // Set the value in the date input
+                            document.getElementById("dateHired").value = formattedDate;
                         } else {
-                            console.log(data.message);
-                            alert('Employee Information Updated');
-                            window.location.href = 'employees.php';
+                            console.error("Invalid date format received:", data.date_hired);
                         }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
+                    }
+                    
 
-            document.getElementById('submitEmployeeForm').addEventListener('click', function() {
-
-                document.getElementById('addNewEmployeeForm').dispatchEvent(new Event('submit'));
-
-            });
-
-        });
-
-        function generateUsername() {
-            const firstname = document.getElementById('firstname').value.trim();
-            const middlename = document.getElementById('middlename').value.trim();
-            const lastname = document.getElementById('lastname').value.trim();
-
-            let username = '';
-            if (firstname.length > 0) {
-                username += firstname.charAt(0).toLowerCase();
-            }
-            if (middlename.length > 0) {
-                username += middlename.charAt(0).toLowerCase();
-            }
-            if (lastname.length > 0) {
-                username += lastname.replace(/\s+/g, '').toLowerCase();
-            }
-
-            document.getElementById('username').value = username;
+                    setSelectedValue("gender", data.gender);
+                    setSelectedValue("department", data.department);
+                    setSelectedValue("position", data.position);
+                    setSelectedValue("emps", data.emp_status);
+                    setSelectedValue("role", data.user_level);
+                    generateUsername();
+                })
+                .catch(error => console.error("Error fetching employee data:", error));
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            let employeeId = "<?php echo $_GET['id']; ?>";
+        console.log("Generating username...");
+        generateUsername();
+        console.log("Username set to:", document.getElementById("username").value);
 
-            if (employeeId) {
-                fetch(`../../api/fetch_employee.php?id=${employeeId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            console.error("Error:", data.error);
-                            return;
-                        }
-
-                        document.getElementById("firstname").value = data.first_name || "";
-                        document.getElementById("middlename").value = data.middle_name || "";
-                        document.getElementById("lastname").value = data.last_name || "";
-                        document.getElementById("email").value = data.email || "";
-                        document.getElementById("phone").value = data.phone || "";
-                        document.getElementById("employee_id").value = data.employee_id || "";
-                        document.getElementById("rfid").value = data.bio_userid || "";
-                        document.getElementById("username").value = data.username || "";
-
-                        if (data.date_hired) {
-                            // Convert to JavaScript Date object
-                            let date = new Date(data.date_hired);
-
-                            // Check if the conversion is valid
-                            if (!isNaN(date.getTime())) {
-                                let formattedDate = date.toISOString().split('T')[0];
-
-                                console.log("Formatted Date for Date Picker:", formattedDate);
-
-                                // Set the value in the date input
-                                document.getElementById("dateHired").value = formattedDate;
-                            } else {
-                                console.error("Invalid date format received:", data.date_hired);
-                            }
-                        }
-
-
-                        setSelectedValue("gender", data.gender);
-                        setSelectedValue("department", data.department);
-                        setSelectedValue("position", data.position);
-                        setSelectedValue("emps", data.emp_status);
-                        setSelectedValue("role", data.user_level);
-                        generateUsername();
-                    })
-                    .catch(error => console.error("Error fetching employee data:", error));
-            }
-
-            console.log("Generating username...");
-            generateUsername();
-            console.log("Username set to:", document.getElementById("username").value);
-
-            function setSelectedValue(selectId, value) {
-                let select = document.getElementById(selectId);
-                if (select) {
-                    let options = select.options;
-                    for (let i = 0; i < options.length; i++) {
-                        if (options[i].value == value) {
-                            options[i].selected = true;
-                            break;
-                        }
+        function setSelectedValue(selectId, value) {
+            let select = document.getElementById(selectId);
+            if (select) {
+                let options = select.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value == value) {
+                        options[i].selected = true;
+                        break;
                     }
                 }
             }
-        });
-    </script>
+        }
+    });
+
+
+</script>
 
 </body>
-
 </html>
