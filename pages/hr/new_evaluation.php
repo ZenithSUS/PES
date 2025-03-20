@@ -1019,16 +1019,16 @@
             }
 
             if (scale === 5 && type === "HR") {
-                if (value == 5) {
+                if (value >= 4.8 && value <= 5) {
                     rateText = 'Excellent';
                     color = 'green';
-                } else if (value >= 4.5 && value <= 4.9) {
+                } else if (value >= 4.5 && value <= 4.7) {
                     rateText = 'Very Good';
                     color = 'blue';
-                } else if (value >= 3 && value <= 4.4) {
+                } else if (value >= 3.5 && value <= 4.4) {
                     rateText = 'Good';
                     color = 'deepskyblue';
-                } else if (value > 0 && value <= 2.9) {
+                } else if (value > 2 && value <= 3.4) {
                     rateText = 'Fair';
                     color = 'orange';
                 } else {
