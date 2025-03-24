@@ -5,10 +5,10 @@ session_start();
 
 header('Content-Type: application/x-www-form-urlencoded');
 if (isset($_POST['fileName'])) {
-    
+
     $fileName = $_POST['fileName'];
     $eval_role = $_POST['eval_role'];
-    
+
     if ($eval_role == "HR") {
 
         $user_to_eval = $_POST['user_to_eval'];
@@ -16,7 +16,6 @@ if (isset($_POST['fileName'])) {
         $suspension = $_POST['sus'];
         $tardiness = $_POST['tard'];
         $rating = $absence + $suspension + $tardiness;
-        
     } else if ($eval_role == "HRM") {
 
         $user_to_eval = $_POST['user_to_eval'];
@@ -33,6 +32,8 @@ if (isset($_POST['fileName'])) {
         $rate_comment = $_POST['rate_comment'];
 
         $rating = $absence + $suspension + $tardiness + $productivity + $knowledge + $quality + $initiative + $attitude + $communication + $creativity;
+        $HR_rating = $absence + $suspension + $tardiness;
+        $MANAGER_rating = $productivity + $knowledge + $quality + $initiative + $attitude + $communication + $creativity;
     } else {
 
         $user_to_eval = $_POST['user_to_eval'];
@@ -71,7 +72,7 @@ if (isset($_POST['fileName'])) {
         echo json_encode(['success' => false, 'message' => 'User not exists']);
     }
 
-    
+
     $date_today = date('F j, Y');
 
     switch ($eval_role) {
@@ -114,9 +115,9 @@ if (isset($_POST['fileName'])) {
                     $stmt->close();
 
                     if ($count > 0) {
-                        $sql = "UPDATE eval_summary SET rating = rating + ?, comment = ?, file = ? WHERE user_id = ?";
+                        $sql = "UPDATE eval_summary SET rating = rating + ?, manager_rating = ?, comment = ?, file = ? WHERE user_id = ?";
                         $stmt = $con->prepare($sql);
-                        $stmt->bind_param("ssss", $rating, $rate_comment, $fileName, $user_to_eval);
+                        $stmt->bind_param("sssss", $rating, $rating, $rate_comment, $fileName, $user_to_eval);
 
                         if (!$stmt->execute()) {
                             error_log("Failed to update eval_summary: " . $stmt->error);
@@ -124,7 +125,7 @@ if (isset($_POST['fileName'])) {
                             exit;
                         }
                     }
-                    
+
                     createEvalMgr($fileName, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $date_today, $rate_comment);
                 } else {
                     echo json_encode(['success' => false, 'message' => 'Failed to update status']);
@@ -153,14 +154,14 @@ if (isset($_POST['fileName'])) {
 
                 if ($count > 0) {
 
-                    $updateSummary = "UPDATE eval_summary SET rating = ? WHERE user_id = ?";
+                    $updateSummary = "UPDATE eval_summary SET rating = ?, hr_rating = ? WHERE user_id = ?";
                     $stmt = $con->prepare($updateSummary);
-                    $stmt->bind_param("ss", $rating, $user_to_eval);
+                    $stmt->bind_param("sss", $rating, $rating, $user_to_eval);
                 } else {
 
-                    $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating) VALUES (?, ?, ?)";
+                    $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating, hr_rating) VALUES (?, ?, ?, ?)";
                     $stmt = $con->prepare($insertSummary);
-                    $stmt->bind_param("sss", $user_to_eval, $_SESSION['user_id'], $rating);
+                    $stmt->bind_param("ssss", $user_to_eval, $_SESSION['user_id'], $rating, $rating);
                 }
 
                 if ($stmt->execute()) {
@@ -180,7 +181,7 @@ if (isset($_POST['fileName'])) {
             $updateStatus = "UPDATE evaluation SET evaluator_hr = ?, evaluator_manager = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare(query: $updateStatus);
             $stmt->bind_param("sss", $_SESSION['user_id'], $_SESSION['user_id'], $fileName);
-            
+
             if ($stmt->execute()) {
 
                 $checkExists = "SELECT COUNT(*) FROM eval_summary WHERE user_id = ?";
@@ -200,15 +201,15 @@ if (isset($_POST['fileName'])) {
 
                     if ($stmt->execute()) {
 
-                        $updateSummary = "UPDATE eval_summary SET rating = ? WHERE user_id = ?";
+                        $updateSummary = "UPDATE eval_summary SET rating = ?, hr_rating = ?, manager_rating = ? WHERE user_id = ?";
                         $stmt = $con->prepare($updateSummary);
-                        $stmt->bind_param("ss", $rating, $user_to_eval);
+                        $stmt->bind_param("ssss", $rating, $HR_rating, $MANAGER_rating, $user_to_eval);
                     }
                 } else {
 
-                    $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating, comment, file) VALUES (?, ?, ?, ?, ?)";
+                    $insertSummary = "INSERT INTO eval_summary (user_id, hr_id, rating, hr_rating, manager_rating, comment, file) VALUES (?, ?, ?, ?, ?, ?, ?)";
                     $stmt = $con->prepare($insertSummary);
-                    $stmt->bind_param("sssss", $user_to_eval, $_SESSION['user_id'], $rating, $rate_comment, $fileName);
+                    $stmt->bind_param("sssssss", $user_to_eval, $_SESSION['user_id'], $rating, $HR_rating, $MANAGER_rating, $rate_comment, $fileName);
 
                     if ($stmt->execute()) {
 
@@ -723,7 +724,7 @@ function createEvalHR($fileName, $fname, $department, $position, $status, $date_
 
 function createEvalHRM($fileName, $fname, $department, $position, $status, $date_today, $dateHired, $absence, $suspension, $tardiness, $productivity, $knowledge, $quality, $initiative, $attitude, $communication, $creativity, $rate_comment)
 {
-    
+
     $reader = PHPExcel_IOFactory::createReaderForFile($fileName);
     $excel_obj = $reader->load($fileName);
 

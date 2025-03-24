@@ -166,6 +166,7 @@
 
                                                         $rating = (int)$accounts['rating'];
 
+                                                        // Adjust remarks logic for Manager Evaluation (0-75 scale)
                                                         if ($rating >= 97 && $rating <= 100) {
                                                             $remark = "Excellent";
                                                         } elseif ($rating >= 90 && $rating <= 96) {
