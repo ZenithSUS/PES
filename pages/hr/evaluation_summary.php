@@ -270,6 +270,18 @@
             "lengthMenu": [5, 10, 20, 50],
             "pageLength": 10
         });
+        $.fn.dataTable.ext.search.push(
+            function(settings, searchData, index, rowData, counter) {
+                let match = false;
+                let searchTerm = settings.oPreviousSearch.sSearch.toLowerCase();
+                searchData.forEach(function (item, index) {
+                    if (item.toLowerCase().startsWith(searchTerm)) {
+                    match = true;
+                }
+                } );
+                return match;
+            }
+        )
 
         multiCheck(c3);
         

@@ -132,19 +132,19 @@
                                                     $html .= '<td>' . htmlspecialchars($accounts['violation_title']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['violation_desc']) . '</td>';
                                                     $html .= '<td class="text-center">
-                                                                    <ul class="table-controls">
-                                                                        <li>
-                                                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' . $accounts['violation_id'] . '">
-                                                                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                                                </svg>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>';
+                                                                        <ul class="table-controls">
+                                                                            <li>
+                                                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="' . $accounts['violation_id'] . '">
+                                                                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                                    </svg>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>';
                                                     $html .= '</tr>';
                                                 }
                                                 echo $html;
@@ -160,21 +160,17 @@
                     <?php
                     // Fetch all users with violations and their descriptions
                     $violationSql = "
-                SELECT 
-                    a.employee_id, 
-                    a.first_name, 
-                    a.last_name, 
-                    a.department, 
-                    a.position, 
-                    COUNT(uv.violation_id) AS violation_count,
-                    GROUP_CONCAT(hvl.violation_title SEPARATOR ', ') AS violation_descriptions
-                FROM accounts a
-                LEFT JOIN user_violations uv ON a.employee_id = uv.employee_id
-                LEFT JOIN hr_violation_list hvl ON uv.violation_id = hvl.violation_id
-                WHERE uv.violation_id IS NOT NULL
-                GROUP BY a.employee_id
-                ORDER BY violation_count DESC
-            ";
+                        SELECT a.employee_id, a.first_name, a.last_name, a.department, a.position, 
+                        COUNT(uv.violation_id) AS violation_count,
+                        GROUP_CONCAT(hvl.violation_title SEPARATOR ', ') AS violation_descriptions,
+                        GROUP_CONCAT(uv.sanction SEPARATOR ', ') AS sanctions
+                        FROM accounts a
+                        LEFT JOIN user_violations uv ON a.employee_id = uv.employee_id
+                        LEFT JOIN hr_violation_list hvl ON uv.violation_id = hvl.violation_id
+                        WHERE uv.violation_id IS NOT NULL
+                        GROUP BY a.employee_id, a.first_name, a.last_name, a.department, a.position
+                        ORDER BY violation_count DESC
+                    ";
                     $violationResult = $con->query($violationSql);
                     $usersWithViolations = [];
                     while ($row = $violationResult->fetch_assoc()) {
@@ -196,11 +192,14 @@
                                                 <th style="width: 15%;">Position</th>
                                                 <th style="width: 10%;">Violation Count</th>
                                                 <th style="width: 35%;">Violation Descriptions</th>
+                                                <th style="width: 35%;">Sanctions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php if (!empty($usersWithViolations)): ?>
-                                                <?php foreach ($usersWithViolations as $user): ?>
+                                                <?php foreach ($usersWithViolations as $user):
+                                                    $sanction = is_null($user['sanctions']) ? "N/A" : $user['sanctions'];
+                                                ?>
                                                     <tr>
                                                         <td><?php echo htmlspecialchars($user['employee_id']); ?></td>
                                                         <td><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></td>
@@ -208,6 +207,7 @@
                                                         <td><?php echo htmlspecialchars($user['position']); ?></td>
                                                         <td><?php echo htmlspecialchars($user['violation_count']); ?></td>
                                                         <td><?php echo htmlspecialchars($user['violation_descriptions']); ?></td>
+                                                        <td><?php echo htmlspecialchars($sanction); ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>

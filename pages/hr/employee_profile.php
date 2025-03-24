@@ -125,6 +125,7 @@
 
                                                 if ($result->num_rows > 0) {
                                                     $row = $result->fetch_assoc();
+                                                    $empId = $row["employee_id"];
                                                     // echo "<script>alert('".$row['employee_id']."')</script>";
                                                     // echo "<script>alert('".$employeeData."')</script>";
                                                     $statusClass = "";
@@ -352,16 +353,17 @@
                                                     $html .= '<td>' . htmlspecialchars($violation['vdate']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($violation['status']) . '</td>';
                                                     $html .= '<td> 
-                                                                    <a class="btn btn-info m-1" 
-                                                                    data-bs-toggle="modal" 
-                                                                    data-bs-target="#vioModal2"  
-                                                                    data-id="' . htmlspecialchars($violation['employee_id']) . '"  
-                                                                    data-bs-toggle="tooltip" 
-                                                                    data-bs-placement="top" 
-                                                                    title="Update Violation">
-                                                                    Update
-                                                                    </a>
-                                                                </td>';
+                                                                <a class="btn btn-info m-1" 
+                                                                data-bs-toggle="modal" 
+                                                                data-bs-target="#vioModal2"  
+                                                                data-id="' . htmlspecialchars($violation['employee_id']) . '"  
+                                                                data-violation-id="' . htmlspecialchars($violation['violation_id']) . '"  
+                                                                data-bs-toggle="tooltip" 
+                                                                data-bs-placement="top" 
+                                                                title="Update Violation">
+                                                                Update
+                                                                </a>
+                                                              </td>';
                                                     $html .= '</tr>';
                                                 }
                                             }
@@ -476,7 +478,7 @@
                                     }
                                     ?>
                                     <input type="text" value="<?php echo $department; ?>" id="dept-val" hidden>
-                                    <select name="vio" id="vio" class="form-select" id="">
+                                    <select name="vio" id="vio" class="form-select">
                                         <option value="" selected disabled>---Select Violation---</option>
                                         <?php
 
@@ -535,16 +537,31 @@
                                     <label for="department">
                                         <p>Violation Status</p>
                                     </label>
-                                    <select name="stat2" id="stat2" class="form-select">
+                                    <select name="stat2" id="stat2" class="form-select" onclick="checkResolved()">
                                         <option value="" selected disabled>---Select Status---</option>
                                         <option value="Pending">Pending</option>
                                         <option value="Under Review">Under Review</option>
                                         <option value="Resolved">Resolved</option>
                                     </select>
                                 </div>
+                                <div class="col-12 mb-4" id="sanctionsSection" style="display: none;">
+                                    <label for="sanctions">
+                                        <p>Sanctions</p>
+                                    </label>
+                                    <select name="sanctions" id="sanctions" class="form-select">
+                                        <option value="" selected disabled>---Select Sanction---</option>
+                                        <option value="Verbal Warning">Verbal Warning</option>
+                                        <option value="Written Warning">Written Warning</option>
+                                        <option value="Final Written Warning">Final Written Warning</option>
+                                        <option value="2 days suspension">2 days suspension</option>
+                                        <option value="30 days suspension">30 days suspension</option>
+                                    </select>
+                                </div>
                                 <input type="hidden" name="emp_id3" id="emp_id3">
+                                <input type="hidden" name="violation_id" id="violation_id">
                                 <div class="modal-footer">
-                                    <button type="submit" id="updVio" class="btn btn-info">Add Status</button>
+                                    <button type="submit" id="updVio" class="btn btn-info">Update Status</button>
+                                    <button type="button" id="sanctionsButton" class="btn btn-warning" disabled>Sanctions</button>
                                     <button type="button" id="cancelDeleteStudent" class="btn btn-light-dark" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </form>
@@ -553,6 +570,7 @@
                 </div>
             </div>
             <!-- upd violation modal end -->
+
             <!-- archive modal start -->
             <div class="modal fade" id="arcModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -735,14 +753,17 @@
             deleteStudentForm.addEventListener('submit', function(event) {
                 event.preventDefault();
 
+                const sanctionVal = document.getElementById('sanctions').value;
                 const formData = new FormData(deleteStudentForm);
                 const idd = formData.get('emp_id3');
+                const violationId = formData.get('violation_id'); // Get the violation ID
                 const stat2 = formData.get('stat2');
 
                 console.log(idd);
+                console.log(violationId); // Log the violation ID
                 console.log(stat2);
 
-                fetch(`../../api/deleteData.php?delete=updviolation&id=${idd}&stat=${stat2}`, {
+                fetch(`../../api/deleteData.php?delete=updviolation&id=${idd}&stat=${stat2}&sanction=${sanctionVal}&vioId=${violationId}`, {
                         method: 'POST',
                         body: formData
                     })
@@ -764,7 +785,9 @@
             $('#vioModal2').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
                 var dataId = button.data('id');
+                var violationId = button.data('violation-id'); // Get the violation ID from the button
                 $('#emp_id3').val(dataId);
+                $('#violation_id').val(violationId); // Set the violation ID in the form
             });
         });
 
@@ -880,6 +903,36 @@
                     alert("An error occurred while filtering the data.");
                 });
         }
+
+        // JavaScript to handle the enabling/disabling of the Sanctions button and showing the sanctions dropdown
+
+
+        function checkResolved() {
+            const status = document.getElementById('stat2').value;
+            var sanctionsButton = document.getElementById('sanctionsButton');
+            var sanctionsSection = document.getElementById('sanctionsSection');
+
+            if (status === 'Resolved') {
+                sanctionsButton.disabled = false;
+                sanctionsSection.style.display = 'block';
+            } else {
+                sanctionsButton.disabled = true;
+                sanctionsSection.style.display = 'none';
+            }
+        }
+
+        checkResolved();
+
+        // JavaScript to handle the Sanctions button click
+        document.getElementById('sanctionsButton').addEventListener('click', function() {
+            var sanctionsSelect = document.getElementById('sanctions');
+            if (sanctionsSelect.value) {
+                alert('Sanction selected: ' + sanctionsSelect.value);
+                // You can add further logic here to handle the selected sanction
+            } else {
+                alert('Please select a sanction.');
+            }
+        });
     </script>
 
 </body>

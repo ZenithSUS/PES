@@ -106,7 +106,7 @@
                     <div class="row layout-spacing">
                         <div class="col-lg-12">
                             <div class="statbox widget box box-shadow">
-                                <div class="widget-content widget-content-area">
+                                <div class="widget-content widget-content-area overflow-auto">
                                     <table id="style-3" class="table style-3 dt-table-hover">
                                         <thead>
                                             <tr>
@@ -115,6 +115,7 @@
                                                 <th>Description</th>
                                                 <th>Date</th>
                                                 <th class="text-center dt-no-sorting">Status</th>
+                                                <th class="text-center dt-no-sorting">Sanction</th>
                                             </tr>
                                         </thead>
 
@@ -132,13 +133,14 @@
 
                                             if ($result && $result->num_rows > 0) {
                                                 while ($accounts = $result->fetch_assoc()) {
-
+                                                    $sanction = is_null($accounts['sanction']) ? "N/A" : $accounts['sanction'];
                                                     $html .= '<tr>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['name']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['violation_title']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['violation_desc']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['vdate']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['status']) . '</td>';
+                                                    $html .= '<td>' . htmlspecialchars($sanction) . '</td>';
                                                     $html .= '</tr>';
                                                 }
                                                 echo $html;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2025 at 02:35 AM
+-- Generation Time: Mar 24, 2025 at 02:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -59,7 +59,7 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`, `last_name`, `gender`, `department`, `emp_status`, `position`, `date_hired`, `username`, `password`, `email`, `phone`, `img`, `active`, `archived`, `otp`, `user_level`, `for_eval`, `current_eval`, `bio_userid`) VALUES
 (2, '16622', 'Rodante', 'Regis', 'Reyes', 'Male', 'Administrator', 'Administrator', 'Administrator', 'July 25, 2013', 'rrreyes', '202cb962ac59075b964b07152d234b70', 'rrreyes@innotor.com', '099123123', 'uploads/rodante.jpg', 1, 0, '', 0, 'admin', '', '5'),
 (3, '16623', 'Amiel', 'Briones', 'Manaog', 'Male', 'MIS', 'Regular', 'Technician', 'May 15, 2024', 'abmanaog', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '99123123', 'uploads/mike.jpeg', 1, 0, '', 3, 'September 04, 2025', '../forms/evaluation/7BFKPP1EQ7.xlsx', '2'),
-(5, '16624', 'Glenn', 'Nicomedes', 'Bautista', 'Male', 'MIS', 'Regular', 'Manager', 'October 9, 2024', 'gnbautista', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '12345678900', 'uploads/pro.jpeg', 1, 0, '', 2, 'April 9, 2025', NULL, '3'),
+(5, '16624', 'Glenn', 'Nicomedes', 'Bautista', 'Male', 'MIS', 'Regular', 'Manager', 'October 9, 2024', 'gnbautista', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '12345678900', 'uploads/pro.jpeg', 1, 0, '', 2, 'September 21, 2025', '../forms/evaluation/ZZQL7P988G.xlsx', '3'),
 (6, '16625', 'Christine', 'Tapia', 'Lumbres', 'Female', 'Human Resource', 'Regular', 'Performance', 'December 10, 20', 'ctlumbres', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '12345678900', 'uploads/16625_jane.jpeg', 1, 0, '', 1, 'December 10, 2024', NULL, '4'),
 (32, '16626', 'Raymund', 'G', 'Delarosa', 'Male', 'Engineering', 'Intern', 'Engineer', 'October 26, 2023', 'rgdelarosa', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09556621712', 'uploads/16626_2.jpg', 1, 0, NULL, 3, 'April 26, 2024', NULL, '6'),
 (33, '16627', 'Darrel', 'C', 'Realingo', 'Male', 'Engineering', 'Regular', 'Manager', 'February 25, 2023', 'dcrealingo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9671234567', 'uploads/16627_darrenicon.png', 1, 0, NULL, 2, 'September 04, 2025', '../forms/evaluation/8AEQ8ULX12.xlsx', '7'),
@@ -69,7 +69,7 @@ INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`
 (37, '16631', 'Marvin', 'Ramos', 'Montoya', 'Male', 'Quality Control', 'Contractual', 'Technician', 'October 10, 2024', 'mrmontoya', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '09962563251', 'uploads/16631_winicon.png', 1, 0, NULL, 3, 'April 10, 2025', NULL, '11'),
 (38, '16632', 'Klein', 'Corpuz', 'Castillo', 'Female', 'Quality Control', 'Contractual', 'QC Inspector', 'September 5, 2024', 'kccastillo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09846278176', 'uploads/16632_3.jpg', 1, 0, NULL, 3, 'September 11, 2025', '../forms/evaluation/GIZ91Y08G2.xlsx', '12'),
 (39, '16633', 'Cecille', 'Medina', 'Ortis', 'Female', 'Engineering', 'Contractual', 'Engineer', 'March 9, 2024', 'cmortis', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '09953800662', 'uploads/16633_hcm13.jpg', 1, 0, NULL, 3, 'September 11, 2025', '../forms/evaluation/UZ9GCMRQYL.xlsx', '13'),
-(40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/HN56EA4M3A.xlsx', '14');
+(40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/4XXDJGQ35B.xlsx', '14');
 
 -- --------------------------------------------------------
 
@@ -1008,7 +1008,8 @@ INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `eva
 (113, 16627, 'March 4, 2025', '16625', '16625', '../forms/evaluation/8AEQ8ULX12.xlsx'),
 (114, 16632, 'March 11, 2025', '16625', '16629', '../forms/evaluation/GIZ91Y08G2.xlsx'),
 (115, 16633, 'March 11, 2025', '16625', '16627', '../forms/evaluation/UZ9GCMRQYL.xlsx'),
-(120, 16634, 'March 19, 2025', '16625', '16624', '../forms/evaluation/HN56EA4M3A.xlsx');
+(121, 16634, 'March 19, 2025', '16625', '16624', '../forms/evaluation/4XXDJGQ35B.xlsx'),
+(122, 16624, 'March 21, 2025', '16625', '16625', '../forms/evaluation/ZZQL7P988G.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1035,7 +1036,8 @@ INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `rating`, `comment`, `fi
 (12, '16627', '16625', '89', 'best manager', '../forms/evaluation/8AEQ8ULX12.xlsx'),
 (13, '16632', '16625', '19', NULL, NULL),
 (14, '16633', '16625', '13', NULL, NULL),
-(19, '16634', '16625', '96.5', 'Very Diligent Employee', '../forms/evaluation/HN56EA4M3A.xlsx');
+(19, '16634', '16625', '97.8', 'Very Good Employee Keep up the good work.', '../forms/evaluation/4XXDJGQ35B.xlsx'),
+(20, '16624', '16625', '94.9', 'Very GOOOOOOOD', '../forms/evaluation/ZZQL7P988G.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1073,17 +1075,24 @@ CREATE TABLE `user_violations` (
   `violation_id` varchar(11) NOT NULL,
   `department` varchar(255) NOT NULL,
   `vdate` varchar(50) NOT NULL,
-  `status` varchar(50) NOT NULL
+  `status` varchar(50) NOT NULL,
+  `sanction` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_violations`
 --
 
-INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `department`, `vdate`, `status`) VALUES
-(1, '16624', '2', 'MIS', 'February 18, 2025', 'Under Review'),
-(2, '16626', '3', 'MIS', 'February 24, 2025', 'Resolved'),
-(3, '16627', '8', 'MIS', 'March 8, 2025', 'Pending');
+INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `department`, `vdate`, `status`, `sanction`) VALUES
+(1, '16624', '2', 'MIS', 'February 18, 2025', 'Resolved', 'Written Warning'),
+(2, '16626', '3', 'MIS', 'February 24, 2025', 'Resolved', NULL),
+(3, '16627', '8', 'MIS', 'March 8, 2025', 'Pending', NULL),
+(11, '16627', '2', 'Engineering', 'March 21, 2025', 'Pending', NULL),
+(15, '16634', '7', 'MIS', 'March 21, 2025', 'Resolved', 'Written Warning'),
+(16, '16634', '8', 'MIS', 'March 21, 2025', 'Pending', ''),
+(17, '16623', '2', 'MIS', 'March 21, 2025', 'Under Review', NULL),
+(22, '16628', '1', 'Quality Control', 'March 21, 2025', 'Resolved', 'Final Written Warning'),
+(23, '16628', '1', 'Quality Control', 'March 21, 2025', 'Under Review', NULL);
 
 --
 -- Indexes for dumped tables
@@ -1139,13 +1148,13 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT for table `eval_summary`
 --
 ALTER TABLE `eval_summary`
-  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `hr_violation_list`
@@ -1157,7 +1166,7 @@ ALTER TABLE `hr_violation_list`
 -- AUTO_INCREMENT for table `user_violations`
 --
 ALTER TABLE `user_violations`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
