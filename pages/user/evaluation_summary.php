@@ -117,6 +117,8 @@
                                                 <th>Manager</th>
                                                 <th>Rating</th>
                                                 <th>Remark</th>
+                                                <th>HR Rating</th>
+                                                <th>Manager Rating</th>
                                                 <th>Comment</th>
                                             </tr>
                                         </thead>
@@ -138,7 +140,9 @@
                                                         evaluator.department AS evaluator_department,
                                                         evaluator.position AS evaluator_position,
                                                         summ.rating,
-                                                        summ.comment
+                                                        summ.comment,
+                                                        summ.hr_rating,
+                                                        summ.manager_rating
                                                     FROM evaluation
                                                     JOIN accounts AS employee ON evaluation.account_id = employee.employee_id
                                                     JOIN eval_summary AS summ ON evaluation.account_id = summ.user_id
@@ -179,6 +183,8 @@
                                                     $html .= '<td><a class="">' . htmlspecialchars($accounts['evaluator_first_name']) . ' ' . htmlspecialchars($accounts['evaluator_middle_name']) . ' ' . htmlspecialchars($accounts['evaluator_last_name']) . '</a></td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['rating']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($remark) . '</td>';
+                                                    $html .= '<td>' . htmlspecialchars($accounts['hr_rating'] !== NULL ? $accounts['hr_rating'] : "N/A") . '</td>';
+                                                    $html .= '<td>' . htmlspecialchars($accounts['manager_rating'] !== NULL ? $accounts['manager_rating'] : "N/A") . '</td>';
                                                     $html .= '<td class="text-center">
                                                                 <ul class="table-controls">
                                                                     <li>

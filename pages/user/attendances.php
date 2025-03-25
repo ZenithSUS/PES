@@ -262,7 +262,10 @@
 
                         let attnRow = document.createElement("tr");
                         attnRow.classList.add("attendance-row");
-                        attnRow.innerHTML = `<td></td><td></td><td>${row.attn_date}(${row.day_of_week})</td><td>${row.check_in_time}</td><td>${row.check_out_time}</td><td>${row.remark}</td>`;
+                        attnRow.innerHTML = `<td></td><td></td><td>${row.attn_date} (${row.day_of_week})</td>
+                                             <td>${row.check_in_time}</td>
+                                             <td>${row.check_out_time || 'N/A'}</td> <!-- Handle missing out times -->
+                                             <td>${row.remark}</td>`;
                         tbody.appendChild(attnRow);
                     });
                 } else {

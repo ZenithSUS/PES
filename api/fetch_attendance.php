@@ -27,16 +27,103 @@ if (empty($employees)) {
     die(json_encode(["error" => "No employees found"]));
 }
 
-$sql = "SELECT 
-            userid, 
-            attn_date, 
-            DAYNAME(STR_TO_DATE(attn_date, '%m/%d/%Y')) AS day_of_week,
-            MIN(CASE WHEN attn_type = 'check-in' THEN attn_time END) AS checkin,
-            MAX(CASE WHEN attn_type = 'check-out' THEN attn_time END) AS checkout
-        FROM attendances
-        WHERE attn_date BETWEEN ? AND ?
-        GROUP BY userid, attn_date
-        ORDER BY userid, attn_date;";
+$sql = "SELECT
+    c.id AS checkin_id,
+    c.userid,
+    c.attn_date AS checkin_date,
+    c.attn_time AS checkin_time,
+    /* Earliest matching checkout ID */
+    (
+      SELECT o.id
+      FROM attendances AS o
+      WHERE o.userid = c.userid
+        AND o.attn_type = 'check-out'
+        AND (
+            -- Day shift: check-out on same date, after check-in time
+            (
+              STR_TO_DATE(c.attn_time, '%h:%i:%s %p') < STR_TO_DATE('06:00:00 PM', '%h:%i:%s %p')
+              AND o.attn_date = c.attn_date
+              AND STR_TO_DATE(o.attn_time, '%h:%i:%s %p') > STR_TO_DATE(c.attn_time, '%h:%i:%s %p')
+            )
+            OR
+            -- Night shift: check-out on next date (no time check needed)
+            (
+              STR_TO_DATE(c.attn_time, '%h:%i:%s %p') >= STR_TO_DATE('06:00:00 PM', '%h:%i:%s %p')
+              AND o.attn_date = DATE_FORMAT(
+                  DATE_ADD(STR_TO_DATE(c.attn_date, '%m/%d/%Y'), INTERVAL 1 DAY),
+                  '%m/%d/%Y'
+              )
+            )
+        )
+      ORDER BY 
+        -- earliest valid check-out by date, then by time
+        STR_TO_DATE(o.attn_date, '%m/%d/%Y'),
+        STR_TO_DATE(o.attn_time, '%h:%i:%s %p')
+      LIMIT 1
+    ) AS checkout_id,
+
+    /* Earliest matching checkout date */
+    (
+      SELECT o.attn_date
+      FROM attendances AS o
+      WHERE o.userid = c.userid
+        AND o.attn_type = 'check-out'
+        AND (
+            (STR_TO_DATE(c.attn_time, '%h:%i:%s %p') < STR_TO_DATE('06:00:00 PM', '%h:%i:%s %p')
+             AND o.attn_date = c.attn_date
+             AND STR_TO_DATE(o.attn_time, '%h:%i:%s %p') > STR_TO_DATE(c.attn_time, '%h:%i:%s %p')
+            )
+            OR
+            (STR_TO_DATE(c.attn_time, '%h:%i:%s %p') >= STR_TO_DATE('06:00:00 PM', '%h:%i:%s %p')
+             AND o.attn_date = DATE_FORMAT(
+                 DATE_ADD(STR_TO_DATE(c.attn_date, '%m/%d/%Y'), INTERVAL 1 DAY),
+                 '%m/%d/%Y'
+             )
+            )
+        )
+      ORDER BY
+        STR_TO_DATE(o.attn_date, '%m/%d/%Y'),
+        STR_TO_DATE(o.attn_time, '%h:%i:%s %p')
+      LIMIT 1
+    ) AS checkout_date,
+
+    /* Earliest matching checkout time */
+    (
+      SELECT o.attn_time
+      FROM attendances AS o
+      WHERE o.userid = c.userid
+        AND o.attn_type = 'check-out'
+        AND (
+            (STR_TO_DATE(c.attn_time, '%h:%i:%s %p') < STR_TO_DATE('06:00:00 PM', '%h:%i:%s %p')
+             AND o.attn_date = c.attn_date
+             AND STR_TO_DATE(o.attn_time, '%h:%i:%s %p') > STR_TO_DATE(c.attn_time, '%h:%i:%s %p')
+            )
+            OR
+            (STR_TO_DATE(c.attn_time, '%h:%i:%s %p') >= STR_TO_DATE('06:00:00 PM', '%h:%i:%s %p')
+             AND o.attn_date = DATE_FORMAT(
+                 DATE_ADD(STR_TO_DATE(c.attn_date, '%m/%d/%Y'), INTERVAL 1 DAY),
+                 '%m/%d/%Y'
+             )
+            )
+        )
+      ORDER BY
+        STR_TO_DATE(o.attn_date, '%m/%d/%Y'),
+        STR_TO_DATE(o.attn_time, '%h:%i:%s %p')
+      LIMIT 1
+    ) AS checkout_time,
+
+    -- day of week, if you like
+    DAYNAME(STR_TO_DATE(c.attn_date, '%m/%d/%Y')) AS day_of_week
+
+FROM attendances c
+WHERE c.attn_type = 'check-in'
+  AND STR_TO_DATE(c.attn_date, '%m/%d/%Y')
+      BETWEEN STR_TO_DATE(?,'%m/%d/%Y')
+      AND STR_TO_DATE(?,'%m/%d/%Y')
+ORDER BY 
+    c.userid,
+    STR_TO_DATE(c.attn_date, '%m/%d/%Y'),
+    STR_TO_DATE(c.attn_time, '%h:%i:%s %p');";
 
 $stmt = $con->prepare($sql);
 $stmt->bind_param("ss", $from, $to);
@@ -47,12 +134,10 @@ $attendanceRecords = [];
 
 while ($row = $result->fetch_assoc()) {
     $userId = $row['userid'];
-    $attnDate = $row['attn_date'];
+    $attnDate = $row['checkin_date'];
 
-    $checkIn = !empty($row['checkin']) ? $row['checkin'] : '------';
-    $checkOut = !empty($row['checkout']) ? $row['checkout'] : '------';
-
-    error_log("User: $userId, Date: $attnDate, Check-in: $checkIn, Check-out: $checkOut");
+    $checkIn = !empty($row['checkin_time']) ? $row['checkin_time'] : '------';
+    $checkOut = !empty($row['checkout_time']) ? $row['checkout_time'] : '------';
 
     $attendanceRecords[$userId][$attnDate] = [
         'day_of_week' => $row['day_of_week'],
@@ -70,12 +155,6 @@ foreach ($employees as $empId => $fullName) {
         $dateStr = $current->format('m/d/Y');
         $dayOfWeek = $current->format('l');
 
-        // **Skip Saturdays and Sundays**
-        if ($dayOfWeek === 'Saturday' || $dayOfWeek === 'Sunday') {
-            $current->modify('+1 day');
-            continue;
-        }
-
         if (isset($attendanceRecords[$empId][$dateStr])) {
             $record = $attendanceRecords[$empId][$dateStr];
 
@@ -83,23 +162,51 @@ foreach ($employees as $empId => $fullName) {
             $checkOut = $record['check_out_time'];
             $workHours = 0;
             $remark = 'Absent';
+            $isNightShift = false;
 
             if ($checkIn !== '------' && $checkOut !== '------') {
-                $checkInTime = DateTime::createFromFormat('m/d/Y h:i:s A', $attnDate . ' ' . $checkIn);
-                $checkOutTime = DateTime::createFromFormat('m/d/Y h:i:s A', $attnDate . ' ' . $checkOut);
-                $officialStartTime = DateTime::createFromFormat('m/d/Y h:i:s A', $attnDate . ' 08:00:00 AM');
-            
-                if ($checkInTime && $checkOutTime && $officialStartTime) {
-                    $workHours = ($checkOutTime->getTimestamp() - $checkInTime->getTimestamp()) / 3600 - 1;
-            
-                    $remark = "Present";
-            
-                    if ($checkInTime > $officialStartTime) {
-                        $remark = "Present (Late)";
+                try {
+                    $checkInTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' ' . $checkIn);
+                    $checkOutDate = $dateStr;
+                    
+                    // Check if this is a night shift (check-in after 6PM)
+                    if ($checkInTime && $checkInTime->format('H') >= 18) {
+                        $isNightShift = true;
+                        $checkOutDate = $current->format('m/d/Y');
+                        $checkOutTime = DateTime::createFromFormat('m/d/Y h:i:s A', $checkOutDate . ' ' . $checkOut);
+                        if ($checkOutTime < $checkInTime) {
+                            $checkOutTime->modify('+1 day');
+                        }
+                    } else {
+                        $checkOutTime = DateTime::createFromFormat('m/d/Y h:i:s A', $checkOutDate . ' ' . $checkOut);
                     }
 
-                } else {
-                    error_log("Date parsing error: Check your input formats.");
+                    if ($checkInTime && $checkOutTime) {
+                        $workHours = ($checkOutTime->getTimestamp() - $checkInTime->getTimestamp()) / 3600;
+                        
+                        // Subtract 1 hour for lunch if work hours > 4
+                        if ($workHours > 4) {
+                            $workHours -= 1;
+                        }
+
+                        $officialDayStartTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' 08:00:00 AM');
+                        $officialDayEndTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' 04:00:00 PM');
+                        $officialNightStartTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' 08:00:00 PM');
+
+                        $remark = "Present";
+
+                        if (!$isNightShift && $checkInTime > $officialDayStartTime) {
+                            $remark = "Late";
+                        } elseif ($isNightShift && $checkInTime > $officialNightStartTime) {
+                            $remark = "Late";
+                        }
+
+                        if ($workHours < 8) {
+                            $remark = ($remark === "Present") ? "Undertime" : $remark . " (Undertime)";
+                        }
+                    }
+                } catch (Exception $e) {
+                    error_log("Error processing time data: " . $e->getMessage());
                 }
             }
 
@@ -111,7 +218,8 @@ foreach ($employees as $empId => $fullName) {
                 'check_in_time' => $checkIn,
                 'check_out_time' => $checkOut,
                 'work_hours' => number_format($workHours, 2),
-                'remark' => $remark
+                'remark' => $remark,
+                'is_night_shift' => $isNightShift
             ];
         } else {
             $data[] = [
@@ -121,8 +229,9 @@ foreach ($employees as $empId => $fullName) {
                 'day_of_week' => $dayOfWeek,
                 'check_in_time' => '------',
                 'check_out_time' => '------',
-                'work_hours' => '0.00',
-                'remark' => 'Absent'
+                'work_hours' => 0,
+                'remark' => 'Absent',
+                'is_night_shift' => false
             ];
         }
         $current->modify('+1 day');
@@ -138,5 +247,4 @@ if (isset($_GET['debug'])) {
 
 header('Content-Type: application/json');
 echo json_encode($data);
-
 ?>
