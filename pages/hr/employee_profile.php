@@ -561,7 +561,6 @@
                                 <input type="hidden" name="violation_id" id="violation_id">
                                 <div class="modal-footer">
                                     <button type="submit" id="updVio" class="btn btn-info">Update Status</button>
-                                    <button type="button" id="sanctionsButton" class="btn btn-warning" disabled>Sanctions</button>
                                     <button type="button" id="cancelDeleteStudent" class="btn btn-light-dark" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </form>
@@ -909,30 +908,16 @@
 
         function checkResolved() {
             const status = document.getElementById('stat2').value;
-            var sanctionsButton = document.getElementById('sanctionsButton');
             var sanctionsSection = document.getElementById('sanctionsSection');
 
             if (status === 'Resolved') {
-                sanctionsButton.disabled = false;
                 sanctionsSection.style.display = 'block';
             } else {
-                sanctionsButton.disabled = true;
                 sanctionsSection.style.display = 'none';
             }
         }
 
         checkResolved();
-
-        // JavaScript to handle the Sanctions button click
-        document.getElementById('sanctionsButton').addEventListener('click', function() {
-            var sanctionsSelect = document.getElementById('sanctions');
-            if (sanctionsSelect.value) {
-                alert('Sanction selected: ' + sanctionsSelect.value);
-                // You can add further logic here to handle the selected sanction
-            } else {
-                alert('Please select a sanction.');
-            }
-        });
     </script>
 
 </body>
