@@ -177,6 +177,7 @@
                                                 <th>Date</th>
                                                 <th>Time IN</th>
                                                 <th>Time OUT</th>
+                                                <th>Late (mins)</th>
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
@@ -262,7 +263,7 @@
                         if (previousUserId !== row.userid) {
                             let empRow = document.createElement("tr");
                             empRow.classList.add("employee-row");
-                            empRow.innerHTML = `<td>${row.userid}</td><td colspan='6'>${row.full_name}</td>`;
+                            empRow.innerHTML = `<td>${row.userid}</td><td colspan='8'>${row.full_name}</td>`;
                             tbody.appendChild(empRow);
                             previousUserId = row.userid;
                         }
@@ -272,11 +273,13 @@
                         attnRow.innerHTML = `<td></td><td></td><td>${row.attn_date} (${row.day_of_week})</td>
                                              <td>${row.check_in_time}</td>
                                              <td>${row.check_out_time || 'N/A'}</td> <!-- Handle missing out times -->
+                                             <td>${row.work_hours}</td>
+                                             <td>${row.late}</td>
                                              <td>${row.remark}</td>`;
                         tbody.appendChild(attnRow);
                     });
                 } else {
-                    tbody.innerHTML = "<tr><td colspan='7'>No attendance records found</td></tr>";
+                    tbody.innerHTML = "<tr><td colspan='8'>No attendance records found</td></tr>";
                 }
             })
             .catch(error => console.error("Error fetching data:", error));

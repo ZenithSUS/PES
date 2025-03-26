@@ -11,7 +11,7 @@ if (empty($from) || empty($to)) {
 
 $start = new DateTime($from);
 $end = new DateTime($to);
-$end->modify('+1 day'); 
+$end->modify('+1 day');
 
 $employeesQuery = "SELECT DISTINCT accounts.bio_userid, 
                         CONCAT(accounts.first_name, ' ', COALESCE(accounts.middle_name, ''), ' ', accounts.last_name) AS full_name 
@@ -19,6 +19,49 @@ $employeesQuery = "SELECT DISTINCT accounts.bio_userid,
 $employeesResult = $con->query($employeesQuery);
 
 $employees = [];
+
+function getLateMinutes($checkInTime, $isNightShift) {
+    // Set cutoff time based on shift type
+    $cutoffTime = $isNightShift ? strtotime("8:00:00 PM") : strtotime("8:00:00 AM");
+    
+    // Convert check-in time to timestamp
+    $checkTime = strtotime($checkInTime);
+    
+    // If invalid time format, return 0
+    if ($checkTime === false) {
+        return 0;
+    }
+    
+    // If check-in is after cutoff time, compute late minutes
+    if ($checkTime > $cutoffTime) {
+        $lateSeconds = $checkTime - $cutoffTime;
+        $lateMinutes = $lateSeconds / 60;
+        return round($lateMinutes);
+    }
+    
+    return 0;
+}
+
+
+function isNightShift($time) {
+    $startTime = strtotime("8:00:00 PM");
+    $checkTime = strtotime($time);
+    
+    if ($checkTime === false) {
+        return false; // Invalid time string
+    }
+    
+    // If time is 8:00 PM or later (until midnight)
+    if ($checkTime >= $startTime) {
+        return true;
+    }
+    
+    // If time is 12:00 AM to 7:59 AM (next day)
+    $midnight = strtotime("12:00:00 AM");
+    $nextDay8AM = strtotime("8:00:00 AM");
+    return ($checkTime >= $midnight && $checkTime < $nextDay8AM);
+}
+
 while ($row = $employeesResult->fetch_assoc()) {
     $employees[$row['bio_userid']] = trim($row['full_name']);
 }
@@ -139,10 +182,13 @@ while ($row = $result->fetch_assoc()) {
     $checkIn = !empty($row['checkin_time']) ? $row['checkin_time'] : '------';
     $checkOut = !empty($row['checkout_time']) ? $row['checkout_time'] : '------';
 
+    $isNightTime = isNightShift($checkIn);
+
     $attendanceRecords[$userId][$attnDate] = [
         'day_of_week' => $row['day_of_week'],
         'check_in_time' => $checkIn,
         'check_out_time' => $checkOut,
+        'late' => getLateMinutes($checkIn, $isNightTime),
         'present' => ($checkIn !== '------' || $checkOut !== '------')
     ];
 }
@@ -155,20 +201,24 @@ foreach ($employees as $empId => $fullName) {
         $dateStr = $current->format('m/d/Y');
         $dayOfWeek = $current->format('l');
 
+
         if (isset($attendanceRecords[$empId][$dateStr])) {
             $record = $attendanceRecords[$empId][$dateStr];
 
             $checkIn = $record['check_in_time'];
             $checkOut = $record['check_out_time'];
+            $lateTime = $record['late'];
             $workHours = 0;
+
             $remark = 'Absent';
             $isNightShift = false;
+
 
             if ($checkIn !== '------' && $checkOut !== '------') {
                 try {
                     $checkInTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' ' . $checkIn);
                     $checkOutDate = $dateStr;
-                    
+
                     // Check if this is a night shift (check-in after 6PM)
                     if ($checkInTime && $checkInTime->format('H') >= 18) {
                         $isNightShift = true;
@@ -183,7 +233,7 @@ foreach ($employees as $empId => $fullName) {
 
                     if ($checkInTime && $checkOutTime) {
                         $workHours = ($checkOutTime->getTimestamp() - $checkInTime->getTimestamp()) / 3600;
-                        
+
                         // Subtract 1 hour for lunch if work hours > 4
                         if ($workHours > 4) {
                             $workHours -= 1;
@@ -209,6 +259,8 @@ foreach ($employees as $empId => $fullName) {
                     error_log("Error processing time data: " . $e->getMessage());
                 }
             }
+            $checkHourRange = $workHours >= 8 | $workHours == 0;
+            $formattedHours = number_format(min($workHours, 8), $checkHourRange ? 0 : 2);
 
             $data[] = [
                 'userid' => $empId,
@@ -217,8 +269,9 @@ foreach ($employees as $empId => $fullName) {
                 'day_of_week' => $record['day_of_week'],
                 'check_in_time' => $checkIn,
                 'check_out_time' => $checkOut,
-                'work_hours' => number_format($workHours, 2),
+                'work_hours' => $formattedHours,
                 'remark' => $remark,
+                'late' => $lateTime,
                 'is_night_shift' => $isNightShift
             ];
         } else {
@@ -231,6 +284,7 @@ foreach ($employees as $empId => $fullName) {
                 'check_out_time' => '------',
                 'work_hours' => 0,
                 'remark' => 'Absent',
+                'late' => 0,
                 'is_night_shift' => false
             ];
         }
@@ -247,4 +301,3 @@ if (isset($_GET['debug'])) {
 
 header('Content-Type: application/json');
 echo json_encode($data);
-?>
