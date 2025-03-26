@@ -23,19 +23,19 @@
     <link href="../../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <link href="../../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-     <script>
+    <script>
         const authData = localStorage.getItem("users-data");
 
-        if(authData) {
+        if (authData) {
             let data = JSON.parse(authData);
             let role = parseInt(data.role);
-            
-            if(role !== 1) {
-                if(role === 0) {
+
+            if (role !== 1) {
+                if (role === 0) {
                     window.location.href = '../admin/dashboard.php';
                 }
 
-                if(role === 2) {
+                if (role === 2) {
                     window.location.href = '../manager/dashboard.php';
                 }
 
@@ -218,7 +218,51 @@
                                                     </a>
                                                 </div>
                                                 <div class="">
-                                                    <p class="w-value"><?php echo $totalRecords ?></p>
+                                                    <?php
+                                                    include('../../api/counter.php');
+
+                                                    // Fetch employees eligible for evaluation
+                                                    $u = $_SESSION['user_id'];
+                                                    $forEvalCount = 0;
+
+                                                    $sql = "SELECT * FROM accounts WHERE employee_id != $u AND (archived != 3 AND user_level != 0)";
+                                                    $result = $con->query($sql);
+
+                                                    if ($result && $result->num_rows > 0) {
+                                                        while ($accounts = $result->fetch_assoc()) {
+                                                            $forEvalValue = $accounts['for_eval'];
+                                                            $forEvalDate = null;
+                                                            $interval = null;
+
+                                                            if ($forEvalValue !== 'Evaluated') {
+                                                                try {
+                                                                    $dateHired = new DateTime($accounts['date_hired']);
+                                                                    $forEvalDate = $dateHired->modify('+5 months +2 weeks');
+                                                                    $today = new DateTime();
+                                                                    $interval = $forEvalDate->diff($today)->days;
+                                                                } catch (Exception $e) {
+                                                                    $forEvalDate = null;
+                                                                }
+                                                            }
+
+                                                            $employeeId = $accounts['employee_id'];
+                                                            $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_hr = '$u' AND account_id = '$employeeId' LIMIT 1";
+                                                            $evalResult = $con->query($checkEvalSql);
+                                                            $evalExists = $evalResult && $evalResult->num_rows > 0;
+
+                                                            if (
+                                                                $forEvalValue !== 'Evaluated' &&
+                                                                !$evalExists &&
+                                                                (!$forEvalDate || ($forEvalDate <= new DateTime() || $interval <= 10)) &&
+                                                                $accounts['emp_status'] !== 'Intern' &&
+                                                                $accounts['position'] !== 'Administrator'
+                                                            ) {
+                                                                $forEvalCount++;
+                                                            }
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <p class="w-value"><?php echo $forEvalCount; ?></p>
                                                     <h5 class="">For Evaluation</h5>
                                                 </div>
                                             </div>

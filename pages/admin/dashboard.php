@@ -47,6 +47,10 @@
                 include('../../components/nav-dropdown.php');
                 include('../../api/counter.php');
 
+                // Add logic to count evaluated employees
+                $evaluatedQuery = "SELECT COUNT(DISTINCT account_id) AS evaluated_count FROM evaluation";
+                $evaluatedResult = $con->query($evaluatedQuery);
+                $totalEvaluated = ($evaluatedResult && $evaluatedResult->num_rows > 0) ? $evaluatedResult->fetch_assoc()['evaluated_count'] : 0;
                 ?>
 
             </ul>
@@ -165,7 +169,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="">
-                                                    <p class="w-value"><?php echo $totalRecords ?></p>
+                                                    <p class="w-value"><?php echo $totalEvaluated; ?></p>
                                                     <h5 class="">Evaluated Employees</h5>
                                                 </div>
                                             </div>

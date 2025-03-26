@@ -161,7 +161,34 @@
                                                     </svg>
                                                 </div>
                                                 <div class="">
-                                                    <p class="w-value"><?php echo $for_eval_count ?></p>
+                                                    <?php
+                                                    include('../../api/counter.php');
+
+                                                    // Fetch the manager's department
+                                                    $managerDepartment = $_SESSION['department'];
+
+                                                    // Query to fetch employees in the manager's department
+                                                    $sql = "SELECT * FROM accounts WHERE active = 1 AND user_level = 3 AND department = '$managerDepartment'";
+                                                    $result = $con->query($sql);
+
+                                                    $forEvalCount = 0;
+
+                                                    if ($result && $result->num_rows > 0) {
+                                                        while ($accounts = $result->fetch_assoc()) {
+                                                            $employeeId = $accounts['employee_id'];
+                                                            $forEvalValue = $accounts['for_eval'];
+
+                                                            // Check if the employee is eligible for evaluation
+                                                            $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL AND account_id = '$employeeId' LIMIT 1";
+                                                            $evalResult = $con->query($checkEvalSql);
+
+                                                            if ($forEvalValue !== 'Evaluated' && $evalResult && $evalResult->num_rows > 0) {
+                                                                $forEvalCount++;
+                                                            }
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <p class="w-value"><?php echo $forEvalCount; ?></p>
                                                     <h5 class="">For Evaluation</h5>
                                                 </div>
                                             </div>

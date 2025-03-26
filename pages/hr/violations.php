@@ -186,11 +186,11 @@
                                     <table id="style-4" class="table style-4 dt-table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="width: 10%;">Employee ID</th>
+                                                <th style="width: 20%;">Employee ID</th>
                                                 <th style="width: 15%;">Name</th>
                                                 <th style="width: 15%;">Department</th>
                                                 <th style="width: 15%;">Position</th>
-                                                <th style="width: 10%;">Violation Count</th>
+                                                <th style="width: 20%;">Violation Count</th>
                                                 <th style="width: 35%;">Violation Descriptions</th>
                                                 <th style="width: 35%;">Sanctions</th>
                                             </tr>
