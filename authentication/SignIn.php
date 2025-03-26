@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>PES | SignIn </title>
+    <title> PES | SignIn </title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico" />
     <link href="../layouts/modern-light-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
     <link href="../layouts/modern-light-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
@@ -30,7 +30,6 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            object-fit: contain;
             min-height: 100vh;
             display: flex;
             align-items: center;

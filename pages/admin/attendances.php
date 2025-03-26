@@ -179,11 +179,12 @@
                                                 <th>Time OUT</th>
                                                 <th>Work Hours</th>
                                                 <th>Late (mins)</th>
+                                                <th>Overime</th>
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
                                         <tbody id="attendanceBody">
-                                            <tr><td colspan='8'>No attendance records found</td></tr>
+                                            <tr><td colspan='9'>No attendance records found</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -264,7 +265,7 @@
                         if (previousUserId !== row.userid) {
                             let empRow = document.createElement("tr");
                             empRow.classList.add("employee-row");
-                            empRow.innerHTML = `<td>${row.userid}</td><td colspan='6'>${row.full_name}</td>`;
+                            empRow.innerHTML = `<td>${row.userid}</td><td colspan='9'>${row.full_name}</td>`;
                             tbody.appendChild(empRow);
                             previousUserId = row.userid;
                         }
@@ -276,6 +277,7 @@
                                              <td>${row.check_out_time || 'N/A'}</td> <!-- Handle missing out times -->
                                              <td>${row.work_hours}</td>
                                              <td>${row.late}</td>
+                                             <td>${row.overtime}</td>
                                              <td>${row.remark}</td>`;
                         tbody.appendChild(attnRow);
                     });
