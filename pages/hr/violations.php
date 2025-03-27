@@ -198,7 +198,7 @@
                                         <tbody>
                                             <?php if (!empty($usersWithViolations)): ?>
                                                 <?php foreach ($usersWithViolations as $user):
-                                                    $sanction = is_null($user['sanctions']) ? "N/A" : $user['sanctions'];
+                                                    $sanction = is_null($user['sanctions']) || $user['sanctions'] === "" ? "N/A" : $user['sanctions'];
                                                 ?>
                                                     <tr>
                                                         <td><?php echo htmlspecialchars($user['employee_id']); ?></td>

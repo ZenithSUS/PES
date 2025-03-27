@@ -131,7 +131,7 @@
 
                                             if ($result && $result->num_rows > 0) {
                                                 while ($accounts = $result->fetch_assoc()) {
-                                                    $sanction = is_null($accounts['sanction']) ? "N/A" : $accounts['sanction'];
+                                                    $sanction = is_null($accounts['sanction']) || $accounts['sanction'] === "" ? "N/A" : $accounts['sanction'];
                                                     $html .= '<tr>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['violation_title']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['violation_desc']) . '</td>';
