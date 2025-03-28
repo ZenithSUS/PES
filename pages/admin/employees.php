@@ -140,7 +140,7 @@
                                                 $statement = "(acc.archived != 3 AND acc.user_level != 0)";
                                             }
 
-                                            $sql = "SELECT DISTINCT acc.*, ev.* FROM accounts acc LEFT JOIN evaluation ev ON acc.employee_id = ev.account_id WHERE $statement ORDER BY acc.date_hired DESC";
+                                            $sql = "SELECT * FROM accounts acc LEFT JOIN evaluation ev ON acc.employee_id = ev.account_id WHERE $statement ORDER BY acc.date_hired DESC";
                                             $result = $con->query($sql);
                                             $html = '';
 
@@ -190,7 +190,7 @@
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Administrator';
-                                                    } else if ($_SESSION['role'] == 0 && (is_null($accounts['evaluator_hr']) && is_null($accounts['evaluator_manager']))) {
+                                                    } else if ($_SESSION['role'] == 0 && ($accounts['user_level'] == 2 || $accounts['user_level'] == 1 && is_null($accounts['evaluator_hr']) && is_null($accounts['evaluator_manager']))) {
                                                         $buttonClass = 'btn-info';
                                                         $disabled = '';
                                                         $buttonText = 'Evaluate';

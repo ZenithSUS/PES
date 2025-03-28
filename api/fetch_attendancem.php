@@ -65,6 +65,13 @@ function isNightShift($time)
     return ($checkTime >= $midnight && $checkTime < $nextDay5AM);
 }
 
+function isOutTime5($checkOut, $isNightShift) {
+    $timeOutIs5 = $isNightShift ? strtotime("5:00:00 AM") : strtotime("5:00:00 PM");
+    $checkOut = strtotime($checkOut);
+    return $checkOut >= $timeOutIs5;
+}
+
+
 function overtimeHours($checkOutTime, $isNightShift)
 {
     // Standard end of workday for day and night shifts
@@ -297,6 +304,10 @@ foreach ($employees as $empId => $fullName) {
                         // Subtract 1 hour for lunch if work hours > 4
                         if ($workHours > 4) {
                             $workHours -= 1;
+                        }
+
+                        if(isOutTime5($checkOut, $isNightTime)) {
+                            $workHours = 8;
                         }
 
                         $officialDayStartTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' 08:00:00 AM');

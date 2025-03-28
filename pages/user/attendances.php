@@ -180,7 +180,7 @@
                                                 <th>Time OUT</th>
                                                 <th>Work Hours</th>
                                                 <th>Late (mins)</th>
-                                                <th>Overime</th>
+                                                <th>Overtime</th>
                                                 <th>Remarks</th>
                                             </tr>
                                         </thead>
