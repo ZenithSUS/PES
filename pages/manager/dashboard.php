@@ -114,84 +114,90 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                                                        <line x1="9" y1="21" x2="9" y2="9"></line>
-                                                    </svg>
+                                            <a href="employees.php">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                                                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <p class="w-value"><?php echo $_SESSION['department'] ?></p>
+                                                        <h5 class="">Department</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <p class="w-value"><?php echo $_SESSION['department'] ?></p>
-                                                    <h5 class="">Department</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                        <circle cx="9" cy="7" r="4"></circle>
-                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                                    </svg>
+                                            <a href="employees.php">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                            <circle cx="9" cy="7" r="4"></circle>
+                                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <p class="w-value"><?php echo $dept_emp ?></p>
+                                                        <h5 class=""><?php echo $_SESSION['department'] ?> Employee</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <p class="w-value"><?php echo $dept_emp ?></p>
-                                                    <h5 class=""><?php echo $_SESSION['department'] ?> Employee</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                                                    </svg>
-                                                </div>
-                                                <div class="">
-                                                    <?php
-                                                    include('../../api/counter.php');
+                                            <a href="employees.php?filter=NotEvaluated">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <?php
+                                                        include('../../api/counter.php');
 
-                                                    // Fetch the manager's department
-                                                    $managerDepartment = $_SESSION['department'];
+                                                        // Fetch the manager's department
+                                                        $managerDepartment = $_SESSION['department'];
 
-                                                    // Query to fetch employees in the manager's department
-                                                    $sql = "SELECT * FROM accounts WHERE active = 1 AND user_level = 3 AND department = '$managerDepartment'";
-                                                    $result = $con->query($sql);
+                                                        // Query to fetch employees in the manager's department
+                                                        $sql = "SELECT * FROM accounts WHERE active = 1 AND user_level = 3 AND department = '$managerDepartment'";
+                                                        $result = $con->query($sql);
 
-                                                    $forEvalCount = 0;
+                                                        $forEvalCount = 0;
 
-                                                    if ($result && $result->num_rows > 0) {
-                                                        while ($accounts = $result->fetch_assoc()) {
-                                                            $employeeId = $accounts['employee_id'];
-                                                            $forEvalValue = $accounts['for_eval'];
+                                                        if ($result && $result->num_rows > 0) {
+                                                            while ($accounts = $result->fetch_assoc()) {
+                                                                $employeeId = $accounts['employee_id'];
+                                                                $forEvalValue = $accounts['for_eval'];
 
-                                                            // Check if the employee is eligible for evaluation
-                                                            $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL AND account_id = '$employeeId' LIMIT 1";
-                                                            $evalResult = $con->query($checkEvalSql);
+                                                                // Check if the employee is eligible for evaluation
+                                                                $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL AND account_id = '$employeeId' LIMIT 1";
+                                                                $evalResult = $con->query($checkEvalSql);
 
-                                                            if ($forEvalValue !== 'Evaluated' && $evalResult && $evalResult->num_rows > 0) {
-                                                                $forEvalCount++;
+                                                                if ($forEvalValue !== 'Evaluated' && $evalResult && $evalResult->num_rows > 0) {
+                                                                    $forEvalCount++;
+                                                                }
                                                             }
                                                         }
-                                                    }
-                                                    ?>
-                                                    <p class="w-value"><?php echo $forEvalCount; ?></p>
-                                                    <h5 class="">For Evaluation</h5>
+                                                        ?>
+                                                        <p class="w-value"><?php echo $forEvalCount; ?></p>
+                                                        <h5 class="">For Evaluation</h5>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

@@ -124,8 +124,23 @@
                                         <tbody id="accountsTable">
                                             <?php
                                             $u = $_SESSION['user_id'];
+                                            $filter = $_GET['filter'] ?? null;
 
-                                            $sql = "SELECT * FROM accounts WHERE employee_id != $u AND (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
+                                            if ($filter === "Evaluated") {
+                                                $statement = "acc.employee_id != $u AND ev.evaluator_hr IS NOT NULL AND ev.evaluator_manager IS NOT NULL";
+                                            } else if ($filter === "NotEvaluated") {
+                                                $statement = "acc.employee_id != $u AND ev.evaluator_hr IS NULL AND (acc.archived != 3 AND acc.user_level != 0)";
+                                            } else if ($filter === "Employees") {
+                                                $statement = "acc.archived != 3 AND acc.user_level != 0";
+                                            } else if ($filter === "Manager") {
+                                                $statement = "acc.employee_id != $u AND acc.position = 'Manager'";
+                                            } else if ($filter === "HR") {
+                                                $statement = "acc.archived != 3 AND acc.user_level = 1";
+                                            } else {
+                                                $statement = "(acc.archived != 3 AND acc.user_level != 0)";
+                                            }
+
+                                            $sql = "SELECT DISTINCT acc.*, ev.* FROM accounts acc LEFT JOIN evaluation ev ON acc.employee_id = ev.account_id WHERE $statement ORDER BY acc.date_hired DESC";
                                             $result = $con->query($sql);
                                             $html = '';
 
@@ -171,15 +186,11 @@
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Evaluate';
-                                                    } elseif ($accounts['emp_status'] === 'Intern') {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Intern';
                                                     } elseif ($accounts['position'] === 'Administrator') {
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Administrator';
-                                                    } else if ($_SESSION['role'] == 0 && ($accounts['user_level'] == 2 || $accounts['user_level'] == 1)) {
+                                                    } else if ($_SESSION['role'] == 0 && (is_null($accounts['evaluator_hr']) && is_null($accounts['evaluator_manager']))) {
                                                         $buttonClass = 'btn-info';
                                                         $disabled = '';
                                                         $buttonText = 'Evaluate';

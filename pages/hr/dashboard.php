@@ -115,7 +115,7 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <a href="employees.php">
+                                                    <a href="employees.php?filter=Employees">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                                                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                                             <circle cx="9" cy="7" r="4"></circle>
@@ -137,7 +137,7 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <a href="employees.php">
+                                                    <a href="employees.php?filter=HR">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                                                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                                             <circle cx="9" cy="7" r="4"></circle>
@@ -159,7 +159,7 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <a href="employees.php">
+                                                    <a href="employees.php?filter=Manager">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                                                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                                             <circle cx="9" cy="7" r="4"></circle>
@@ -189,7 +189,7 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <a href="evaluations.php">
+                                                    <a href="employees.php?filter=Evaluated">
                                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                                                             <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                                                             <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
@@ -210,7 +210,7 @@
                                         <div class="widget-heading">
                                             <div class="w-title">
                                                 <div class="w-icon">
-                                                    <a href="evaluations.php">
+                                                    <a href="employees.php?filter=NotEvaluated">
                                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                                                             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                                                             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -254,7 +254,6 @@
                                                                 $forEvalValue !== 'Evaluated' &&
                                                                 !$evalExists &&
                                                                 (!$forEvalDate || ($forEvalDate <= new DateTime() || $interval <= 10)) &&
-                                                                $accounts['emp_status'] !== 'Intern' &&
                                                                 $accounts['position'] !== 'Administrator'
                                                             ) {
                                                                 $forEvalCount++;

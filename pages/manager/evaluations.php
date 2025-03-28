@@ -122,6 +122,7 @@
                                         <tbody id="accountsTable">
                                             <?php
                                             // Query to fetch data from evaluation and join with accounts
+                                            $u = $_SESSION['user_id'];
                                             $d = $_SESSION['department'];
                                             $sql = "SELECT 
                                                             e.evaluation_id, 
@@ -154,7 +155,7 @@
                                                         INNER JOIN 
                                                             accounts a ON e.account_id = a.employee_id
                                                         WHERE
-                                                            a.department = '$d'
+                                                            a.department = '$d' AND e.account_id != $u
                                                         ORDER BY
                                                             e.evaluation_date;";
 

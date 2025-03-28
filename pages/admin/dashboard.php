@@ -93,60 +93,66 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                        <circle cx="9" cy="7" r="4"></circle>
-                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                                    </svg>
+                                            <a href="employees.php?filter=Employees">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                            <circle cx="9" cy="7" r="4"></circle>
+                                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <p class="w-value"><?php echo $user_count ?></p>
+                                                        <h5 class="">Employees</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <p class="w-value"><?php echo $user_count ?></p>
-                                                    <h5 class="">Employees</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                        <circle cx="9" cy="7" r="4"></circle>
-                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                                    </svg>
+                                            <a href="employees.php?filter=HR">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                            <circle cx="9" cy="7" r="4"></circle>
+                                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <p class="w-value"><?php echo $hr_count ?></p>
+                                                        <h5 class="">Human Resource</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <p class="w-value"><?php echo $hr_count ?></p>
-                                                    <h5 class="">Human Resource</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                        <circle cx="9" cy="7" r="4"></circle>
-                                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                                    </svg>
+                                            <a href="employees.php?filter=Manager">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                            <circle cx="9" cy="7" r="4"></circle>
+                                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <p class="w-value"><?php echo $manager_count ?></p>
+                                                        <h5 class="">Managers</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <p class="w-value"><?php echo $totalRecords2 ?></p>
-                                                    <h5 class="">Managers</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -161,18 +167,20 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                                     <div class="widget widget-one_hybrid widget-followers">
                                         <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="w-icon">
-                                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                                                    </svg>
+                                            <a href="employees.php?filter=Evaluated">
+                                                <div class="w-title">
+                                                    <div class="w-icon">
+                                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="">
+                                                        <p class="w-value"><?php echo $totalEvaluated; ?></p>
+                                                        <h5 class="">Evaluated Employees</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="">
-                                                    <p class="w-value"><?php echo $totalEvaluated; ?></p>
-                                                    <h5 class="">Evaluated Employees</h5>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

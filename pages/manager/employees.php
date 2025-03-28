@@ -126,8 +126,17 @@
                                             <?php
                                             $u = $_SESSION['user_id'];
                                             $d = $_SESSION['department'];
+                                            $filter = $_GET['filter'] ?? null;
 
-                                            $sql = "SELECT * FROM accounts WHERE (employee_id != $u AND active = 1) AND (user_level = 3 AND department = '$d')";
+                                            if (isset($filter)) {
+                                                if ($filter === "NotEvaluated") {
+                                                    $statement = "ev.evaluator_hr IS NOT NULL AND ev.evaluator_manager IS NULL AND (acc.employee_id != $u AND acc.active = 1) AND (acc.user_level = 3 AND acc.department = '$d')";
+                                                }
+                                            } else {
+                                                $statement = "(acc.employee_id != $u AND acc.active = 1) AND (acc.user_level = 3 AND acc.department = '$d')";
+                                            }
+
+                                            $sql = "SELECT * FROM accounts acc LEFT JOIN evaluation ev ON acc.employee_id = ev.account_id WHERE $statement";
                                             $result = $con->query($sql);
                                             $html = '';
 

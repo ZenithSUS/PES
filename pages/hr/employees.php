@@ -124,14 +124,30 @@
                                         <tbody id="accountsTable">
                                             <?php
                                             $u = $_SESSION['user_id'];
+                                            $filter = $_GET['filter'] ?? null;
 
-                                            $sql = "SELECT * FROM accounts WHERE employee_id != $u AND (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
+                                            if ($filter === "Evaluated") {
+                                                $statement = "acc.employee_id != $u AND ev.evaluator_hr IS NOT NULL";
+                                            } else if ($filter === "NotEvaluated") {
+                                                $statement = "acc.employee_id != $u AND ev.evaluator_hr IS NULL AND (acc.archived != 3 AND acc.user_level != 0)";
+                                            } else if ($filter === "Employees") {
+                                                $statement = "acc.archived != 3 AND acc.user_level != 0";
+                                            } else if ($filter === "Manager") {
+                                                $statement = "acc.employee_id != $u AND acc.position = 'Manager'";
+                                            } else if ($filter === "HR") {
+                                                $statement = "acc.archived != 3 AND acc.user_level = 1";
+                                            } else {
+                                                $statement = "(acc.archived != 3 AND acc.user_level != 0)";
+                                            }
+
+                                            $sql = "SELECT DISTINCT acc.*, ev.* FROM accounts acc LEFT JOIN evaluation ev ON acc.employee_id = ev.account_id WHERE $statement ORDER BY acc.date_hired DESC";
                                             $result = $con->query($sql);
                                             $html = '';
 
                                             if ($result && $result->num_rows > 0) {
                                                 while ($accounts = $result->fetch_assoc()) {
                                                     $forEvalValue = $accounts['for_eval'];
+                                                    $accId = $accounts['employee_id'];
 
                                                     $forEvalDate = null;
                                                     $interval = null;
@@ -171,14 +187,14 @@
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Evaluate';
-                                                    } elseif ($accounts['emp_status'] === 'Intern') {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Intern';
                                                     } elseif ($accounts['position'] === 'Administrator') {
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Administrator';
+                                                    } elseif ($accounts['employee_id'] === $u) {
+                                                        $buttonClass = 'btn-muted disabled';
+                                                        $disabled = 'disabled="disabled"';
+                                                        $buttonText = 'Disabled';
                                                     } else {
                                                         $buttonClass = 'btn-info';
                                                         $disabled = '';
