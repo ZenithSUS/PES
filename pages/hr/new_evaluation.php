@@ -637,7 +637,6 @@
                 console.log('Response status:', response.status);
                 const data = await response.json(); // Assuming the response is JSON
                 console.log(data);
-                
 
                 // Step 2: Prepare and send user evaluation data to sendEmail.php
                 const userEvalData = new FormData();
@@ -648,7 +647,9 @@
                     body: userEvalData,
                 });
 
-                console.log('Email response status:', emailResponse.status);
+                // Check the email response status and handle it correctly
+                const emailData = await emailResponse.json(); // Use the correct response object here
+                console.log('Email response status:', emailData);
 
                 // Step 3: Redirect to employees.php
                 alert('Evaluated Successfully!');
@@ -657,6 +658,7 @@
                 console.error('Fetch error:', error);
                 alert(`An error occurred: ${error.message}. Please check the console for details.`);
             }
+
 
             // fetch('../../api/editForm.php', {
             //         method: 'POST',

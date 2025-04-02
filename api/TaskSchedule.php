@@ -16,15 +16,15 @@ use PHPMailer\PHPMailer\Exception;
 $mail = new PHPMailer(true);
 $email = '';
 
-$targetDate = date('F j, Y', strtotime('+10 days'));
+$targetDate = date('F j, Y', strtotime('+14 days'));
 
-$sql = "SELECT *, DATE_FORMAT(STR_TO_DATE(for_eval, '%M %d, %Y'), '%M %e, %Y') AS formatted_eval
-        FROM accounts
-        WHERE STR_TO_DATE(for_eval, '%M %d, %Y') 
-        <= STR_TO_DATE(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 10 DAY), '%M %d, %Y'), '%M %d, %Y')
-        AND current_eval IS NULL
-        AND (user_level <= 3 AND user_level > 1)
-        ORDER BY STR_TO_DATE(for_eval, '%M %d, %Y') ASC";
+
+
+$sql = "SELECT *, DATE_FORMAT(STR_TO_DATE(for_eval, '%M %d, %Y'), '%M %e, %Y') AS formatted_eval 
+FROM accounts WHERE archived != 3 AND (user_level <= 3 AND user_level > 1)
+AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
+AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
+ORDER BY STR_TO_DATE(for_eval, '%M %d, %Y') ASC";
 
 $stmt = $con->prepare($sql);
 $stmt->execute();
@@ -202,8 +202,7 @@ try {
                                 <img src='https://firebasestorage.googleapis.com/v0/b/consultease-9033b.appspot.com/o/user_img%2Finnotor-removebg-preview.png?alt=media&token=2218456f-cc80-48f3-90e5-137437e9a50d' alt=''>
                             </div>
                             <div class='content'>
-                                <p>Hello,</p>
-                                <p>You have a new employee evaluation to review.</p>
+                                <p>Hello, You have a new employee evaluation to review.</p>
 
                                 <!-- Responsive Table -->
                                 <table class='responsive-table'>
@@ -224,7 +223,7 @@ try {
                                                             <td data-label='Department'>{$userRecord['department']}</td>
                                                             <td data-label='Position'>{$userRecord['position']}</td>
                                                             <td data-label='Status'>{$userRecord['status']}</td>
-                                                            <td data-label='Period Covered'>5th month Regularization</td>
+                                                            <td data-label='Period Covered'>6th month Regularization</td>
                                                         </tr>";
                                     }
         $mail->Body .= "

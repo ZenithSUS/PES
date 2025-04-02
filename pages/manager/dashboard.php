@@ -173,25 +173,16 @@
                                                         $managerDepartment = $_SESSION['department'];
 
                                                         // Query to fetch employees in the manager's department
-                                                        $sql = "SELECT * FROM accounts WHERE active = 1 AND user_level = 3 AND department = '$managerDepartment'";
                                                         $result = $con->query($sql);
+                                                        $sql = "SELECT COUNT(*) AS for_eval FROM accounts WHERE (archived != 3 AND user_level != 0)
+                                                        AND active = 1 AND user_level = 3 AND department = '$managerDepartment'
+                                                        AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
+                                                        AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
+                                                        ORDER BY date_hired DESC;";
 
-                                                        $forEvalCount = 0;
-
-                                                        if ($result && $result->num_rows > 0) {
-                                                            while ($accounts = $result->fetch_assoc()) {
-                                                                $employeeId = $accounts['employee_id'];
-                                                                $forEvalValue = $accounts['for_eval'];
-
-                                                                // Check if the employee is eligible for evaluation
-                                                                $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL AND account_id = '$employeeId' LIMIT 1";
-                                                                $evalResult = $con->query($checkEvalSql);
-
-                                                                if ($forEvalValue !== 'Evaluated' && $evalResult && $evalResult->num_rows > 0) {
-                                                                    $forEvalCount++;
-                                                                }
-                                                            }
-                                                        }
+                                                        $result = $con->query($sql);
+                                                        $accounts = $result->fetch_assoc();
+                                                        $forEvalCount = $accounts['for_eval'];
                                                         ?>
                                                         <p class="w-value"><?php echo $forEvalCount; ?></p>
                                                         <h5 class="">For Evaluation</h5>

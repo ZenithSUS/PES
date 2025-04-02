@@ -225,41 +225,13 @@
                                                     $u = $_SESSION['user_id'];
                                                     $forEvalCount = 0;
 
-                                                    $sql = "SELECT * FROM accounts WHERE employee_id != $u AND (archived != 3 AND user_level != 0)";
-                                                    $result = $con->query($sql);
-
-                                                    if ($result && $result->num_rows > 0) {
-                                                        while ($accounts = $result->fetch_assoc()) {
-                                                            $forEvalValue = $accounts['for_eval'];
-                                                            $forEvalDate = null;
-                                                            $interval = null;
-
-                                                            if ($forEvalValue !== 'Evaluated') {
-                                                                try {
-                                                                    $dateHired = new DateTime($accounts['date_hired']);
-                                                                    $forEvalDate = $dateHired->modify('+5 months +2 weeks');
-                                                                    $today = new DateTime();
-                                                                    $interval = $forEvalDate->diff($today)->days;
-                                                                } catch (Exception $e) {
-                                                                    $forEvalDate = null;
-                                                                }
-                                                            }
-
-                                                            $employeeId = $accounts['employee_id'];
-                                                            $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_hr = '$u' AND account_id = '$employeeId' LIMIT 1";
-                                                            $evalResult = $con->query($checkEvalSql);
-                                                            $evalExists = $evalResult && $evalResult->num_rows > 0;
-
-                                                            if (
-                                                                $forEvalValue !== 'Evaluated' &&
-                                                                !$evalExists &&
-                                                                (!$forEvalDate || ($forEvalDate <= new DateTime() || $interval <= 10)) &&
-                                                                $accounts['position'] !== 'Administrator'
-                                                            ) {
-                                                                $forEvalCount++;
-                                                            }
-                                                        }
-                                                    }
+                                                    $sql = "SELECT COUNT(*) AS for_eval FROM accounts WHERE (archived != 3 AND user_level != 0)
+                                                    AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
+                                                    AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
+                                                    ORDER BY date_hired DESC;";
+                                                            $result = $con->query($sql);
+                                                            $accounts = $result->fetch_assoc();
+                                                            $forEvalCount = $accounts['for_eval'];
                                                     ?>
                                                     <p class="w-value"><?php echo $forEvalCount; ?></p>
                                                     <h5 class="">For Evaluation</h5>

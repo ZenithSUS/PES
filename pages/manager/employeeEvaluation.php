@@ -116,6 +116,14 @@
                                         <tbody id="accountsTable">
                                             <?php
                                                     $d = $_SESSION['department'];
+                                                    $empID = $_GET['employee'] ?? null;
+                                                    
+                                                    if(isset($empID) && !is_null($empID)) {
+                                                        $statement = "a.department = '$d' AND e.account_id = '$empID'";
+                                                    } else {
+                                                        $statement = " a.department = '$d'";
+                                                    }
+
                                                     $sql = "SELECT 
                                                             e.evaluation_id, 
                                                             e.account_id, 
@@ -138,7 +146,7 @@
                                                         INNER JOIN 
                                                             accounts a ON e.account_id = a.employee_id
                                                         WHERE
-                                                            a.department = '$d'";
+                                                           $statement";
                                                         
 
                                                 $result = $con->query($sql);

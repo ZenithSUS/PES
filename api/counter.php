@@ -90,7 +90,8 @@ if ($result && $result->num_rows > 0) {
 $sql = "SELECT COUNT(*) as total_records
         FROM accounts
         WHERE STR_TO_DATE(for_eval, '%M %d, %Y') 
-        <= STR_TO_DATE(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 10 DAY), '%M %d, %Y'), '%M %d, %Y') AND user_level != 0 AND current_eval = '';";
+        <= STR_TO_DATE(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 14 DAY), '%M %d, %Y'), '%M %d, %Y') 
+        AND user_level != 0 AND current_eval = '';";
 
 $stmt = $con->prepare($sql);
 $stmt->execute();
@@ -100,9 +101,12 @@ $row = $result->fetch_assoc();
 $totalRecords = $row['total_records'];
 
 
-$sql = "SELECT COUNT(*) as total_records2
-        FROM accounts
-        WHERE current_eval != '';";
+$sql = "SELECT COUNT(*) AS total_records2 FROM accounts 
+        WHERE (archived != 3 AND user_level != 0) 
+        AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') 
+        OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)) 
+        AND (current_eval IS NOT NULL OR current_eval != '')
+        ORDER BY date_hired DESC";
 
 $stmt = $con->prepare($sql);
 $stmt->execute();

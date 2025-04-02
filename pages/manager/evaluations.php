@@ -498,33 +498,35 @@
         multiCheck(c3);
 
         document.addEventListener('DOMContentLoaded', function() {
-            const deleteStudentForm = document.getElementById('deleteStudent');
+            const deleteStudentForm = document.querySelector('#deleteStudent');
             const cancelDeleteStudentForm = document.getElementById('cancelDeleteStudent');
 
-            deleteStudentForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+            if (deleteStudentForm) {
+                deleteStudentForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
 
-                const formData = new FormData(deleteStudentForm);
-                const studentId = formData.get('id');
+                    const formData = new FormData(deleteStudentForm);
+                    const studentId = formData.get('id');
 
-                fetch(`../../api/deleteData.php?delete=deleteTeacher&id=${studentId}`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert('Error deleting Teacher Account: ' + data.error);
-                        } else {
-                            alert('Teacher Account deleted successfully.');
-                            location.reload();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred while deleting the Teacher Account.');
-                    });
-            });
+                    fetch(`../../api/deleteData.php?delete=deleteTeacher&id=${studentId}`, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                alert('Error deleting Teacher Account: ' + data.error);
+                            } else {
+                                alert('Teacher Account deleted successfully.');
+                                location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while deleting the Teacher Account.');
+                        });
+                });
+            }
 
             cancelDeleteStudentForm.addEventListener('click', function() {
                 const studentIdInput = document.getElementById('student_id');

@@ -14,7 +14,6 @@ $mail = new PHPMailer(true);
 
 $email = '';
 $user_to_eval = $_POST['user_to_eval'];
-
 $sql = "SELECT * FROM accounts WHERE employee_id = ?";
 
 $stmt = $con->prepare($sql);
@@ -34,8 +33,7 @@ if ($result->num_rows > 0) {
     $position = $userRecord['position'];
     $status = $userRecord['emp_status'];
     $dateHired = $userRecord['date_hired'];
-    $dateEvaluation = $userRecord['for_eval'];
-
+    $dateEvaluation = date('F, d, Y', strtotime($userRecord['for_eval'] . ' +2 weeks'));
 
 } else {
 
@@ -43,8 +41,6 @@ if ($result->num_rows > 0) {
 
 }
 
-
-    
 $sql = "SELECT email FROM accounts WHERE department = ? AND user_level = 2";
 
 $stmt = $con->prepare($sql);
@@ -61,17 +57,20 @@ if ($result->num_rows > 0) {
 
     $email = $userRecord['email'];
 
-
 } else {
 
     echo "User not found";
-
+    exit; // Stop execution if no email is found
 }
 
 try {
 
+    if (empty($email)) {
+        throw new Exception("Recipient email address is empty.");
+    }
+
     $sendTO = $email;
-    $mail->isSMTP();                                                     
+    $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'ea00.ph@gmail.com';
@@ -79,12 +78,21 @@ try {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port       = 465;
 
+    // Set timeouts for better error handling
+    $mail->Timeout = 30; // Timeout in seconds
+    $mail->SMTPOptions = [
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ],
+    ];
 
     $mail->setFrom('ea00.ph@gmail.com', $_SESSION['full'].' - Human Resource Department');
     $mail->addAddress($sendTO);
 
     $mail->isHTML(true);
-    $mail->Subject = "Under Regulariztion Employees Evaluation (6th month)";
+    $mail->Subject = "Under Regularization Employees Evaluation (6th month)";
     $mail->Body    = '';
     $mail->Body .= "
             <!DOCTYPE html>
@@ -195,7 +203,7 @@ try {
                                             <td data-label='Department'>$department</td>
                                             <td data-label='Position'>$position</td>
                                             <td data-label='Status'>$status</td>
-                                            <td data-label='Period Covered'>5th month Evaluation</td>
+                                            <td data-label='Period Covered'>6th month Evaluation</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -215,13 +223,16 @@ try {
                     </body>
                     </html>";
 
-    if($mail->send()) {
+    if ($mail->send()) {
 
-        echo 'Sent Successfully to:'. $email;
+        echo json_encode(["status" => 'Send Successfully to'. $email]);
 
+    } else {
+        throw new Exception("Failed to send email: " . $mail->ErrorInfo);
     }
 } catch (Exception $e) {
-    echo 'Error sending message:'. $e;
+    error_log('Error sending message: ' . $e->getMessage());
+    echo 'Error sending message: ' . $e->getMessage();
 }
 
 ?>
