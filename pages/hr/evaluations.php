@@ -114,43 +114,17 @@
                                                 <th class="text-center">Image</th>
                                                 <th>Full Name</th>
                                                 <th>Department</th>
-                                                <th>Evaluation Date</th>
                                                 <th class="text-center dt-no-sorting">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody id="accountsTable">
                                             <?php
-                                            $sql = "SELECT DISTINCT
-                                                            e.evaluation_id, 
-                                                            e.account_id, 
-                                                            e.evaluation_date, 
-                                                            e.evaluator_hr, 
-                                                            e.evaluator_manager,
-                                                            e.evaluation_file,
-                                                            a.first_name, 
-                                                            a.middle_name, 
-                                                            a.last_name, 
-                                                            a.department, 
-                                                            a.date_hired,
-                                                            a.img
-                                                        FROM 
-                                                            (SELECT 
-                                                                e.evaluation_id,
-                                                                e.account_id,
-                                                                e.evaluation_date,
-                                                                e.evaluator_hr,
-                                                                e.evaluator_manager,
-                                                                e.evaluation_file
-                                                            FROM 
-                                                                evaluation e
-                                                            INNER JOIN 
-                                                                (SELECT account_id, MAX(evaluation_date) AS latest_date 
-                                                                FROM evaluation GROUP BY account_id) latest
-                                                            ON e.account_id = latest.account_id AND e.evaluation_date = latest.latest_date) e
-                                                        INNER JOIN 
-                                                            accounts a ON e.account_id = a.employee_id
-                                                        ORDER BY
-                                                            e.evaluation_date;";
+                                            $sql = "SELECT first_name, middle_name, last_name, employee_id, department, img
+                                                            FROM accounts account
+                                                            WHERE active != 0 AND user_level != 0
+                                                            ORDER BY
+                                                                first_name;";
+
 
                                             $result = $con->query($sql);
                                             $html = '';
@@ -158,15 +132,14 @@
                                             if ($result && $result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
                                                     $html .= '<tr>';
-                                                    $html .= '<td>' . htmlspecialchars($row['account_id']) . '</td>';
+                                                    $html .= '<td>' . htmlspecialchars($row['employee_id']) . '</td>';
                                                     $html .= '<td class="text-center"><span><img src="../../api/' . htmlspecialchars($row['img']) . '" class="profile-img rounded-circle" alt="avatar"></span></td>';
                                                     $html .= '<td>' . htmlspecialchars($row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($row['department']) . '</td>';
-                                                    $html .= '<td>' . htmlspecialchars($row['evaluation_date']) . '</td>';
                                                     $html .= '<td class="text-center">
                                                                     <ul class="table-controls">
                                                                         <li>
-                                                                            <a class="btn btn-dark" href="employeeEvaluation.php?employee=' . htmlspecialchars($row['account_id']) . '">Evaluations</a>
+                                                                            <a class="btn btn-dark" href="employeeEvaluation.php?employee=' . htmlspecialchars($row['employee_id']) . '">Evaluations</a>
                                                                         </li>
                                                                     </ul>
                                                                 </td>';

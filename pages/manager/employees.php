@@ -124,20 +124,26 @@
 
                                         <tbody id="accountsTable">
                                             <?php
+                                        
                                             $u = $_SESSION['user_id'];
                                             $d = $_SESSION['department'];
                                             $filter = $_GET['filter'] ?? null;
 
                                             if (isset($filter)) {
                                                 if ($filter === "NotEvaluated") {
-                                                    $sql = "SELECT * FROM accounts 
-                                                    WHERE (archived != 3 AND user_level != 0 AND user_level = 3 AND department = '$d') 
-                                                    AND (employee_id != $u AND active = 1)
-                                                    AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
-                                                    AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
+                                                    $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) AND (
+                                                        /* For Regular employees: use 2-week window */
+                                                        (emp_status != 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
+                                                        OR
+                                                        /* For Probationary employees: use 1-month window */
+                                                        (emp_status = 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
+                                                        )
+                                                        AND (employee_id != $u AND active = 1) AND (user_level = 3 AND department = '$d')
                                                     ORDER BY date_hired DESC;";
-                                                    $statement = "ev.evaluator_hr IS NOT NULL AND ev.evaluator_manager IS NULL 
-                                                    AND (acc.employee_id != $u AND acc.active = 1) AND (acc.user_level = 3 AND acc.department = '$d')";
                                                 }
                                             } else {
                                                 $sql = "SELECT * FROM accounts
@@ -156,36 +162,63 @@
                                                     $interval = null;
 
                                                     try {
-                                                        // Get the for_eval date from database
-                                                        if (!empty($accounts['for_eval'])) {
-                                                            // Parse the for_eval date string from the database
-                                                            $forEvalDate = new DateTime($accounts['for_eval']);
-                                                            
-                                                            // Format the evaluation date as needed
-                                                            $forEvalValue = $forEvalDate->format('F j, Y');
-                                                        } else {
-                                                            // If for_eval is empty, calculate it (fallback only)
-                                                            $dateHired = new DateTime($accounts['date_hired']);
-                                                            $forEvalDate = clone $dateHired;
-                                                            $forEvalDate->modify('+5 months +2 weeks');
-                                                            $forEvalValue = $forEvalDate->format('F j, Y');
-                                                        }
-                                                        
                                                         // Get today's date
                                                         $today = new DateTime();
                                                         
-                                                        // Check if today is within the 2-week evaluation window
+                                                        // Get the for_eval date from the database
+                                                        if (!empty($accounts['for_eval'])) {
+                                                            // First, try parsing with format "F j, Y" (e.g., "April 2, 2025")
+                                                            
+                                                            $forEvalDate = DateTime::createFromFormat('F j, Y', $accounts['for_eval']);
+                                                            
+                                                            // If the first attempt fails, try parsing with format "F d, Y" (e.g., "April 02, 2025")
+                                                            if (!$forEvalDate) {
+                                                                $forEvalDate = DateTime::createFromFormat('F d, Y', $accounts['for_eval']);
+                                                            }
+                                                            
+                                                            // Ensure the conversion was successful
+                                                            if (!$forEvalDate) {
+                                                                throw new Exception("Invalid for_eval format");
+                                                            }
+                                                        } else {
+                                                            // If for_eval is empty, calculate it based on date_hired (fallback only)
+                                                            if (!empty($accounts['date_hired'])) {
+                                                                // Parse the date_hired
+                                                                $dateHired = new DateTime($accounts['date_hired']);
+                                                                // Set the evaluation date to 5 months + 2 weeks from date_hired
+                                                                $forEvalDate = clone $dateHired;
+                                                                $forEvalDate->modify('+5 months +2 weeks');
+                                                            } else {
+                                                                throw new Exception("date_hired is missing");
+                                                            }
+                                                        }
+                                                    
+                                                        // Format the evaluation date properly
+                                                        $forEvalValue = $forEvalDate->format('F j, Y');
+                                                        
+                                                        // Set evaluation window range (2 weeks after for_eval)
                                                         $evalWindowStart = clone $forEvalDate;
                                                         $evalWindowEnd = clone $forEvalDate;
-                                                        $evalWindowEnd->modify('+2 weeks');
+                                                
+                                                         // Different evaluation windows based on employee status
+                                                         if ($accounts['emp_status'] === 'Probationary') {
+                                                            // For probationary employees: evaluation window is 1 month
+                                                            $evalWindowEnd->modify('+1 month');
+                                                        } else {
+                                                            // For regular employees: evaluation window is 2 weeks
+                                                            $evalWindowEnd->modify('+2 weeks');
+                                                        }
+
                                                         
-                                                        // Calculate days until evaluation date (for future reference)
+                                                        // Check if today is within the evaluation window
+                                                        $isInEvalWindow = ($today >= $evalWindowStart && $today <= $evalWindowEnd);
+                                                        
+                                                        // Calculate days until evaluation date
                                                         $interval = $today->diff($forEvalDate)->days;
-                                                        $isPastDate = $today > $forEvalDate;
                                                         
-                                                        // Determine if we're in the evaluation window
-                                                        $isInEvalWindow = ($today >= $forEvalDate && $today <= $evalWindowEnd);
-                                                        
+                                                        // Check if the evaluation date is in the past
+                                                        $isPastDate = ($today > $forEvalDate);
+                                                    
                                                     } catch (Exception $e) {
                                                         $forEvalDate = null;
                                                         $isInEvalWindow = false;
@@ -195,18 +228,21 @@
                                                     }
 
                                                     $employeeId = $accounts['employee_id'];
-                                                    $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL AND account_id = '$employeeId' LIMIT 1";
+                                                    $checkEvalSql = "SELECT * FROM evaluation WHERE (evaluator_manager IS NULL 
+                                                                    OR evaluator_manager = '') AND evaluator_hr IS NOT NULL 
+                                                    AND account_id = '$employeeId' 
+                                                    AND for_evaluation_date = '$forEvalValue' LIMIT 1";
                                                     $evalResult = $con->query($checkEvalSql);
 
                                                     $evalExists = $evalResult && $evalResult->num_rows > 0;
 
-                                                    if ($evalExists) {
-                                                        $buttonClass = 'btn-info';
-                                                        $disabled = '';
-                                                        $buttonText = 'Evaluate';
-                                                    } elseif ($forEvalDate && !$isInEvalWindow && (!$isPastDate || $interval > 14)) {
+                                                    if ($forEvalDate && !$isInEvalWindow && (!$isPastDate || $interval > 14)) {
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
+                                                        $buttonText = 'Evaluate';
+                                                    } elseif ($evalExists && $isInEvalWindow) {
+                                                        $buttonClass = 'btn-info';
+                                                        $disabled = '';
                                                         $buttonText = 'Evaluate';
                                                     } else {
                                                         $buttonClass = 'btn-muted disabled';

@@ -407,6 +407,7 @@
             const firstname = document.getElementById('firstname').value.trim();
             const middlename = document.getElementById('middlename').value.trim();
             const lastname = document.getElementById('lastname').value.trim();
+            const RFID = document.getElementById('rfid').value.trim();
 
             let username = '';
             if (firstname.length > 0) {
@@ -418,6 +419,9 @@
             if (lastname.length > 0) {
                 username += lastname.replace(/\s+/g, '').toLowerCase();
             }
+            username += RFID.slice(-4); // Append the last 4 digits of the RFID
+            username = username.replace(/\s+/g, ''); // Remove any spaces
+            username = username.replace(/[^a-zA-Z0-9]/g, ''); // Remove any special characters
 
             document.getElementById('username').value = username;
         }

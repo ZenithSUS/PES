@@ -127,11 +127,32 @@
                                             $filter = $_GET['filter'] ?? null;
 
                                             if ($filter === "Evaluated") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)) ORDER BY date_hired DESC;";
+                                                $sql = "SELECT * FROM accounts 
+                                                WHERE (archived != 3 AND user_level != 0) 
+                                                    AND (
+                                                /* For Regular employees: outside 2-week window */
+                                                (emp_status != 'Probationary' AND 
+                                                 (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR 
+                                                CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)))
+                                                OR
+                                                /* For Probationary employees: outside 1-month window */
+                                                (emp_status = 'Probationary' AND 
+                                                 (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR 
+                                                  CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH)))
+                                                )
+                                        ORDER BY date_hired DESC;";
                                             } else if ($filter === "NotEvaluated") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0)
-                                                    AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
-                                                    AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
+                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) AND (
+                                                        /* For Regular employees: use 2-week window */
+                                                        (emp_status != 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
+                                                        OR
+                                                        /* For Probationary employees: use 1-month window */
+                                                        (emp_status = 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
+                                                        )
                                                     ORDER BY date_hired DESC;";
                                             } else if ($filter === "Employees") {
                                                 $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
@@ -158,7 +179,7 @@
                                                         if (!empty($accounts['for_eval'])) {
                                                             // Parse the for_eval date string from the database
                                                             $forEvalDate = new DateTime($accounts['for_eval']);
-                                                            
+
                                                             // Format the evaluation date as needed
                                                             $forEvalValue = $forEvalDate->format('F j, Y');
                                                         } else {
@@ -168,22 +189,29 @@
                                                             $forEvalDate->modify('+5 months +2 weeks');
                                                             $forEvalValue = $forEvalDate->format('F j, Y');
                                                         }
-                                                        
+
                                                         // Get today's date
                                                         $today = new DateTime();
-                                                        
+
                                                         // Check if today is within the 2-week evaluation window
                                                         $evalWindowStart = clone $forEvalDate;
                                                         $evalWindowEnd = clone $forEvalDate;
-                                                        $evalWindowEnd->modify('+2 weeks');
-                                                        
+
+                                                        // Different evaluation windows based on employee status
+                                                        if ($accounts['emp_status'] === 'Probationary') {
+                                                            // For probationary employees: evaluation window is 1 month
+                                                            $evalWindowEnd->modify('+1 month');
+                                                        } else {
+                                                            // For regular employees: evaluation window is 2 weeks
+                                                            $evalWindowEnd->modify('+2 weeks');
+                                                        }
+
                                                         // Calculate days until evaluation date (for future reference)
                                                         $interval = $today->diff($forEvalDate)->days;
                                                         $isPastDate = $today > $forEvalDate;
-                                                        
+
                                                         // Determine if we're in the evaluation window
                                                         $isInEvalWindow = ($today >= $forEvalDate && $today <= $evalWindowEnd);
-                                                        
                                                     } catch (Exception $e) {
                                                         $forEvalDate = null;
                                                         $isInEvalWindow = false;
@@ -194,12 +222,13 @@
 
 
                                                     $employeeId = $accounts['employee_id'];
-                                                    $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_hr = '$u' AND account_id = '$employeeId' LIMIT 1";
+                                                    $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL OR evaluator_manager = '' AND account_id = '$employeeId' 
+                                                    AND for_evaluation_date = '$forEvalValue' LIMIT 1";
                                                     $evalResult = $con->query($checkEvalSql);
 
                                                     $evalExists = $evalResult && $evalResult->num_rows > 0;
 
-                                                    if(isset($accounts['evaluator_hr']) && isset($accounts['evaluator_manager'])) {
+                                                    if (isset($accounts['evaluator_hr']) && isset($accounts['evaluator_manager'])) {
                                                         if ($_SESSION['role'] == 0 && ($accounts['user_level'] == 2 || $accounts['user_level'] == 1 && is_null($accounts['evaluator_hr']) && is_null($accounts['evaluator_manager']))) {
                                                             $buttonClass = 'btn-info';
                                                             $disabled = '';

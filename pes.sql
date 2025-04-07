@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2025 at 09:52 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Apr 07, 2025 at 08:48 AM
+-- Server version: 8.0.32
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,28 +28,28 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accounts` (
-  `account_id` int(11) NOT NULL,
-  `employee_id` varchar(30) DEFAULT NULL,
-  `first_name` varchar(40) DEFAULT NULL,
-  `middle_name` varchar(40) DEFAULT NULL,
-  `last_name` varchar(40) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `department` varchar(35) DEFAULT NULL,
-  `emp_status` varchar(35) DEFAULT NULL,
-  `position` varchar(35) DEFAULT NULL,
-  `date_hired` varchar(25) DEFAULT NULL,
-  `username` varchar(25) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `img` varchar(100) DEFAULT NULL,
-  `active` int(11) DEFAULT NULL,
-  `archived` int(11) DEFAULT NULL,
-  `otp` varchar(11) DEFAULT NULL,
-  `user_level` int(11) DEFAULT NULL,
-  `for_eval` varchar(20) DEFAULT NULL,
-  `current_eval` text DEFAULT NULL,
-  `bio_userid` varchar(20) DEFAULT NULL
+  `account_id` int NOT NULL,
+  `employee_id` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `first_name` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `middle_name` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `last_name` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `gender` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `department` varchar(35) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `emp_status` varchar(35) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `position` varchar(35) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `date_hired` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `img` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `active` int DEFAULT NULL,
+  `archived` int DEFAULT NULL,
+  `otp` varchar(11) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_level` int DEFAULT NULL,
+  `for_eval` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `current_eval` text COLLATE utf8mb4_general_ci,
+  `bio_userid` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -57,30 +57,32 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`, `last_name`, `gender`, `department`, `emp_status`, `position`, `date_hired`, `username`, `password`, `email`, `phone`, `img`, `active`, `archived`, `otp`, `user_level`, `for_eval`, `current_eval`, `bio_userid`) VALUES
-(2, '16622', 'Rodante', 'Regis', 'Reyes', 'Male', 'Administrator', 'Regular', 'Administrator', 'July 25, 2013', 'rrreyes', '18c0395de718bb42f7f5828f5232bba8', 'rrreyes@innotor.com', '099123123', 'uploads/rodante.jpg', 1, 0, '', 0, 'admin', NULL, '5'),
+(2, '16622', 'Rodante', 'Regis', 'Reyes', 'Male', 'Administrator', 'Regular', 'Administrator', 'July 25, 2013', 'rrreyes', '18c0395de718bb42f7f5828f5232bba8', 'rrreyes@innotor.com', '099123123', 'uploads/rodante.jpg', 1, 0, '', 0, 'admin', '', '5'),
 (3, '16623', 'Amiel', 'Briones', 'Manaog', 'Male', 'MIS', 'Regular', 'Technician', 'May 15, 2024', 'abmanaog', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '99123123', 'uploads/mike.jpeg', 1, 0, '', 3, 'September 04, 2025', '../forms/evaluation/7BFKPP1EQ7.xlsx', '2'),
-(5, '16624', 'Bennard', 'Histo', 'Cuba', 'Male', 'MIS', 'Probationary', 'Operator', 'October 9, 2024', 'bhcuba', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '12345678933', 'uploads/pro.jpeg', 1, 0, '', 3, 'April 9, 2025', '../forms/evaluation/GV7OX6GWST.xlsx', '3'),
+(5, '16624', 'Bennard', 'Histo', 'Cuba', 'Male', 'MIS', 'Regular', 'Manager', 'October 5, 2024', 'bhcuba3', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '12345678933', 'uploads/pro.jpeg', 1, 0, '', 2, 'April 8, 2025', '../forms/evaluation/GV7OX6GWST.xlsx', '3'),
 (6, '16625', 'Christine', 'Tapia', 'Lumbres', 'Female', 'Human Resource', 'Regular', 'Performance', 'December 10, 20', 'ctlumbres', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '12345678900', 'uploads/16625_jane.jpeg', 1, 0, '', 1, 'December 10, 2024', NULL, '4'),
-(32, '16626', 'Raymund', 'G', 'Delarosa', 'Male', 'Engineering', 'Contractual', 'Engineer', 'October 26, 2023', 'rgdelarosa', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09556621712', 'uploads/16626_2.jpg', 1, 0, NULL, 3, 'April 26, 2024', '../forms/evaluation/3FOVW4NZ6G.xlsx', '6'),
+(32, '16626', 'Raymund', 'G', 'Delarosa', 'Male', 'Engineering', 'Regular', 'Engineer', 'October 25, 2023', 'rgdelarosa6', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9556621712', 'uploads/16626_2.jpg', 1, 0, NULL, 3, 'September 25, 2024', '../forms/evaluation/3FOVW4NZ6G.xlsx', '6'),
 (33, '16627', 'Darrel', 'C', 'Realingo', 'Male', 'Engineering', 'Regular', 'Manager', 'February 25, 2023', 'dcrealingo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9671234567', 'uploads/16627_darrenicon.png', 1, 0, NULL, 2, 'September 04, 2025', '../forms/evaluation/8AEQ8ULX12.xlsx', '7'),
-(34, '16628', 'Rannie', 'Q', 'Delarea', 'Male', 'Quality Control', 'Contractual', 'Technician', 'July 23, 2024', 'rqdelarea', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278171', 'uploads/16628_ranieicon.png', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/XXLL9A10CZ.xlsx', '8'),
+(34, '16628', 'Rannie', 'Q', 'Delarea', 'Male', 'Quality Control', 'Regular', 'Technician', 'July 23, 2024', 'rqdelarea', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278171', 'uploads/16628_ranieicon.png', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/XXLL9A10CZ.xlsx', '8'),
 (35, '16629', 'Jomar', 'K', 'Abrise', 'Male', 'Quality Control', 'Regular', 'Manager', 'February 26, 2023', 'jkabrise', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278171', 'uploads/16629_jomaricon.png', 1, 0, NULL, 2, 'August 26, 2023', '../forms/evaluation/9EV4DDEXPI.xlsx', '9'),
 (36, '16630', 'Rcio', 'T', 'Baguisa', 'Male', 'Engineering', 'Regular', 'Engineer', 'September 22, 2024', 'rtbaguisa', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '9876123541', 'uploads/16630_ricoicon.jfif', 1, 0, NULL, 3, 'September 27, 2025', '../forms/evaluation/HDALIA31ZX.xlsx', '10'),
 (37, '16631', 'Marvin', 'Ramos', 'Montoya', 'Male', 'Quality Control', 'Contractual', 'Technician', 'October 10, 2024', 'mrmontoya', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '09962563251', 'uploads/16631_winicon.png', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/U3A5ZR8PSW.xlsx', '11'),
 (38, '16632', 'Klein', 'Corpuz', 'Castillo', 'Female', 'Quality Control', 'Regular', 'Staff', 'September 4, 2024', 'kccastillo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278176', 'uploads/16632_freepikman.jpg', 1, 0, NULL, 3, 'March 4, 2025', '../forms/evaluation/GIZ91Y08G2.xlsx', '12'),
 (39, '16633', 'Cecille', 'Medina', 'Ortis', 'Female', 'Engineering', 'Regular', 'Engineer', 'March 8, 2024', 'cmortis', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '9953800662', 'uploads/16633_dreamstine.jpg', 1, 0, NULL, 3, 'September 8, 2024', '../forms/evaluation/UZ9GCMRQYL.xlsx', '13'),
-(40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'April 1, 2025', '../forms/evaluation/0JVNOQBS8N.xlsx', '14'),
+(40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'September 27, 2025', '../forms/evaluation/LMTT1RUQKO.xlsx', '14'),
 (44, '16635', 'Carol', 'C', 'Banawa', 'Female', 'Production', 'Regular', 'Operator', 'September 18, 2024', 'ccbanawa', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '9962563444', 'uploads/16635_businessman.png', 1, 0, NULL, 3, 'September 28, 2025', '../forms/evaluation/JUX5KY1954.xlsx', '15'),
-(45, '16636', 'Rachell', 'C', 'Hitalia', 'Female', 'Warehouse', 'Contractual', 'Staff', 'September 4, 2024', 'rchitalia', '18c0395de718bb42f7f5828f5232bba8', 'rachell.hitalia@yahoo.com', '09962567272', 'uploads/16636_winicon.png', 1, 0, NULL, 3, 'March 4, 2025', '../forms/evaluation/NR7HXMRPF3.xlsx', '16'),
+(45, '16636', 'Rachell', 'C', 'Hitalia', 'Female', 'Warehouse', 'Contractual', 'Staff', 'September 4, 2024', 'rchitalia', '18c0395de718bb42f7f5828f5232bba8', 'rachell.hitalia@yahoo.com', '09962567272', 'uploads/16636_winicon.png', 1, 0, NULL, 3, 'October 02, 2025', '../forms/evaluation/NR7HXMRPF3.xlsx', '16'),
 (46, '16637', 'Rita', 'Santos', 'Gia', 'Female', 'Warehouse', 'Regular', 'Manager', 'September 4, 2024', 'rsgia', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278167', 'uploads/16637_vecteezy.jpg', 1, 0, NULL, 2, 'September 20, 2025', '../forms/evaluation/7VKJJ21XW6.xlsx', '17'),
 (47, '16638', 'Michael', 'Sebastian', 'Lascano', 'Male', 'Purchasing', 'Contractual', 'Manager', 'September 5, 2024', 'mslascano', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09669206521', 'uploads/16638_businessman.png', 1, 0, NULL, 2, 'September 20, 2025', '../forms/evaluation/PMIO2HLAQ1.xlsx', '18'),
-(48, '16639', 'Dan', 'Regis', 'Reyes', 'Male', 'Quality Control', 'Contractual', 'QC Inspector', 'September 1, 2024', 'drreyes', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '098462781837', 'uploads/16639_sweatshirt.jpg', 1, 0, NULL, 3, 'September 20, 2025', '../forms/evaluation/RA1TXM5FOR.xlsx', '19'),
+(48, '16639', 'Dan', 'Regis', 'Reyes', 'Male', 'MIS', 'Regular', 'Staff', 'August 29, 2024', 'drreyes19', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '98462781837', 'uploads/16639_sweatshirt.jpg', 1, 0, NULL, 3, 'February 14, 2025', '../forms/evaluation/RA1TXM5FOR.xlsx', '19'),
 (49, '16640', 'Mina', 'Castillo', 'Perez', 'Female', 'Quality Control', 'Contractual', 'QC Inspector', 'September 1, 2024', 'mcperez', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09846278222', 'uploads/16640_dan1.jpg', 1, 0, NULL, 3, 'March 1, 2025', '../forms/evaluation/W35VD3LFCE.xlsx', '20'),
 (50, '16641', 'Celeste', 'Carlos', 'Legaspi', 'Female', 'Production', 'Contractual', 'Operator', 'September 8, 2024', 'cclegaspi', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '09556624232', 'uploads/16641_parksojun.jpg', 1, 0, NULL, 3, 'March 8, 2025', '../forms/evaluation/8M4G44JWIW.xlsx', '21'),
 (51, '16642', 'Kiko', 'Karlos', 'Jaun', 'Male', 'Production', 'Probationary', 'Manager', 'September 9, 2024', 'kkjaun', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '09846278188', 'uploads/16642_vecteezy.jpg', 1, 0, NULL, 2, 'September 28, 2025', '../forms/evaluation/V02HWLNF3B.xlsx', '22'),
-(52, '16643', 'Brian Laurence', 'Santos', 'Enriquez', 'Male', 'Purchasing', 'Contractual', 'Timekeeping', 'October 1, 2024', 'bsenriquez', '18c0395de718bb42f7f5828f5232bba8', 'alcordo.grace8757@yahoo.com', '09123456789', 'uploads/16643_innotor.jpg', 1, 0, NULL, 3, 'October 02, 2025', '../forms/evaluation/WLTUEFR98N.xlsx', '23'),
-(53, '16644', 'Jeran Christopher', 'DInglasan', 'Merino', 'Male', 'MIS', 'Regular', 'Manager', 'April 2, 2025', 'jdmerinos', '18c0395de718bb42f7f5828f5232bba8', 'jeranmerino147@gmail.com', '09123456789', 'uploads/16644_logo.jpg', 1, 0, NULL, 2, 'October 2, 2025', NULL, '24'),
-(54, '16645', 'John', 'Fren', 'Doe', 'Male', 'MIS', 'Contractual', 'Safety Officer', 'October 28, 2024', 'jfdoe', '18c0395de718bb42f7f5828f5232bba8', 'johndoe@gmail.com', '09063897482', 'uploads/16645_innotor.jpg', 1, 0, NULL, 3, 'April 28, 2025', NULL, '25');
+(52, '16643', 'Joshua', 'Madrid', 'Pia', 'Male', 'Warehouse', 'Probationary', 'Staff', 'October 17, 2024', 'jmpia', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '95566213635', 'uploads/16643_vecteezy.jpg', 1, 0, NULL, 3, 'March 31, 2025', '../forms/evaluation/G177UO6CLE.xlsx', '23'),
+(53, '16644', 'Rico', 'Pilar', 'Blanco', 'Male', 'Engineering', 'Probationary', 'Engineer', 'April 17, 2024', 'rpblanco24', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278725', 'uploads/16644_vecteezy.jpg', 1, 0, NULL, 3, 'March 17, 2025', NULL, '24'),
+(54, '16645', 'Myrna', 'Palabok', 'Pansit', 'Female', 'Quality Control', 'Contractual', 'Staff', 'October 18, 2024', 'mppansit', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '9962563699', 'uploads/16645_vecteezy.jpg', 1, 0, NULL, 3, 'September 18, 2025', '../forms/evaluation/5SEQYA7JWA.xlsx', '25'),
+(55, '16646', 'Bennard', 'Madrid', 'Delarea', 'Male', 'Quality Control', 'Regular', 'Staff', 'April 2, 2024', 'bmdelarea', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '12345678999', 'uploads/16646_vecteezy.jpg', 1, 0, NULL, 3, 'March 2, 2025', NULL, '26'),
+(56, '16647', 'Gigi', 'Batlo', 'Sisa', 'Female', 'MIS', 'Contractual', 'Technician', 'October 16, 2024', 'gbsisa27', '18c0395de718bb42f7f5828f5232bba8', 'gbsisa@gmail.com', '9962563645', 'uploads/16647_winicon.png', 1, 0, NULL, 3, 'March 30, 2025', '../forms/evaluation/M3NGHEGFPF.xlsx', '27');
 
 -- --------------------------------------------------------
 
@@ -89,12 +91,12 @@ INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`
 --
 
 CREATE TABLE `attendances` (
-  `id` int(11) NOT NULL,
-  `userid` varchar(20) NOT NULL,
+  `id` int NOT NULL,
+  `userid` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `attn_timestamp` datetime NOT NULL,
-  `attn_type` varchar(50) NOT NULL,
-  `attn_date` varchar(10) DEFAULT NULL,
-  `attn_time` varchar(15) DEFAULT NULL
+  `attn_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `attn_date` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `attn_time` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1175,7 +1177,75 @@ INSERT INTO `attendances` (`id`, `userid`, `attn_timestamp`, `attn_type`, `attn_
 (15660, '3', '2025-03-28 07:02:32', 'Check-in', '03/28/2025', '07:02:32 AM'),
 (15661, '2', '2025-03-28 07:02:33', 'Check-in', '03/28/2025', '07:02:33 AM'),
 (15662, '4', '2025-03-28 07:02:35', 'Check-in', '03/28/2025', '07:02:35 AM'),
-(15663, '7', '2025-03-28 07:02:36', 'Check-in', '03/28/2025', '07:02:36 AM');
+(15663, '7', '2025-03-28 07:02:36', 'Check-in', '03/28/2025', '07:02:36 AM'),
+(24554, '7', '2025-03-28 17:00:12', 'Check-out', '03/28/2025', '05:00:12 PM'),
+(24555, '4', '2025-03-28 17:00:15', 'Check-out', '03/28/2025', '05:00:15 PM'),
+(24556, '2', '2025-03-28 17:00:17', 'Check-out', '03/28/2025', '05:00:17 PM'),
+(24557, '3', '2025-03-28 17:00:20', 'Check-out', '03/28/2025', '05:00:20 PM'),
+(24558, '9', '2025-03-28 17:00:23', 'Check-out', '03/28/2025', '05:00:23 PM'),
+(24559, '6', '2025-03-28 17:00:27', 'Check-out', '03/28/2025', '05:00:27 PM'),
+(24560, '5', '2025-03-28 17:00:31', 'Check-out', '03/28/2025', '05:00:31 PM'),
+(38897, '5', '2025-04-02 06:49:40', 'Check-in', '04/02/2025', '06:49:40 AM'),
+(38898, '6', '2025-04-02 06:49:42', 'Check-in', '04/02/2025', '06:49:42 AM'),
+(38899, '9', '2025-04-02 06:49:43', 'Check-in', '04/02/2025', '06:49:43 AM'),
+(38900, '3', '2025-04-02 06:49:45', 'Check-in', '04/02/2025', '06:49:45 AM'),
+(38901, '2', '2025-04-02 06:49:46', 'Check-in', '04/02/2025', '06:49:46 AM'),
+(38902, '4', '2025-04-02 06:49:47', 'Check-in', '04/02/2025', '06:49:47 AM'),
+(38903, '7', '2025-04-02 06:49:49', 'Check-in', '04/02/2025', '06:49:49 AM'),
+(47031, '7', '2025-04-02 17:06:13', 'Check-out', '04/02/2025', '05:06:13 PM'),
+(47032, '4', '2025-04-02 17:06:15', 'Check-out', '04/02/2025', '05:06:15 PM'),
+(47033, '2', '2025-04-02 17:06:16', 'Check-out', '04/02/2025', '05:06:16 PM'),
+(47034, '2', '2025-04-02 17:06:17', 'Check-out', '04/02/2025', '05:06:17 PM'),
+(47035, '3', '2025-04-02 17:06:18', 'Check-out', '04/02/2025', '05:06:18 PM'),
+(47036, '9', '2025-04-02 17:06:20', 'Check-out', '04/02/2025', '05:06:20 PM'),
+(47037, '6', '2025-04-02 17:06:22', 'Check-out', '04/02/2025', '05:06:22 PM'),
+(47038, '5', '2025-04-02 17:06:23', 'Check-out', '04/02/2025', '05:06:23 PM'),
+(47039, '11', '2025-04-02 19:59:00', 'Check-in', '04/02/2025', '07:59:00 PM'),
+(47040, '12', '2025-04-02 19:59:04', 'Check-in', '04/02/2025', '07:59:04 PM'),
+(47041, '14', '2025-04-02 19:59:07', 'Check-in', '04/02/2025', '07:59:07 PM'),
+(47042, '13', '2025-04-02 19:59:10', 'Check-in', '04/02/2025', '07:59:10 PM'),
+(47043, '10', '2025-04-02 19:59:13', 'Check-in', '04/02/2025', '07:59:13 PM'),
+(47044, '8', '2025-04-02 19:59:16', 'Check-in', '04/02/2025', '07:59:16 PM'),
+(47045, '11', '2025-04-03 05:02:14', 'Check-out', '04/03/2025', '05:02:14 AM'),
+(47046, '12', '2025-04-03 05:02:16', 'Check-out', '04/03/2025', '05:02:16 AM'),
+(47047, '14', '2025-04-03 05:02:18', 'Check-out', '04/03/2025', '05:02:18 AM'),
+(47048, '13', '2025-04-03 05:02:20', 'Check-out', '04/03/2025', '05:02:20 AM'),
+(47049, '10', '2025-04-03 05:02:22', 'Check-out', '04/03/2025', '05:02:22 AM'),
+(47050, '8', '2025-04-03 05:02:24', 'Check-out', '04/03/2025', '05:02:24 AM'),
+(56281, '11', '2025-04-03 19:58:15', 'Check-in', '04/03/2025', '07:58:15 PM'),
+(56282, '12', '2025-04-03 19:58:17', 'Check-in', '04/03/2025', '07:58:17 PM'),
+(56283, '14', '2025-04-03 19:58:19', 'Check-in', '04/03/2025', '07:58:19 PM'),
+(56284, '13', '2025-04-03 19:58:21', 'Check-in', '04/03/2025', '07:58:21 PM'),
+(56285, '10', '2025-04-03 19:58:22', 'Check-in', '04/03/2025', '07:58:22 PM'),
+(56286, '8', '2025-04-03 19:58:25', 'Check-in', '04/03/2025', '07:58:25 PM'),
+(56287, '11', '2025-04-04 05:02:02', 'Check-out', '04/04/2025', '05:02:02 AM'),
+(56288, '12', '2025-04-04 05:02:04', 'Check-out', '04/04/2025', '05:02:04 AM'),
+(56289, '14', '2025-04-04 05:02:07', 'Check-out', '04/04/2025', '05:02:07 AM'),
+(56290, '13', '2025-04-04 05:02:09', 'Check-out', '04/04/2025', '05:02:09 AM'),
+(56291, '10', '2025-04-04 05:02:12', 'Check-out', '04/04/2025', '05:02:12 AM'),
+(56292, '8', '2025-04-04 05:02:14', 'Check-out', '04/04/2025', '05:02:14 AM'),
+(56293, '5', '2025-04-04 07:49:55', 'Check-in', '04/04/2025', '07:49:55 AM'),
+(56294, '6', '2025-04-04 07:49:57', 'Check-in', '04/04/2025', '07:49:57 AM'),
+(56295, '9', '2025-04-04 07:49:59', 'Check-in', '04/04/2025', '07:49:59 AM'),
+(56296, '3', '2025-04-04 07:50:00', 'Check-in', '04/04/2025', '07:50:00 AM'),
+(56297, '2', '2025-04-04 07:50:02', 'Check-in', '04/04/2025', '07:50:02 AM'),
+(56298, '4', '2025-04-04 07:50:04', 'Check-in', '04/04/2025', '07:50:04 AM'),
+(56299, '7', '2025-04-04 07:50:06', 'Check-in', '04/04/2025', '07:50:06 AM'),
+(63836, '7', '2025-04-04 17:56:47', 'Check-in', '04/04/2025', '05:56:47 PM'),
+(63837, '7', '2025-04-04 17:56:52', 'Check-out', '04/04/2025', '05:56:52 PM'),
+(63838, '4', '2025-04-04 17:56:54', 'Check-out', '04/04/2025', '05:56:54 PM'),
+(63839, '2', '2025-04-04 17:56:56', 'Check-out', '04/04/2025', '05:56:56 PM'),
+(63840, '3', '2025-04-04 17:57:03', 'Check-out', '04/04/2025', '05:57:03 PM'),
+(63841, '9', '2025-04-04 17:57:05', 'Check-out', '04/04/2025', '05:57:05 PM'),
+(63842, '6', '2025-04-04 17:57:08', 'Check-out', '04/04/2025', '05:57:08 PM'),
+(63843, '5', '2025-04-04 17:57:10', 'Check-out', '04/04/2025', '05:57:10 PM'),
+(71444, '5', '2025-04-05 07:57:29', 'Check-in', '04/05/2025', '07:57:29 AM'),
+(71445, '6', '2025-04-05 07:57:31', 'Check-in', '04/05/2025', '07:57:31 AM'),
+(71446, '9', '2025-04-05 07:57:33', 'Check-in', '04/05/2025', '07:57:33 AM'),
+(71447, '3', '2025-04-05 07:57:35', 'Check-in', '04/05/2025', '07:57:35 AM'),
+(71448, '2', '2025-04-05 07:57:37', 'Check-in', '04/05/2025', '07:57:37 AM'),
+(71449, '4', '2025-04-05 07:57:39', 'Check-in', '04/05/2025', '07:57:39 AM'),
+(71450, '7', '2025-04-05 07:57:41', 'Check-in', '04/05/2025', '07:57:41 AM');
 
 -- --------------------------------------------------------
 
@@ -1184,41 +1254,54 @@ INSERT INTO `attendances` (`id`, `userid`, `attn_timestamp`, `attn_type`, `attn_
 --
 
 CREATE TABLE `evaluation` (
-  `evaluation_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  `evaluation_date` text NOT NULL,
-  `evaluator_hr` varchar(30) DEFAULT NULL,
-  `evaluator_manager` varchar(30) DEFAULT NULL,
-  `evaluation_file` text NOT NULL
+  `evaluation_id` int NOT NULL,
+  `account_id` int NOT NULL,
+  `evaluation_date` text COLLATE utf8mb4_general_ci NOT NULL,
+  `for_evaluation_date` text COLLATE utf8mb4_general_ci,
+  `evaluator_hr` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `evaluator_manager` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `evaluation_file` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `evaluation`
 --
 
-INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `evaluator_hr`, `evaluator_manager`, `evaluation_file`) VALUES
-(111, 16629, 'February 26, 2025', '16625', '16625', '../forms/evaluation/9EV4DDEXPI.xlsx'),
-(112, 16623, 'March 4, 2025', '16625', '16624', '../forms/evaluation/7BFKPP1EQ7.xlsx'),
-(113, 16627, 'March 4, 2025', '16625', '16625', '../forms/evaluation/8AEQ8ULX12.xlsx'),
-(114, 16632, 'March 11, 2025', '16625', '16629', '../forms/evaluation/GIZ91Y08G2.xlsx'),
-(115, 16633, 'March 11, 2025', '16625', '16627', '../forms/evaluation/UZ9GCMRQYL.xlsx'),
-(122, 16624, 'March 19, 2025', NULL, NULL, '../forms/evaluation/FVGETT08RC.xlsx'),
-(123, 16631, 'March 19, 2025', '16625', '16629', '../forms/evaluation/U3A5ZR8PSW.xlsx'),
-(125, 16628, 'March 19, 2025', '16625', '16629', '../forms/evaluation/XXLL9A10CZ.xlsx'),
-(126, 16637, 'March 20, 2025', '16625', '16625', '../forms/evaluation/7VKJJ21XW6.xlsx'),
-(127, 16638, 'March 20, 2025', '16625', '16625', '../forms/evaluation/PMIO2HLAQ1.xlsx'),
-(128, 16639, 'March 20, 2025', '16625', '16629', '../forms/evaluation/RA1TXM5FOR.xlsx'),
-(129, 16640, 'March 20, 2025', '16625', NULL, '../forms/evaluation/W35VD3LFCE.xlsx'),
-(131, 16626, 'March 27, 2025', NULL, NULL, '../forms/evaluation/3FOVW4NZ6G.xlsx'),
-(132, 16630, 'March 27, 2025', '16625', '16627', '../forms/evaluation/HDALIA31ZX.xlsx'),
-(133, 16636, 'March 27, 2025', '16625', NULL, '../forms/evaluation/NR7HXMRPF3.xlsx'),
-(134, 16624, 'March 28, 2025', '16625', '16625', '../forms/evaluation/GV7OX6GWST.xlsx'),
-(135, 16635, 'March 28, 2025', '16625', '16642', '../forms/evaluation/JUX5KY1954.xlsx'),
-(136, 16641, 'March 28, 2025', '16625', NULL, '../forms/evaluation/8M4G44JWIW.xlsx'),
-(137, 16642, 'March 28, 2025', NULL, NULL, '../forms/evaluation/DGWOKPQR4U.xlsx'),
-(138, 16642, 'March 28, 2025', '16625', '16625', '../forms/evaluation/V02HWLNF3B.xlsx'),
-(139, 16643, 'April 2, 2025', '16625', '16638', '../forms/evaluation/WLTUEFR98N.xlsx'),
-(162, 16634, 'April 2, 2025', '16625', NULL, '../forms/evaluation/0JVNOQBS8N.xlsx');
+INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `for_evaluation_date`, `evaluator_hr`, `evaluator_manager`, `evaluation_file`) VALUES
+(111, 16629, 'February 26, 2025', NULL, '16625', '16625', '../forms/evaluation/9EV4DDEXPI.xlsx'),
+(112, 16623, 'March 4, 2025', NULL, '16625', '16624', '../forms/evaluation/7BFKPP1EQ7.xlsx'),
+(113, 16627, 'March 4, 2025', NULL, '16625', '16625', '../forms/evaluation/8AEQ8ULX12.xlsx'),
+(114, 16632, 'March 11, 2025', NULL, '16625', '16629', '../forms/evaluation/GIZ91Y08G2.xlsx'),
+(115, 16633, 'March 11, 2025', NULL, '16625', '16627', '../forms/evaluation/UZ9GCMRQYL.xlsx'),
+(122, 16624, 'March 19, 2025', NULL, NULL, NULL, '../forms/evaluation/FVGETT08RC.xlsx'),
+(123, 16631, 'March 19, 2025', NULL, '16625', '16629', '../forms/evaluation/U3A5ZR8PSW.xlsx'),
+(125, 16628, 'March 19, 2025', NULL, '16625', '16629', '../forms/evaluation/XXLL9A10CZ.xlsx'),
+(126, 16637, 'March 20, 2025', NULL, '16625', '16625', '../forms/evaluation/7VKJJ21XW6.xlsx'),
+(127, 16638, 'March 20, 2025', NULL, '16625', '16625', '../forms/evaluation/PMIO2HLAQ1.xlsx'),
+(128, 16639, 'March 20, 2025', NULL, '16625', '16629', '../forms/evaluation/RA1TXM5FOR.xlsx'),
+(129, 16640, 'March 20, 2025', NULL, '16625', NULL, '../forms/evaluation/W35VD3LFCE.xlsx'),
+(130, 16634, 'March 27, 2025', NULL, '16625', '16624', '../forms/evaluation/LMTT1RUQKO.xlsx'),
+(131, 16626, 'March 27, 2025', NULL, NULL, NULL, '../forms/evaluation/3FOVW4NZ6G.xlsx'),
+(132, 16630, 'March 27, 2025', NULL, '16625', '16627', '../forms/evaluation/HDALIA31ZX.xlsx'),
+(133, 16636, 'March 27, 2025', NULL, '16625', '16637', '../forms/evaluation/NR7HXMRPF3.xlsx'),
+(134, 16624, 'March 28, 2025', NULL, '16625', '16625', '../forms/evaluation/GV7OX6GWST.xlsx'),
+(135, 16635, 'March 28, 2025', NULL, '16625', '16642', '../forms/evaluation/JUX5KY1954.xlsx'),
+(136, 16641, 'March 28, 2025', NULL, '16625', NULL, '../forms/evaluation/8M4G44JWIW.xlsx'),
+(137, 16642, 'March 28, 2025', NULL, NULL, NULL, '../forms/evaluation/DGWOKPQR4U.xlsx'),
+(138, 16642, 'March 28, 2025', NULL, '16625', '16625', '../forms/evaluation/V02HWLNF3B.xlsx'),
+(139, 16643, 'April 2, 2025', NULL, NULL, NULL, '../forms/evaluation/SVMFMRD3V1.xlsx'),
+(140, 16643, 'April 2, 2025', NULL, '16625', NULL, '../forms/evaluation/G177UO6CLE.xlsx'),
+(141, 16645, 'April 3, 2025', NULL, '16625', NULL, '../forms/evaluation/31FEP3TGT0.xlsx'),
+(142, 16645, 'April 4, 2025', 'April 1, 2025', '16625', '16629', '../forms/evaluation/5SEQYA7JWA.xlsx'),
+(143, 16647, 'April 5, 2025', 'March 24, 2025', '16625', NULL, '../forms/evaluation/M9OD167RB0.xlsx'),
+(144, 16647, 'April 5, 2025', 'April 3, 2025', '16625', NULL, '../forms/evaluation/FJDYD99C8P.xlsx'),
+(145, 16647, 'April 5, 2025', 'April 2, 2025', '16625', NULL, '../forms/evaluation/Q5BZL4D7CK.xlsx'),
+(146, 16647, 'April 5, 2025', 'April 2, 2025', '16625', NULL, '../forms/evaluation/X30R2Q8EC5.xlsx'),
+(147, 16647, 'April 5, 2025', 'April 2, 2025', '16625', NULL, '../forms/evaluation/9Y3RB3QPBH.xlsx'),
+(148, 16647, 'April 5, 2025', 'April 2, 2025', '16625', NULL, '../forms/evaluation/P4F4XSLRXB.xlsx'),
+(149, 16647, 'April 5, 2025', 'April 2, 2025', '16625', NULL, '../forms/evaluation/PUM3NAOU44.xlsx'),
+(150, 16647, 'April 5, 2025', 'March 28, 2025', '16625', NULL, '../forms/evaluation/84LQETHBON.xlsx'),
+(151, 16647, 'April 5, 2025', 'March 31, 2025', '16625', NULL, '../forms/evaluation/M3NGHEGFPF.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1227,14 +1310,14 @@ INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `eva
 --
 
 CREATE TABLE `eval_summary` (
-  `esid` int(11) NOT NULL,
-  `user_id` varchar(100) DEFAULT NULL,
-  `hr_id` varchar(100) DEFAULT NULL,
-  `hr_rating` varchar(255) DEFAULT NULL,
-  `manager_rating` varchar(255) DEFAULT NULL,
-  `rating` varchar(10) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `file` varchar(100) DEFAULT NULL
+  `esid` int NOT NULL,
+  `user_id` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `hr_id` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `hr_rating` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `manager_rating` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `rating` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `comment` text COLLATE utf8mb4_general_ci,
+  `file` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1254,13 +1337,15 @@ INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `hr_rating`, `manager_ra
 (25, '16638', '16625', NULL, NULL, '85.2', 'Good manager', '../forms/evaluation/PMIO2HLAQ1.xlsx'),
 (26, '16639', '16625', NULL, NULL, '90.7', 'for regulazations', '../forms/evaluation/RA1TXM5FOR.xlsx'),
 (27, '16640', '16625', NULL, NULL, '25', NULL, NULL),
+(28, '16634', '16625', '24.1', '70.5', '94.6', 'Awesome', '../forms/evaluation/LMTT1RUQKO.xlsx'),
 (29, '16630', '16625', '20.4', '65', '85.4', 'good performance', '../forms/evaluation/HDALIA31ZX.xlsx'),
-(30, '16636', '16625', '23', NULL, '23', NULL, NULL),
+(30, '16636', '16625', '23', '75', '98', 'good', '../forms/evaluation/NR7HXMRPF3.xlsx'),
 (31, '16635', '16625', '23', '71', '94', 'ok na siya', '../forms/evaluation/JUX5KY1954.xlsx'),
 (32, '16641', '16625', '24', NULL, '24', NULL, NULL),
 (33, '16642', '16625', '25', '75', '100', '100', '../forms/evaluation/V02HWLNF3B.xlsx'),
-(34, '16643', '16625', '23.7', '73.6', '97.3', 'Very goods', '../forms/evaluation/WLTUEFR98N.xlsx'),
-(51, '16634', '16625', '25', NULL, '25', NULL, NULL);
+(34, '16643', '16625', '23', NULL, '23', NULL, NULL),
+(35, '16645', '16625', '25', '75', '100', 'good job!', '../forms/evaluation/5SEQYA7JWA.xlsx'),
+(36, '16647', '16625', '23', NULL, '23', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1269,9 +1354,9 @@ INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `hr_rating`, `manager_ra
 --
 
 CREATE TABLE `hr_violation_list` (
-  `violation_id` int(11) NOT NULL,
-  `violation_title` text NOT NULL,
-  `violation_desc` text NOT NULL
+  `violation_id` int NOT NULL,
+  `violation_title` text COLLATE utf8mb4_general_ci NOT NULL,
+  `violation_desc` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1293,13 +1378,13 @@ INSERT INTO `hr_violation_list` (`violation_id`, `violation_title`, `violation_d
 --
 
 CREATE TABLE `user_violations` (
-  `record_id` int(11) NOT NULL,
-  `employee_id` varchar(11) NOT NULL,
-  `violation_id` varchar(11) NOT NULL,
-  `department` varchar(255) NOT NULL,
-  `vdate` varchar(50) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `sanction` varchar(255) DEFAULT NULL
+  `record_id` int NOT NULL,
+  `employee_id` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `violation_id` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `department` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `vdate` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `sanction` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1316,7 +1401,9 @@ INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `depa
 (10, '16631', '2', 'Quality Control', 'March 19, 2025', 'Under Review', NULL),
 (11, '16639', '1', 'Quality Control', 'March 20, 2025', 'Pending', NULL),
 (12, '16636', '3', 'Warehouse', 'March 20, 2025', 'Pending', NULL),
-(13, '16641', '3', 'Production', 'March 28, 2025', 'Under Review', NULL);
+(13, '16641', '3', 'Production', 'March 28, 2025', 'Under Review', NULL),
+(14, '16643', '2', 'Warehouse', 'April 2, 2025', 'Under Review', NULL),
+(15, '16645', '1', 'Quality Control', 'April 3, 2025', 'Resolved', 'Verbal Warning');
 
 --
 -- Indexes for dumped tables
@@ -1367,37 +1454,37 @@ ALTER TABLE `user_violations`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `account_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22776;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79107;
 
 --
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `evaluation_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `eval_summary`
 --
 ALTER TABLE `eval_summary`
-  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `esid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `hr_violation_list`
 --
 ALTER TABLE `hr_violation_list`
-  MODIFY `violation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `violation_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_violations`
 --
 ALTER TABLE `user_violations`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `record_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

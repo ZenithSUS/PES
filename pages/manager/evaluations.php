@@ -155,7 +155,7 @@
                                                         INNER JOIN 
                                                             accounts a ON e.account_id = a.employee_id
                                                         WHERE
-                                                            a.department = '$d' AND e.account_id != $u
+                                                            a.department = '$d' AND e.account_id != $u AND a.user_level != 2
                                                         ORDER BY
                                                             e.evaluation_date;";
 

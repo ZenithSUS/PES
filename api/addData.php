@@ -6,10 +6,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+
     $insertionType = $_GET['insertion'];
     $sql = '';
-    
+
     switch ($insertionType) {
 
         case 'addViolation':
@@ -57,13 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $otp = '';
             $active = 1;
             $date = DateTime::createFromFormat('F j, Y', $formattedDateHired);
-            $date->modify('+6 months');
+            $date->modify('+5 months +2 weeks');
             $for_eval = $date->format('F j, Y');
 
-            if (empty($firstname) || empty($lastname) || empty($gender) || empty($department) || 
-                empty($position) || empty($employee_id) || empty($role) || empty($email) || 
-                empty($phone) || empty($dateHired) || empty($username) || empty($password) || 
-                empty($status)) {
+            if (
+                empty($firstname) || empty($lastname) || empty($gender) || empty($department) ||
+                empty($position) || empty($employee_id) || empty($role) || empty($email) ||
+                empty($phone) || empty($dateHired) || empty($username) || empty($password) ||
+                empty($status)
+            ) {
                 returnError('All fields are required.');
             }
 
@@ -83,17 +85,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 returnError("Error preparing the statement: " . $con->error);
             }
 
-            $stmt->bind_param("ssssssssssssssiiiss", 
-                $employee_id, $firstname, $middlename, $lastname, $gender, $department, 
-                $status, $position, $formattedDateHired, $username, $password, 
-                $email, $phone, $imagePath, $active, $archived, 
-                $role, $for_eval, $rfid
+            $stmt->bind_param(
+                "ssssssssssssssiiiss",
+                $employee_id,
+                $firstname,
+                $middlename,
+                $lastname,
+                $gender,
+                $department,
+                $status,
+                $position,
+                $formattedDateHired,
+                $username,
+                $password,
+                $email,
+                $phone,
+                $imagePath,
+                $active,
+                $archived,
+                $role,
+                $for_eval,
+                $rfid
             );
 
             if ($stmt->execute()) {
                 echo json_encode(['message' => 'Employee Data Added Successfully']);
             } else {
-                returnError('Error inserting record: ' );
+                returnError('Error inserting record: ');
             }
 
             break;
@@ -117,23 +135,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $rfid = sanitizeInput($_POST['rfid']);
             $archived = 0;
             $active = 1;
-        
+
             $date = DateTime::createFromFormat('F j, Y', $formattedDateHired);
-            $date->modify('+6 months');
-            $for_eval = $date->format('F j, Y');
-        
-            if (empty($firstname) || empty($lastname) || empty($gender) || empty($department) || 
-                empty($position) || empty($employee_id) || empty($role) || empty($email) || 
-                empty($phone) || empty($dateHired) || empty($username) || empty($status)) {
+
+            if ($status === "Probationary") {
+                $date->modify('+11 months');
+                $for_eval = $date->format('F j, Y');
+            } else if ($status === "Contractual") {
+                $date->modify('+5 months +2 weeks');
+                $for_eval = $date->format('F j, Y');
+            } else {
+                $for_eval = null;
+            }
+
+            $forEvalQuery = (isset($for_eval) || !is_null($for_eval) || $for_eval != "") ? "for_eval = ? ," : "";
+
+            if (
+                empty($firstname) || empty($lastname) || empty($gender) || empty($department) ||
+                empty($position) || empty($employee_id) || empty($role) || empty($email) ||
+                empty($phone) || empty($dateHired) || empty($username) || empty($status)
+            ) {
                 returnError('All fields are required.');
             }
-        
+
             $allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
             $uploadDir = __DIR__ . '/uploads/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
-        
+
             if (!empty($_FILES['filepond']['name']) && $_FILES['filepond']['error'] === UPLOAD_ERR_OK) {
                 $imagePath = handleFileUpload($_FILES['filepond'], $allowedTypes, $uploadDir, $employee_id);
                 $updateImageQuery = ", img = ?";
@@ -147,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $imagePath = $row['img'] ?? null; // Set to NULL if no existing image
                 $updateImageQuery = $imagePath ? ", img = ?" : ""; // Only update if there's an image
             }
-        
+
             $query = "UPDATE accounts SET 
                         first_name = ?, 
                         middle_name = ?, 
@@ -163,41 +193,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         active = ?, 
                         archived = ?, 
                         user_level = ?, 
-                        for_eval = ?, 
+                        $forEvalQuery 
                         bio_userid = ? 
                         $updateImageQuery 
                         WHERE employee_id = ?";
-        
+
             $stmt = $con->prepare($query);
-        
+
             if (!$stmt) {
                 returnError("Error preparing the statement: " . $con->error);
             }
-        
-            if ($updateImageQuery) {
-                $stmt->bind_param("ssssssssssiiississ", 
-                    $firstname, $middlename, $lastname, $gender, $department, 
-                    $status, $position, $formattedDateHired, $username, 
-                    $email, $phone, $active, $archived, $role, 
-                    $for_eval, $rfid, $imagePath, $employee_id
+
+            if ($updateImageQuery && !$forEvalQuery) {
+                $stmt->bind_param(
+                    "ssssssssssiiisiss",
+                    $firstname,
+                    $middlename,
+                    $lastname,
+                    $gender,
+                    $department,
+                    $status,
+                    $position,
+                    $formattedDateHired,
+                    $username,
+                    $email,
+                    $phone,
+                    $active,
+                    $archived,
+                    $role,
+                    $rfid,
+                    $imagePath,
+                    $employee_id
+                );
+            } elseif ($forEvalQuery && $forEvalQuery) {
+                $stmt->bind_param(
+                    "ssssssssssiiississ",
+                    $firstname,
+                    $middlename,
+                    $lastname,
+                    $gender,
+                    $department,
+                    $status,
+                    $position,
+                    $formattedDateHired,
+                    $username,
+                    $email,
+                    $phone,
+                    $active,
+                    $archived,
+                    $role,
+                    $for_eval,
+                    $rfid,
+                    $imagePath,
+                    $employee_id
                 );
             } else {
-                $stmt->bind_param("ssssssssssiiisss", 
-                    $firstname, $middlename, $lastname, $gender, $department, 
-                    $status, $position, $formattedDateHired, $username, 
-                    $email, $phone, $active, $archived, $role, 
-                    $for_eval, $rfid, $employee_id
+                $stmt->bind_param(
+                    "ssssssssssiiisss",
+                    $firstname,
+                    $middlename,
+                    $lastname,
+                    $gender,
+                    $department,
+                    $status,
+                    $position,
+                    $formattedDateHired,
+                    $username,
+                    $email,
+                    $phone,
+                    $active,
+                    $archived,
+                    $role,
+                    $for_eval,
+                    $rfid,
+                    $employee_id
                 );
             }
-        
+
             if ($stmt->execute()) {
                 echo json_encode(['message' => 'Employee Data Updated Successfully']);
             } else {
                 returnError('Error updating record: ' . $stmt->error);
             }
-        
+
             break;
-        
+
         default:
             returnError('Invalid insertion type.');
     }
@@ -205,17 +285,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $con->close();
 
-function returnError($message) {
+function returnError($message)
+{
     echo json_encode(value: ['error' => $message]);
     exit;
 }
 
-function sanitizeInput($data) {
+function sanitizeInput($data)
+{
     global $con;
     return htmlspecialchars($con->real_escape_string($data));
 }
 
-function handleFileUpload($file, $allowedTypes, $uploadDir, $empID) {
+function handleFileUpload($file, $allowedTypes, $uploadDir, $empID)
+{
     if ($file['error'] !== UPLOAD_ERR_OK) {
         returnError('File upload error.');
     }
@@ -228,7 +311,7 @@ function handleFileUpload($file, $allowedTypes, $uploadDir, $empID) {
         returnError('File size must be greater than 0.');
     }
 
-    $uniqueFileName = $empID. '_' . basename($file['name']);
+    $uniqueFileName = $empID . '_' . basename($file['name']);
     $destinationPath = $uploadDir . $uniqueFileName;
 
     if (!move_uploaded_file($file['tmp_name'], $destinationPath)) {
@@ -237,5 +320,3 @@ function handleFileUpload($file, $allowedTypes, $uploadDir, $empID) {
 
     return 'uploads/' . $uniqueFileName;
 }
-
-?>

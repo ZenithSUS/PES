@@ -88,10 +88,19 @@ if ($result && $result->num_rows > 0) {
 }
 
 $sql = "SELECT COUNT(*) as total_records
-        FROM accounts
-        WHERE STR_TO_DATE(for_eval, '%M %d, %Y') 
-        <= STR_TO_DATE(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 14 DAY), '%M %d, %Y'), '%M %d, %Y') 
-        AND user_level != 0 AND current_eval = '';";
+FROM accounts
+WHERE (
+    /* For Regular and Contractual employees: counting those within the next 14 days */
+    (emp_status != 'Probationary' AND 
+     STR_TO_DATE(for_eval, '%M %d, %Y') <= DATE_ADD(CURDATE(), INTERVAL 14 DAY))
+    OR
+    /* For Probationary employees: counting those within the next month */
+    (emp_status = 'Probationary' AND 
+     STR_TO_DATE(for_eval, '%M %d, %Y') <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH))
+)
+AND user_level != 0 
+AND (current_eval IS NULL OR current_eval = '')
+AND archived != 3";
 
 $stmt = $con->prepare($sql);
 $stmt->execute();
@@ -102,11 +111,21 @@ $totalRecords = $row['total_records'];
 
 
 $sql = "SELECT COUNT(*) AS total_records2 FROM accounts 
-        WHERE (archived != 3 AND user_level != 0) 
-        AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') 
-        OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)) 
-        AND (current_eval IS NOT NULL OR current_eval != '')
-        ORDER BY date_hired DESC";
+WHERE (archived != 3 AND user_level != 0) 
+AND (
+    /* For regular and contractual employees: check 2-week window */
+    (emp_status != 'Probationary' AND (
+        CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') 
+        OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
+    ))
+    OR
+    /* For probationary employees: check 1-month window */
+    (emp_status = 'Probationary' AND (
+        CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') 
+        OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH)
+    ))
+)
+ORDER BY date_hired DESC";
 
 $stmt = $con->prepare($sql);
 $stmt->execute();

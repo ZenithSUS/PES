@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
 
 } else {
 
-    echo "User not found";
+    echo json_encode(["status" => 'No email found for department: ' . $department]);
     exit; // Stop execution if no email is found
 }
 
@@ -69,8 +69,11 @@ try {
         throw new Exception("Recipient email address is empty.");
     }
 
+    $periodCovered = $status === "Regular" ? "Yearly Evaluation" : "6th month Evaluation";
+
     $sendTO = $email;
     $mail->isSMTP();
+    $mail->CharSet = 'UTF-8';
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'ea00.ph@gmail.com';
@@ -92,7 +95,7 @@ try {
     $mail->addAddress($sendTO);
 
     $mail->isHTML(true);
-    $mail->Subject = "Under Regularization Employees Evaluation (6th month)";
+    $mail->Subject = $status === "Regular" ? "Under Regularization Employees Evaluation (12th month)" : "Under Employees Evaluation (6th month)";
     $mail->Body    = '';
     $mail->Body .= "
             <!DOCTYPE html>
@@ -203,7 +206,7 @@ try {
                                             <td data-label='Department'>$department</td>
                                             <td data-label='Position'>$position</td>
                                             <td data-label='Status'>$status</td>
-                                            <td data-label='Period Covered'>6th month Evaluation</td>
+                                            <td data-label='Period Covered'>$periodCovered</td>
                                         </tr>
                                     </tbody>
                                 </table>

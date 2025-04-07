@@ -68,6 +68,7 @@ if (isset($_POST['fileName'])) {
         $position = $userRecord['position'];
         $status = $userRecord['emp_status'];
         $dateHired = $userRecord['date_hired'];
+        $forEvalDate = $userRecord['for_eval'];
     } else {
         echo json_encode(['success' => false, 'message' => 'User not exists']);
     }
@@ -86,7 +87,7 @@ if (isset($_POST['fileName'])) {
             if ($stmt->execute()) {
 
                 $updateStatus = "UPDATE accounts SET for_eval = ? WHERE current_eval = ?";
-                $changeEval = date("F d, Y", strtotime("+6 months"));
+                $changeEval = $status === "Regular" ? date("F d, Y", strtotime("+11 months +2 weeks")) : date("F d, Y", strtotime("+5 months +2 weeks"));
                 $stmt = $con->prepare($updateStatus);
                 $stmt->bind_param("ss", $changeEval, $fileName);
 
@@ -138,9 +139,9 @@ if (isset($_POST['fileName'])) {
 
         case "HR":
 
-            $updateStatus = "UPDATE evaluation SET evaluator_hr = ? WHERE evaluation_file = ?";
+            $updateStatus = "UPDATE evaluation SET evaluator_hr = ?, for_evaluation_date = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare(query: $updateStatus);
-            $stmt->bind_param("ss", $_SESSION['user_id'], $fileName);
+            $stmt->bind_param("sss", $_SESSION['user_id'], $forEvalDate, $fileName);
 
             if ($stmt->execute()) {
 
@@ -178,9 +179,9 @@ if (isset($_POST['fileName'])) {
 
         case "HRM":
 
-            $updateStatus = "UPDATE evaluation SET evaluator_hr = ?, evaluator_manager = ? WHERE evaluation_file = ?";
+            $updateStatus = "UPDATE evaluation SET evaluator_hr = ?, evaluator_manager = ?, for_evaluation_date = ? WHERE evaluation_file = ?";
             $stmt = $con->prepare(query: $updateStatus);
-            $stmt->bind_param("sss", $_SESSION['user_id'], $_SESSION['user_id'], $fileName);
+            $stmt->bind_param("ssss", $_SESSION['user_id'], $_SESSION['user_id'], $forEvalDate, $fileName);
 
             if ($stmt->execute()) {
 
@@ -195,7 +196,7 @@ if (isset($_POST['fileName'])) {
                 if ($count > 0) {
 
                     $updateStatus = "UPDATE accounts SET for_eval = ? WHERE current_eval = ?";
-                    $changeEval = date("F d, Y", strtotime("+6 months"));
+                    $changeEval = $status === "Regular" ? date("F d, Y", strtotime("+11 months +2 weeks")) : date("F d, Y", strtotime("+5 months +2 weeks"));
                     $stmt = $con->prepare($updateStatus);
                     $stmt->bind_param("ss", $changeEval, $fileName);
 
@@ -214,7 +215,7 @@ if (isset($_POST['fileName'])) {
                     if ($stmt->execute()) {
 
                         $updateStatus = "UPDATE accounts SET for_eval = ? WHERE current_eval = ?";
-                        $changeEval = date("F d, Y", strtotime("+6 months"));
+                        $changeEval = $status === "Regular" ? date("F d, Y", strtotime("+11 months +2 weeks")) : date("F d, Y", strtotime("+5 months +2 weeks"));
                         $stmt = $con->prepare($updateStatus);
                         $stmt->bind_param("ss", $changeEval, $fileName);
                     }
