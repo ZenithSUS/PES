@@ -159,7 +159,7 @@
                                             } else if ($filter === "Manager") {
                                                 $sql = "SELECT * FROM accounts WHERE (employee_id != $u AND position = 'Manager') ORDER BY date_hired DESC";
                                             } else if ($filter === "HR") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level = 1) ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level = 1 OR department = 'Human Resource') ORDER BY date_hired DESC";
                                             } else {
                                                 $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
                                             }
@@ -222,37 +222,11 @@
 
 
                                                     $employeeId = $accounts['employee_id'];
-                                                    $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_manager IS NULL OR evaluator_manager = '' AND account_id = '$employeeId' 
-                                                    AND for_evaluation_date = '$forEvalValue' LIMIT 1";
-                                                    $evalResult = $con->query($checkEvalSql);
-
-                                                    $evalExists = $evalResult && $evalResult->num_rows > 0;
-
-                                                    if (isset($accounts['evaluator_hr']) && isset($accounts['evaluator_manager'])) {
-                                                        if ($_SESSION['role'] == 0 && ($accounts['user_level'] == 2 || $accounts['user_level'] == 1 && is_null($accounts['evaluator_hr']) && is_null($accounts['evaluator_manager']))) {
-                                                            $buttonClass = 'btn-info';
-                                                            $disabled = '';
-                                                            $buttonText = 'Evaluate';
-                                                        }
-                                                    }
-
-                                                    if ($evalExists) {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Evaluated';
-                                                    } elseif ($forEvalDate && !$isInEvalWindow && (!$isPastDate || $interval > 14)) {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Evaluate';
-                                                    } elseif ($accounts['position'] === 'Administrator') {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Administrator';
-                                                    } else {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Evaluate';
-                                                    }
+                                                    
+                                                    $buttonClass = 'btn muted disabled';
+                                                    $disabled = 'disabled="disabled"';
+                                                    $buttonText = 'Disabled';
+                                                    
 
                                                     $html .= '<tr>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['employee_id']) . '</td>';

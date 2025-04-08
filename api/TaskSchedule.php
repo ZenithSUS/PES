@@ -3,11 +3,11 @@
 session_start();
 include('database.php');
 
-require_once 'C:\xampp\htdocs\oas\PHPMailer\Exception.php';
-require_once 'C:\xampp\htdocs\oas\PHPMailer\SMTP.php';
-require_once 'C:\xampp\htdocs\oas\PHPMailer\PHPMailer.php';
+require_once 'C:\xampp\htdocs\pes\PHPMailer\Exception.php';
+require_once 'C:\xampp\htdocs\pes\PHPMailer\SMTP.php';
+require_once 'C:\xampp\htdocs\pes\PHPMailer\PHPMailer.php';
 
-set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\xampp\htdocs\oas');
+set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\xampp\htdocs\pes');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -63,11 +63,15 @@ if ($result->num_rows > 0) {
         ];
     }
 } else {
-    echo "User not found";
+    echo json_encode([
+        'message' => 'No records found',
+        'status' => false,
+    ]);
+    exit;
 }
 
 $performance = "Performance";
-    
+
 $sql = "SELECT email FROM accounts WHERE position = ? AND user_level = 1";
 
 $stmt = $con->prepare($sql);
@@ -82,39 +86,43 @@ $hrRecords = [];
 if ($result->num_rows > 0) {
 
     $hrRecords = $result->fetch_all(MYSQLI_ASSOC);
-
 } else {
 
-    echo "User not found";
-
+    echo json_encode([
+        'message' => 'No HR records found',
+        'status' => false,
+    ]);
+    exit;
 }
 
-try {
 
-    // $sendTO = $email;
+if (isset($hrRecords[0])) {
+    try {
 
-    // $mail->addAddress($sendTo); 
+        // $sendTO = $email;
 
-    foreach ($hrRecords as $record) {
-        $mail->addCC($record['email']); 
-    }
+        // $mail->addAddress($sendTo); 
 
-    $mail->isSMTP();                                                     
-    $mail->Host       = 'smtp.gmail.com';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'ea00.ph@gmail.com';
-    $mail->Password   = 'dpyqoiouespqozba';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port       = 465;
+        foreach ($hrRecords as $record) {
+            $mail->addCC($record['email']);
+        }
+
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'ea00.ph@gmail.com';
+        $mail->Password = 'dpyqoiouespqozba';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
 
 
-    $mail->setFrom('ea00.ph@gmail.com', 'Evaluation System - Human Resource Department');
-    // $mail->addAddress($sendTO);
+        $mail->setFrom('ea00.ph@gmail.com', 'Evaluation System - Human Resource Department');
+        // $mail->addAddress($sendTO);
 
-    $mail->isHTML(true);
-    $mail->Subject = "Under Employees Evaluation (6th month)";
-    $mail->Body    = '';
-    $mail->Body .= "
+        $mail->isHTML(true);
+        $mail->Subject = "Under Employees Evaluation (6th month)";
+        $mail->Body = '';
+        $mail->Body .= "
             <!DOCTYPE html>
                     <html dir='ltr' xmlns='http://www.w3.org/1999/xhtml'>
                     <head>
@@ -219,8 +227,8 @@ try {
                                         </tr>
                                     </thead>
                                     <tbody>";
-                                    foreach ($userRecords as $userRecord) {
-        $mail->Body .= "
+        foreach ($userRecords as $userRecord) {
+            $mail->Body .= "
                                                         <tr>
                                                             <td data-label='Employee Name'>{$userRecord['full_name']}</td>
                                                             <td data-label='Department'>{$userRecord['department']}</td>
@@ -230,7 +238,7 @@ try {
                                                             <td data-label='Evaluation Deadline'>{$userRecord['date_evaluation']}</td>
                                                             <td data-label='Days Remaining'>{$userRecord['days_remaining']}</td>
                                                         </tr>";
-                                    }
+        }
         $mail->Body .= "
                                         </tbody>
                                     </table>
@@ -250,19 +258,17 @@ try {
                         </body>
                         </html>";
 
-    if($mail->send()) {
-
-        // echo '<script>alert("aw")</script>';
-        // echo '<script>window.location.href = "../pages/hr/employees.php"</script>';
-        echo "Successfully sending to multiple recipients";
-
-    } else {
-
-        echo "Failed sending to multiple recipients";
-
+        if ($mail->send()) {
+            echo "Successfully sending to multiple recipients";
+        } else {
+            echo "Failed sending to multiple recipients";
+        }
+    } catch (Exception $e) {
+        //throw $th;
     }
-} catch (Exception $e) {
-    //throw $th;
+} else {
+    echo json_encode([
+        "message" => "No Employee to evaluate",
+        "status" => false,
+    ]);
 }
-
-?>

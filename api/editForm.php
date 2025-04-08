@@ -4,7 +4,30 @@ include('database.php');
 session_start();
 
 header('Content-Type: application/x-www-form-urlencoded');
+
+function checkIfManagerExists($con, $department)
+{
+    $sql = "SELECT employee_id FROM accounts WHERE department = ? AND position = 'Manager' OR position = 'Supervisor'";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param('s', $department);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+}
+
 if (isset($_POST['fileName'])) {
+
+    if (isset($_POST['department'])) {
+        $department = $_POST['department'];
+
+        if (!checkIfManagerExists($con, $department)) {
+            echo json_encode(['success' => false, 'message' => 'No manager found in the department.']);
+            exit;
+        }
+    }
+
+
+
 
     $fileName = $_POST['fileName'];
     $eval_role = $_POST['eval_role'];
@@ -69,6 +92,7 @@ if (isset($_POST['fileName'])) {
         $status = $userRecord['emp_status'];
         $dateHired = $userRecord['date_hired'];
         $forEvalDate = $userRecord['for_eval'];
+        
     } else {
         echo json_encode(['success' => false, 'message' => 'User not exists']);
     }
@@ -732,12 +756,12 @@ function createEvalHRM($fileName, $fname, $department, $position, $status, $date
     $worksheet = $excel_obj->getActiveSheet();
 
     $A56 = new PHPExcel_RichText();
-    $boldA56 = $A56->createTextRun(pText: "Juan Dela Cruz"); //change to president/ceo name
+    $boldA56 = $A56->createTextRun(pText: $_SESSION['full']);
     $boldA56->getFont()->setBold(true);
     $worksheet->getCell('A56')->setValue($A56);
 
     $A56 = new PHPExcel_RichText();
-    $boldA56 = $A56->createTextRun("President / CEO"); // change position 
+    $boldA56 = $A56->createTextRun($_SESSION['department'] . " Department, Manager"); // change position 
     $worksheet->getCell('A57')->setValue($A56);
 
     $A56 = new PHPExcel_RichText();

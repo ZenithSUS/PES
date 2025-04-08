@@ -33,11 +33,13 @@ if ($result->num_rows > 0) {
     $position = $userRecord['position'];
     $status = $userRecord['emp_status'];
     $dateHired = $userRecord['date_hired'];
-    $dateEvaluation = date('F, d, Y', strtotime($userRecord['for_eval'] . ' +2 weeks'));
+    $dateEvaluation = $userRecord['for_eval'];
+    
 
 } else {
 
-    echo "User not found";
+    echo json_encode(["status" => 'No user found.']);
+    exit; // Stop execution if no user is found
 
 }
 
@@ -59,7 +61,7 @@ if ($result->num_rows > 0) {
 
 } else {
 
-    echo json_encode(["status" => 'No email found for department: ' . $department]);
+    echo json_encode(["status" => 'No email found for the department.']);
     exit; // Stop execution if no email is found
 }
 
@@ -69,11 +71,8 @@ try {
         throw new Exception("Recipient email address is empty.");
     }
 
-    $periodCovered = $status === "Regular" ? "Yearly Evaluation" : "6th month Evaluation";
-
     $sendTO = $email;
     $mail->isSMTP();
-    $mail->CharSet = 'UTF-8';
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'ea00.ph@gmail.com';
@@ -95,7 +94,7 @@ try {
     $mail->addAddress($sendTO);
 
     $mail->isHTML(true);
-    $mail->Subject = $status === "Regular" ? "Under Regularization Employees Evaluation (12th month)" : "Under Employees Evaluation (6th month)";
+    $mail->Subject = "Under Regularization Employees Evaluation (6th month)";
     $mail->Body    = '';
     $mail->Body .= "
             <!DOCTYPE html>
@@ -206,7 +205,7 @@ try {
                                             <td data-label='Department'>$department</td>
                                             <td data-label='Position'>$position</td>
                                             <td data-label='Status'>$status</td>
-                                            <td data-label='Period Covered'>$periodCovered</td>
+                                            <td data-label='Period Covered'>6th month Evaluation</td>
                                         </tr>
                                     </tbody>
                                 </table>

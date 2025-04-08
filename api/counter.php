@@ -51,7 +51,7 @@ $for_eval_count = $row_dept['for_eval_count'];
 $dept_stmt->close();
 
 $sql = "SELECT 
-    COUNT(CASE WHEN user_level = 1 THEN 1 END) AS hr_count,
+    COUNT(CASE WHEN user_level = 1 OR department = 'Human Resource' THEN 1 END) AS hr_count,
     COUNT(CASE WHEN user_level = 2 THEN 1 END) AS manager_count,
     COUNT(CASE WHEN department = '$dpt' AND user_level = 3 THEN 1 END) AS dept_count,
     COUNT(*) AS user_count

@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-12">
-                                                <p>Evaluator: <b><?php echo $userFirstname . $userLastname ?></b></p>
+                                                <p>Evaluator: <b><?php echo $userFirstname . ' ' . $userLastname ?></b></p>
                                                 <?php
 
                                                 if ($_SESSION['role'] == 1) {
@@ -437,6 +437,7 @@
         const to_eval_position = "<?php echo $_SESSION['to_eval_pos']; ?>";
         const userRole = <?php echo $_SESSION['role']; ?>;
         const user_to_eval = <?php echo $employee_id ?>;
+        const department = "<?php echo $dpt; ?>";
 
         document.addEventListener('DOMContentLoaded', function() {
             console.log(to_eval_position);
@@ -477,8 +478,9 @@
                 formData.append('eval_hr_tard', eval_hr_tard);
                 formData.append('code', serial);
                 formData.append('user_to_eval', user_to_eval);
+                formData.append('department', department);
 
-                if (userRole == 1 && to_eval_position !== 'Manager') {
+                if (userRole == 1 && (to_eval_position !== 'Manager' && to_eval_position !== 'Supervisor') && (department !== 'Human Resource')) {
 
                     evalRole = "HR";
                     formData.append('evaluator_role', evalRole);
@@ -490,11 +492,11 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                insertHrEvaluation(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval);
+                                insertHrEvaluation(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, department);
                                 console.log(data.newFileName);
                                 console.log("success");
                             } else {
-                                console.log(data.success);
+                                alert(data.message);
                                 console.log("failed");
                             }
                         })
@@ -504,9 +506,10 @@
 
                         });
 
-                } else if (userRole == 1 && to_eval_position == 'Manager') {
+                } else if (userRole == 1 && (to_eval_position == 'Manager' || to_eval_position == 'Supervisor') || (department == 'Human Resource')) {
 
                     evalRole = "HRM";
+                    console.log(evalRole)
                     formData.append('evaluator_role', evalRole);
 
                     fetch('../../api/createForm.php', {
@@ -516,7 +519,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                insertHrEvaluation2(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, productivity, knowledge, quality, initiative, attitude, communication, creativity, rate_comment);
+                                insertHrEvaluation2(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, productivity, knowledge, quality, initiative, attitude, communication, creativity, rate_comment, department);
                                 console.log(data.newFileName);
                                 console.log("success");
                                 console.log(evalRole);
@@ -546,6 +549,8 @@
                     console.log(formData.get('communication'));
                     console.log(formData.get('creativity'));
                     console.log(formData.get('code'));
+                    console.log(formData.get('user_to_eval'));
+                    console.log(formData.get('department'));
                     formData.append('evaluator_role', evalRole);
                     console.log(formData.get('evaluator_role'));
 
@@ -561,7 +566,7 @@
 
         });
 
-        async function insertHrEvaluation2(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, productivity, knowledge, quality, initiative, attitude, communication, creativity, rate_comment) {
+        async function insertHrEvaluation2(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, productivity, knowledge, quality, initiative, attitude, communication, creativity, rate_comment, department) {
             const formData = new FormData();
             console.log(fileName)
             formData.append('fileName', fileName);
@@ -578,6 +583,7 @@
             formData.append('communication', communication);
             formData.append('creativity', creativity);
             formData.append('rate_comment', rate_comment);
+            formData.append('department', department);
             // console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
             try {
@@ -615,7 +621,7 @@
             //     });
         }
 
-        async function insertHrEvaluation(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval) {
+        async function insertHrEvaluation(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, department) {
 
             const formData = new FormData();
 
@@ -625,6 +631,7 @@
             formData.append('tard', eval_hr_tard);
             formData.append('user_to_eval', user_to_eval);
             formData.append('eval_role', evalRole);
+            formData.append('department', department);
             console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
             try {
@@ -652,8 +659,15 @@
                 console.log('Email response status:', emailData);
 
                 // Step 3: Redirect to employees.php
-                alert('Evaluated Successfully!');
+
+                if(data.success) {
+                    alert('Evaluation Form Created');
+
+                } else {
+                    alert(data.message);
+                }
                 window.location.href = 'employees.php';
+
             } catch (error) {
                 console.error('Fetch error:', error);
                 alert(`An error occurred: ${error.message}. Please check the console for details.`);
@@ -717,7 +731,7 @@
 
             document.getElementById('serial').value = serial_code;
 
-            if (userRole !== 2 && to_eval_position !== 'Manager') {
+            if (userRole !== 2 && (to_eval_position !== 'Manager' && to_eval_position !== 'Supervisor') && department !== 'Human Resource') {
                 disableInputs('#managerEvaluation');
                 document.getElementById('rate_comment').disabled = true;
             }
@@ -725,7 +739,7 @@
                 disableInputs('#hrEvaluation');
                 document.getElementById('rate_comment').disabled = true;
             }
-            if ((userRole !== 1 && userRole !== 2) && to_eval_position !== 'Manager') {
+            if ((userRole !== 1 && userRole !== 2) && (to_eval_position !== 'Manager' || to_eval_position !== 'Supervisor')) {
                 disableInputs('#managerEvaluation');
                 disableInputs('#hrEvaluation');
             }

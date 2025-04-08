@@ -148,8 +148,8 @@
                                                     while ($row = $result->fetch_assoc()) {
                                                         // Build table row with data from both tables
                                                         $html .= '<tr>';
-                                                        $html .= '<td class="text-center"><span><img src="../../api/' . htmlspecialchars($row['img']) . '" class="profile-img rounded-circle" alt="avatar"></span></td>';
                                                         $html .= '<td>' . htmlspecialchars($row['account_id']) . '</td>';
+                                                        $html .= '<td class="text-center"><span><img src="../../api/' . htmlspecialchars($row['img']) . '" class="profile-img rounded-circle" alt="avatar"></span></td>';
                                                         $html .= '<td>' . htmlspecialchars($row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']) . '</td>';
                                                         $html .= '<td>' . htmlspecialchars($row['department']) . '</td>';
                                                         $html .= '<td>' . htmlspecialchars($row['evaluation_date']) . '</td>';

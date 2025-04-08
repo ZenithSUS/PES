@@ -378,6 +378,8 @@
     <script>
         const userRole = <?php echo $_SESSION['role']; ?>;
         const user_to_eval = <?php echo $employee_id ?>;
+        const department = <?php echo json_encode($dpt); ?>;
+
 
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -415,6 +417,7 @@
                 formData.append('eval_hr_tard', eval_hr_tard);
                 formData.append('code', serial);
                 formData.append('user_to_eval', user_to_eval);
+                formData.append('department', department);
 
                 if (userRole == 1) {
 
@@ -429,7 +432,7 @@
                         .then(data => {
                             if (data.success) {
 
-                                insertHrEvaluation(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval);
+                                insertHrEvaluation(data.newFileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, department);
                                 console.log(data.newFileName);
                                 console.log("success");
 
@@ -472,7 +475,7 @@
 
         });
 
-        async function insertHrEvaluation(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval) {
+        async function insertHrEvaluation(fileName, evalRole, eval_hr_abs, eval_hr_sus, eval_hr_tard, user_to_eval, department) {
 
             const formData = new FormData();
 
@@ -482,47 +485,48 @@
             formData.append('tard', eval_hr_tard);
             formData.append('user_to_eval', user_to_eval);
             formData.append('eval_role', evalRole);
+            formData.append('department', department);
             console.log(eval_hr_abs + " " + eval_hr_sus + " " + eval_hr_tard);
 
 
-            fetch('../../api/editForm.php', {
+            try {
+                // Step 1: Send form data to editForm.php
+                const response = await fetch('../../api/editForm.php', {
                     method: 'POST',
                     body: formData,
-                })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    return response.text();
-                })
-                .then(data => {
-                    let jsonResponse;
-                    try {
-                        jsonResponse = JSON.parse(data);
-                    } catch (error) {
-                        alert('Evaluation Form Created');
-
-                        const userEvalData = new FormData();
-                        userEvalData.append('user_to_eval', user_to_eval);
-
-                        return fetch('../../api/sendEmail.php', {
-                            method: 'POST',
-                            body: userEvalData,
-                        });
-                    }
-                })
-                .then(emailResponse => {
-                    if (emailResponse) {
-                        console.log('Email response status:', emailResponse.status);
-                        return emailResponse.text();
-                    }
-                })
-                .then(emailData => {
-                    console.log('Email send response:', emailData);
-                    window.location.href = "employees.php";
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    alert(`An error occurred: ${error.message}. Please check the console for details.`);
                 });
+
+                console.log('Response status:', response.status);
+                const data = await response.json(); // Assuming the response is JSON
+                console.log(data);
+
+                // Step 2: Prepare and send user evaluation data to sendEmail.php
+                const userEvalData = new FormData();
+                userEvalData.append('user_to_eval', user_to_eval);
+
+                const emailResponse = await fetch('../../api/sendEmail.php', {
+                    method: 'POST',
+                    body: userEvalData,
+                });
+
+                // Check the email response status and handle it correctly
+                const emailData = await emailResponse.json(); // Use the correct response object here
+                console.log('Email response status:', emailData);
+
+                // Step 3: Redirect to employees.php
+
+                if (data.success) {
+                    alert('Evaluation Form Created');
+
+                } else {
+                    alert(data.message);
+                }
+                window.location.href = 'employees.php';
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert(`An error occurred: ${error.message}. Please check the console for details.`);
+            }
 
         }
 

@@ -225,18 +225,21 @@
                                                     $u = $_SESSION['user_id'];
                                                     $forEvalCount = 0;
 
-                                                    $sql = "SELECT COUNT(*) as for_eval FROM accounts WHERE (
-                                                            /* For Regular employees: use 2-week window */
-                                                            (emp_status != 'Probationary' AND STR_TO_DATE(for_eval, '%M %d, %Y') <= DATE_ADD(CURDATE(), INTERVAL 14 DAY)) OR
-                                                            /* For Probationary employees: use 1-month window */
-                                                            (emp_status = 'Probationary' AND 
-                                                            STR_TO_DATE(for_eval, '%M %d, %Y') <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH))
-                                                            ) AND user_level != 0 
-                                                            AND (current_eval IS NULL OR current_eval = '')
-                                                            AND archived != 3";
-                                                            $result = $con->query($sql);
-                                                            $accounts = $result->fetch_assoc();
-                                                            $forEvalCount = $accounts['for_eval'];
+                                                    $sql = "SELECT COUNT(*) AS for_eval FROM accounts WHERE (archived != 3 AND user_level != 0) AND (
+                                                        /* For Regular employees: use 2-week window */
+                                                        (emp_status != 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
+                                                        OR
+                                                        /* For Probationary employees: use 1-month window */
+                                                        (emp_status = 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
+                                                        )
+                                                    ORDER BY date_hired DESC";
+                                                    $result = $con->query($sql);
+                                                    $accounts = $result->fetch_assoc();
+                                                    $forEvalCount = $accounts['for_eval'];
                                                     ?>
                                                     <p class="w-value"><?php echo $forEvalCount; ?></p>
                                                     <h5 class="">For Evaluation</h5>

@@ -3,11 +3,11 @@
 session_start();
 include('database.php');
 
-require_once 'C:\xampp\htdocs\oas\PHPMailer\Exception.php';
-require_once 'C:\xampp\htdocs\oas\PHPMailer\SMTP.php';
-require_once 'C:\xampp\htdocs\oas\PHPMailer\PHPMailer.php';
+require_once 'C:\xampp\htdocs\pes\PHPMailer\Exception.php';
+require_once 'C:\xampp\htdocs\pes\PHPMailer\SMTP.php';
+require_once 'C:\xampp\htdocs\pes\PHPMailer\PHPMailer.php';
 
-set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\xampp\htdocs\oas');
+set_include_path(get_include_path() . PATH_SEPARATOR . 'C:\xampp\htdocs\pes');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -56,11 +56,12 @@ if ($result->num_rows > 0) {
         ];
     }
 } else {
-    echo "User not found";
+    echo json_encode(['message' => 'No records found']);
+    exit;
 }
 
 $performance = "Performance";
-    
+
 $sql = "SELECT email FROM accounts WHERE position = ? AND user_level = 1";
 
 $stmt = $con->prepare($sql);
@@ -75,13 +76,13 @@ $hrRecords = [];
 if ($result->num_rows > 0) {
 
     $hrRecords = $result->fetch_all(MYSQLI_ASSOC);
-
 } else {
 
-    echo "User not found";
-
+    echo json_encode(['message' => 'No HR records found']);
+    exit;
 }
 
+if(isset($hrRecords[0])) {
 try {
 
     // $sendTO = $email;
@@ -89,10 +90,10 @@ try {
     // $mail->addAddress($sendTo); 
 
     foreach ($hrRecords as $record) {
-        $mail->addCC($record['email']); 
+        $mail->addCC($record['email']);
     }
 
-    $mail->isSMTP();                                                     
+    $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'ea00.ph@gmail.com';
@@ -212,7 +213,7 @@ try {
                                         </tr>
                                     </thead>
                                     <tbody>";
-                                    foreach ($userRecords as $userRecord) {
+    foreach ($userRecords as $userRecord) {
         $mail->Body .= "
                                                         <tr>
                                                             <td data-label='Employee Name'>{$userRecord['full_name']}</td>
@@ -223,8 +224,8 @@ try {
                                                             <td data-label='Evaluation Deadline'>{$userRecord['date_evaluation']}</td>
                                                             <td data-label='Days Remaining'>{$userRecord['days_remaining_in_window']} days</td>
                                                         </tr>";
-                                    }
-        $mail->Body .= "
+    }
+    $mail->Body .= "
                                         </tbody>
                                     </table>
                         
@@ -243,19 +244,17 @@ try {
                         </body>
                         </html>";
 
-    if($mail->send()) {
-
-        // echo '<script>alert("aw")</script>';
-        // echo '<script>window.location.href = "../pages/hr/employees.php"</script>';
+    if ($mail->send()) {
         echo "Successfully sending to multiple recipients";
-
     } else {
-
         echo "Failed sending to multiple recipients";
-
     }
 } catch (Exception $e) {
     //throw $th;
 }
-
-?>
+} else {
+    echo json_encode([
+        "message" => "No Employee to evaluate",
+        "status" => false,
+    ]);
+}

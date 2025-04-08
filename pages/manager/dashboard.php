@@ -171,22 +171,32 @@
 
                                                         // Fetch the manager's department
                                                         $managerDepartment = $_SESSION['department'];
+                                                        $managerID = $_SESSION['user_id'];
 
                                                         // Query to fetch employees in the manager's department
                                                         $result = $con->query($sql);
-                                                        $sql = "SELECT COUNT(*) as for_eval FROM accounts WHERE (
-                                                            /* For Regular employees: use 2-week window */
-                                                            (emp_status != 'Probationary' AND STR_TO_DATE(for_eval, '%M %d, %Y') <= DATE_ADD(CURDATE(), INTERVAL 14 DAY)) OR
-                                                            /* For Probationary employees: use 1-month window */
-                                                            (emp_status = 'Probationary' AND 
-                                                            STR_TO_DATE(for_eval, '%M %d, %Y') <= DATE_ADD(CURDATE(), INTERVAL 1 MONTH))
-                                                            ) AND user_level != 0 
-                                                            AND (current_eval IS NULL OR current_eval = '')
-                                                            AND archived != 3 AND department = '$managerDepartment'";
+                                                        $sql = "SELECT COUNT(*) AS for_eval FROM accounts WHERE (archived != 3 AND user_level != 0) AND (
+                                                        /* For Regular employees: use 2-week window */
+                                                        (emp_status != 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
+                                                        OR
+                                                        /* For Probationary employees: use 1-month window */
+                                                        (emp_status = 'Probationary' AND 
+                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
+                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
+                                                        )
+                                                        AND (employee_id != ? AND active = 1) AND (user_level = 3 AND department = ?)
+                                                    ORDER BY date_hired DESC;";
 
-                                                        $result = $con->query($sql);
-                                                        $accounts = $result->fetch_assoc();
-                                                        $forEvalCount = $accounts['for_eval'];
+                                                        $stmt = $con->prepare($sql);
+                                                        $stmt->bind_param("ss", $managerID, $managerDepartment);
+                                                        $stmt->execute();
+                                                        $result = $stmt->get_result();
+                                                        $row = $result->fetch_assoc();
+                                                        $forEvalCount = $row['for_eval'];
+                                                        $stmt->close();
+
                                                         ?>
                                                         <p class="w-value"><?php echo $forEvalCount; ?></p>
                                                         <h5 class="">For Evaluation</h5>

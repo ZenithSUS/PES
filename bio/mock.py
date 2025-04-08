@@ -33,7 +33,7 @@ def generate_mock_attendance():
 
 attendances = generate_mock_attendance()
 
-url = "http://localhost:80/oas/bio/processattendances.php"
+url = "http://localhost:80/pes/bio/processattendances.php"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 attendance_json = dumps(attendances)

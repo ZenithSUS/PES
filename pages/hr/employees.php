@@ -159,7 +159,7 @@
                                             } else if ($filter === "Manager") {
                                                 $sql = "SELECT * FROM accounts WHERE (employee_id != $u AND position = 'Manager') ORDER BY date_hired DESC";
                                             } else if ($filter === "HR") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level = 1) ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level = 1 OR department = 'Human Resource') ORDER BY date_hired DESC";
                                             } else {
                                                 $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
                                             }
