@@ -127,41 +127,21 @@
                                             $filter = $_GET['filter'] ?? null;
 
                                             if ($filter === "Evaluated") {
-                                                $sql = "SELECT * FROM accounts 
-                                                        WHERE (archived != 3 AND user_level != 0) 
-                                                            AND (
-                                                        /* For Regular employees: outside 2-week window */
-                                                        (emp_status != 'Probationary' AND 
-                                                         (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR 
-                                                        CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)))
-                                                        OR
-                                                        /* For Probationary employees: outside 1-month window */
-                                                        (emp_status = 'Probationary' AND 
-                                                         (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR 
-                                                          CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH)))
-                                                        )
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)) 
+                                                AND (current_eval IS NOT NULL OR current_eval != '')
                                                 ORDER BY date_hired DESC;";
                                             } else if ($filter === "NotEvaluated") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) AND (
-                                                        /* For Regular employees: use 2-week window */
-                                                        (emp_status != 'Probationary' AND 
-                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
-                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
-                                                        OR
-                                                        /* For Probationary employees: use 1-month window */
-                                                        (emp_status = 'Probationary' AND 
-                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
-                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
-                                                        )
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
+                                                    AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
                                                     ORDER BY date_hired DESC;";
                                             } else if ($filter === "Employees") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 ORDER BY date_hired DESC";
                                             } else if ($filter === "Manager") {
-                                                $sql = "SELECT * FROM accounts WHERE (employee_id != $u AND position = 'Manager') ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND position = 'Manager' ORDER BY date_hired DESC";
                                             } else if ($filter === "HR") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level = 1 OR department = 'Human Resource') ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND user_level = 1 ORDER BY date_hired DESC";
                                             } else {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 ORDER BY date_hired DESC";
                                             }
 
 
@@ -175,6 +155,7 @@
 
                                                     $forEvalDate = null;
                                                     $interval = null;
+
 
                                                     try {
                                                         // Get today's date
@@ -215,14 +196,8 @@
                                                         $evalWindowStart = clone $forEvalDate;
                                                         $evalWindowEnd = clone $forEvalDate;
 
-                                                        // Different evaluation windows based on employee status
-                                                        if ($accounts['emp_status'] === 'Probationary') {
-                                                            // For probationary employees: evaluation window is 1 month
-                                                            $evalWindowEnd->modify('+1 month');
-                                                        } else {
-                                                            // For regular employees: evaluation window is 2 weeks
-                                                            $evalWindowEnd->modify('+2 weeks');
-                                                        }
+                                                        $evalWindowEnd->modify('+2 weeks');
+
 
                                                         // Check if today is within the evaluation window
                                                         $isInEvalWindow = ($today >= $evalWindowStart && $today <= $evalWindowEnd);
@@ -241,9 +216,11 @@
                                                     }
 
 
+
+
+
                                                     $employeeId = $accounts['employee_id'];
-                                                    $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_hr = '$u' AND account_id = '$employeeId' 
-                                                    AND for_evaluation_date = '$forEvalValue' LIMIT 1";
+                                                    $checkEvalSql = "SELECT 1 FROM evaluation WHERE evaluator_hr = '$u' AND account_id = '$employeeId' LIMIT 1";
                                                     $evalResult = $con->query($checkEvalSql);
 
                                                     $evalExists = $evalResult && $evalResult->num_rows > 0;
@@ -252,10 +229,6 @@
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Evaluated';
-                                                    } elseif ($accounts['employee_id'] === $u) {
-                                                        $buttonClass = 'btn-muted disabled';
-                                                        $disabled = 'disabled="disabled"';
-                                                        $buttonText = 'Disabled';
                                                     } elseif ($forEvalDate && !$isInEvalWindow && (!$isPastDate || $interval > 14)) {
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
@@ -264,6 +237,10 @@
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Administrator';
+                                                    } elseif ($accounts['employee_id'] === $u) {
+                                                        $buttonClass = 'btn-muted disabled';
+                                                        $disabled = 'disabled="disabled"';
+                                                        $buttonText = 'Disabled';
                                                     } else {
                                                         $buttonClass = 'btn-info';
                                                         $disabled = '';
@@ -327,7 +304,7 @@
                     <!-- evaluate modal end -->
                 </div>
                 <!--  BEGIN FOOTER  -->
-                <!-- <div class="footer-wrapper">
+                <div class="footer-wrapper">
                     <div class="footer-section f-section-1">
                         <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
                     </div>
@@ -336,7 +313,7 @@
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg></p>
                     </div>
-                </div> -->
+                </div>
                 <!--  END FOOTER  -->
             </div>
             <!--  END CONTENT AREA  -->

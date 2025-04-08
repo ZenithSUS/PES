@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql = "UPDATE accounts SET active = $active, archived = $archive WHERE employee_id = $id";
             } else if ($stat == 'Terminated') {
                 $archive = 3;
-                $sql = "UPDATE accounts SET date_hired = $dateNow, active = $active, archived = $archive WHERE employee_id = $id";
+                $sql = "UPDATE accounts SET date_hired = '$dateNow', active = $active, archived = $archive WHERE employee_id = $id";
             }
 
             break;

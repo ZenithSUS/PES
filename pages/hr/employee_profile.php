@@ -116,7 +116,7 @@
                                         <div class="row mb-3">
                                             <div class="col-md-12 text-center">
                                                 <?php
-                                                $sql = "SELECT * FROM accounts WHERE bio_userid = ?";
+                                                $sql = "SELECT * FROM accounts WHERE bio_userid = ? AND archived = 0";
                                                 $stmt = $con->prepare($sql);
                                                 $stmt->bind_param("s", $employeeData);
                                                 $stmt->execute();
@@ -555,6 +555,7 @@
                                         <option value="Final Written Warning">Final Written Warning</option>
                                         <option value="2 days suspension">2 days suspension</option>
                                         <option value="30 days suspension">30 days suspension</option>
+                                        <option value="30 days suspension">Terminated</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="emp_id3" id="emp_id3">
@@ -608,7 +609,7 @@
             </div>
             <!-- archive modal end -->
             <!--  BEGIN FOOTER  -->
-            <!-- <div class="footer-wrapper">
+            <div class="footer-wrapper">
                 <div class="footer-section f-section-1">
                     <p class="">Copyright © <span class="dynamic-year">2022</span> <a target="_blank" href="https://designreset.com/cork-admin/">DesignReset</a>, All rights reserved.</p>
                 </div>
@@ -617,7 +618,7 @@
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg></p>
                 </div>
-            </div> -->
+            </div>
             <!--  END FOOTER  -->
         </div>
         <!--  END CONTENT AREA  -->
