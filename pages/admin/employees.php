@@ -127,41 +127,21 @@
                                             $filter = $_GET['filter'] ?? null;
 
                                             if ($filter === "Evaluated") {
-                                                $sql = "SELECT * FROM accounts 
-                                                WHERE (archived != 3 AND user_level != 0) 
-                                                    AND (
-                                                /* For Regular employees: outside 2-week window */
-                                                (emp_status != 'Probationary' AND 
-                                                 (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR 
-                                                CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)))
-                                                OR
-                                                /* For Probationary employees: outside 1-month window */
-                                                (emp_status = 'Probationary' AND 
-                                                 (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR 
-                                                  CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH)))
-                                                )
-                                        ORDER BY date_hired DESC;";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)) 
+                                                AND (current_eval IS NOT NULL OR current_eval != '')
+                                                ORDER BY date_hired DESC;";
                                             } else if ($filter === "NotEvaluated") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) AND (
-                                                        /* For Regular employees: use 2-week window */
-                                                        (emp_status != 'Probationary' AND 
-                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
-                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
-                                                        OR
-                                                        /* For Probationary employees: use 1-month window */
-                                                        (emp_status = 'Probationary' AND 
-                                                        CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
-                                                        CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
-                                                        )
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
+                                                    AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
                                                     ORDER BY date_hired DESC;";
                                             } else if ($filter === "Employees") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 ORDER BY date_hired DESC";
                                             } else if ($filter === "Manager") {
-                                                $sql = "SELECT * FROM accounts WHERE (employee_id != $u AND position = 'Manager') ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND position = 'Manager' ORDER BY date_hired DESC";
                                             } else if ($filter === "HR") {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level = 1 OR department = 'Human Resource') ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 AND user_level = 1 ORDER BY date_hired DESC";
                                             } else {
-                                                $sql = "SELECT * FROM accounts WHERE (archived != 3 AND user_level != 0) ORDER BY date_hired DESC";
+                                                $sql = "SELECT * FROM accounts WHERE archived = 0 ORDER BY date_hired DESC";
                                             }
 
                                             $result = $con->query($sql);
@@ -222,11 +202,11 @@
 
 
                                                     $employeeId = $accounts['employee_id'];
-                                                    
+
                                                     $buttonClass = 'btn muted disabled';
                                                     $disabled = 'disabled="disabled"';
                                                     $buttonText = 'Disabled';
-                                                    
+
 
                                                     $html .= '<tr>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['employee_id']) . '</td>';
