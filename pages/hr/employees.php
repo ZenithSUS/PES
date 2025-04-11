@@ -139,13 +139,13 @@
                                                             (
                                                             emp_status != 'Probationary' 
                                                             AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') 
-                                                                OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 WEEK))
+                                                                OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
                                                             )
                                                         )
                                                         ORDER BY date_hired DESC;";
                                             } else if ($filter === "NotEvaluated") {
                                                 $sql = "SELECT * FROM accounts 
-                                                        WHERE archived = 0 
+                                                        WHERE (archived != 3 AND user_level != 0)
                                                         AND (
                                                             (
                                                             emp_status = 'Probationary' 
@@ -156,7 +156,7 @@
                                                             (
                                                             emp_status != 'Probationary' 
                                                             AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
-                                                            AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 WEEK)
+                                                            AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
                                                             )
                                                         )
                                                         ORDER BY date_hired DESC;";
@@ -222,7 +222,11 @@
                                                         $evalWindowStart = clone $forEvalDate;
                                                         $evalWindowEnd = clone $forEvalDate;
 
-                                                        $evalWindowEnd->modify('+2 weeks');
+                                                        if ($accounts['emp_status'] === 'Probationary') {
+                                                            $evalWindowEnd->modify('+1 month');
+                                                        } else {
+                                                            $evalWindowEnd->modify('+2 weeks');
+                                                        }
 
 
                                                         // Check if today is within the evaluation window

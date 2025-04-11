@@ -139,7 +139,7 @@
                                                             (
                                                             emp_status != 'Probationary' 
                                                             AND (CURDATE() < STR_TO_DATE(for_eval, '%M %d, %Y') 
-                                                                OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 WEEK))
+                                                                OR CURDATE() > DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
                                                             )
                                                         )
                                                         ORDER BY date_hired DESC;";
@@ -156,7 +156,7 @@
                                                             (
                                                             emp_status != 'Probationary' 
                                                             AND CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y')
-                                                            AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 WEEK)
+                                                            AND CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK)
                                                             )
                                                         )
                                                         ORDER BY date_hired DESC;";
