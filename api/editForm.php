@@ -16,8 +16,10 @@ function checkIfManagerExists($con, $department)
 }
 
 if (isset($_POST['fileName'])) {
+    $fileName = $_POST['fileName'];
+    $eval_role = $_POST['eval_role'];
 
-    if (isset($_POST['department'])) {
+    if (isset($_POST['department']) && $eval_role !== "HRM") {
         $department = $_POST['department'];
 
         if (!checkIfManagerExists($con, $department)) {
@@ -25,12 +27,6 @@ if (isset($_POST['fileName'])) {
             exit;
         }
     }
-
-
-
-
-    $fileName = $_POST['fileName'];
-    $eval_role = $_POST['eval_role'];
 
     if ($eval_role == "HR") {
 

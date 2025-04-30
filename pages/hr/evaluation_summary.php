@@ -126,7 +126,7 @@
 
                                         <tbody id="accountsTable">
                                             <?php
-                                            $sql = "SELECT 
+                                            $sql = "SELECT DISTINCT
                                            employee.first_name AS employee_first_name, 
                                            employee.middle_name AS employee_middle_name, 
                                            employee.last_name AS employee_last_name, 

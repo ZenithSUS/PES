@@ -544,6 +544,7 @@
                                         <option value="Final Written Warning">Final Written Warning</option>
                                         <option value="2 days suspension">2 days suspension</option>
                                         <option value="30 days suspension">30 days suspension</option>
+                                        <option value="Terminated">Terminated</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="emp_id3" id="emp_id3">
