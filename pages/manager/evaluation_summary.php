@@ -139,28 +139,43 @@
 
                                                 // Fetch employees from the manager's department
                                                 $sql = "SELECT 
-                                        employee.first_name AS employee_first_name, 
-                                        employee.middle_name AS employee_middle_name, 
-                                        employee.last_name AS employee_last_name, 
-                                        employee.department AS employee_department, 
-                                        employee.employee_id AS employee_id, 
-                                        employee.position AS employee_position,
-                                        evaluation.evaluation_date,
-                                        evaluator.first_name AS evaluator_first_name,
-                                        evaluator.middle_name AS evaluator_middle_name,
-                                        evaluator.last_name AS evaluator_last_name,
-                                        evaluator.department AS evaluator_department,
-                                        evaluator.position AS evaluator_position,
-                                        summ.rating,
-                                        summ.hr_rating,
-                                        summ.manager_rating
-                                    FROM evaluation
-                                    JOIN accounts AS employee ON evaluation.account_id = employee.employee_id
-                                    JOIN eval_summary AS summ ON evaluation.account_id = summ.user_id
-                                    JOIN accounts AS evaluator 
-                                        ON evaluator.department = employee.department 
-                                        AND evaluator.user_level = 2
-                                    WHERE employee.department = '$managerDepartment';"; // Filter by the manager's department
+                                                employee.first_name AS employee_first_name, 
+                                                employee.middle_name AS employee_middle_name, 
+                                                employee.last_name AS employee_last_name, 
+                                                employee.department AS employee_department, 
+                                                employee.employee_id AS employee_id, 
+                                                employee.bio_userid AS bio_userid,
+                                                employee.position AS employee_position,
+                                                evaluation.evaluation_date,
+                                           CASE
+                                                WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN 'N/A'
+                                                ELSE evaluator.first_name
+                                            END AS evaluator_first_name,
+                                            CASE
+                                                WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN NULL
+                                                ELSE COALESCE(evaluator.middle_name, '')
+                                            END AS evaluator_middle_name,
+                                            CASE
+                                                WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN NULL
+                                                ELSE evaluator.last_name
+                                            END AS evaluator_last_name,
+                                            CASE
+                                                WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN NULL
+                                                    ELSE evaluator.bio_userid
+                                                END AS evaluator_bio_userid,
+                                                evaluator.department AS evaluator_department,
+                                                evaluator.position AS evaluator_position,
+                                                summ.rating,
+                                                summ.hr_rating,
+                                                summ.manager_rating
+                                            FROM evaluation
+                                            JOIN accounts AS employee ON evaluation.account_id = employee.employee_id
+                                            JOIN eval_summary AS summ ON evaluation.account_id = summ.user_id
+                                            LEFT JOIN accounts AS evaluator ON evaluator.department = employee.department 
+                                                AND evaluator.user_level = 2
+                                            WHERE employee.department = '$managerDepartment' AND employee.position != 'Supervisor' AND employee.employee_id != '$uss'
+                                            GROUP BY employee.employee_id,
+                                                    evaluation.evaluation_date;";
 
                                                 $result = $con->query($sql);
                                                 $html = '';

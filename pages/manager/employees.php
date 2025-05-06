@@ -124,7 +124,7 @@
 
                                         <tbody id="accountsTable">
                                             <?php
-                                        
+
                                             $u = $_SESSION['user_id'];
                                             $d = $_SESSION['department'];
                                             $filter = $_GET['filter'] ?? null;
@@ -148,7 +148,8 @@
                                             } else {
                                                 $sql = "SELECT * FROM accounts
                                                 WHERE (employee_id != $u AND active = 1) 
-                                                AND (user_level = 3 AND department = '$d')";
+                                                AND (user_level = 3 AND department = '$d')
+                                                AND position != 'Supervisor'";
                                             }
 
                                             $result = $con->query($sql);
@@ -164,18 +165,18 @@
                                                     try {
                                                         // Get today's date
                                                         $today = new DateTime();
-                                                        
+
                                                         // Get the for_eval date from the database
                                                         if (!empty($accounts['for_eval'])) {
                                                             // First, try parsing with format "F j, Y" (e.g., "April 2, 2025")
-                                                            
+
                                                             $forEvalDate = DateTime::createFromFormat('F j, Y', $accounts['for_eval']);
-                                                            
+
                                                             // If the first attempt fails, try parsing with format "F d, Y" (e.g., "April 02, 2025")
                                                             if (!$forEvalDate) {
                                                                 $forEvalDate = DateTime::createFromFormat('F d, Y', $accounts['for_eval']);
                                                             }
-                                                            
+
                                                             // Ensure the conversion was successful
                                                             if (!$forEvalDate) {
                                                                 throw new Exception("Invalid for_eval format");
@@ -192,16 +193,16 @@
                                                                 throw new Exception("date_hired is missing");
                                                             }
                                                         }
-                                                    
+
                                                         // Format the evaluation date properly
                                                         $forEvalValue = $forEvalDate->format('F j, Y');
-                                                        
+
                                                         // Set evaluation window range (2 weeks after for_eval)
                                                         $evalWindowStart = clone $forEvalDate;
                                                         $evalWindowEnd = clone $forEvalDate;
-                                                
-                                                         // Different evaluation windows based on employee status
-                                                         if ($accounts['emp_status'] === 'Probationary') {
+
+                                                        // Different evaluation windows based on employee status
+                                                        if ($accounts['emp_status'] === 'Probationary') {
                                                             // For probationary employees: evaluation window is 1 month
                                                             $evalWindowEnd->modify('+1 month');
                                                         } else {
@@ -209,16 +210,15 @@
                                                             $evalWindowEnd->modify('+2 weeks');
                                                         }
 
-                                                        
+
                                                         // Check if today is within the evaluation window
                                                         $isInEvalWindow = ($today >= $evalWindowStart && $today <= $evalWindowEnd);
-                                                        
+
                                                         // Calculate days until evaluation date
                                                         $interval = $today->diff($forEvalDate)->days;
-                                                        
+
                                                         // Check if the evaluation date is in the past
                                                         $isPastDate = ($today > $forEvalDate);
-                                                    
                                                     } catch (Exception $e) {
                                                         $forEvalDate = null;
                                                         $isInEvalWindow = false;

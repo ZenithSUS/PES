@@ -127,33 +127,51 @@
                                         <tbody id="accountsTable">
                                             <?php
                                             $sql = "SELECT DISTINCT
-                                           employee.first_name AS employee_first_name, 
-                                           employee.middle_name AS employee_middle_name, 
-                                           employee.last_name AS employee_last_name, 
-                                           employee.department AS employee_department, 
-                                           employee.employee_id AS employee_id, 
-                                           employee.position AS employee_position,
-                                           evaluation.evaluation_date,
-                                           evaluator.first_name AS evaluator_first_name,
-                                           evaluator.middle_name AS evaluator_middle_name,
-                                           evaluator.last_name AS evaluator_last_name,
-                                           evaluator.department AS evaluator_department,
-                                           evaluator.position AS evaluator_position,
-                                           summ.rating,
-                                           summ.hr_rating,
-                                           summ.manager_rating
-                                       FROM evaluation
-                                       JOIN accounts AS employee ON evaluation.account_id = employee.employee_id
-                                       JOIN eval_summary AS summ ON evaluation.account_id = summ.user_id
-                                       JOIN accounts AS evaluator 
-                                           ON evaluator.department = employee.department 
-                                           AND evaluator.user_level = 2;";
+                                                employee.first_name AS employee_first_name, 
+                                                employee.middle_name AS employee_middle_name, 
+                                                employee.last_name AS employee_last_name, 
+                                                employee.department AS employee_department, 
+                                                employee.employee_id AS employee_id, 
+                                                employee.bio_userid AS bio_userid,
+                                                employee.position AS employee_position,
+                                                employee.department AS employee_department,
+                                                evaluation.evaluation_date,
+                                                CASE 
+                                                    WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN 'N/A'
+                                                    ELSE evaluator.first_name
+                                                END AS evaluator_first_name,
+                                                CASE 
+                                                    WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN NULL
+                                                    ELSE COALESCE(evaluator.middle_name, '')
+                                                END AS evaluator_middle_name,
+                                                CASE 
+                                                    WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN NULL
+                                                    ELSE evaluator.last_name
+                                                END AS evaluator_last_name,
+                                                CASE
+                                                    WHEN employee.position IN ('Manager', 'Supervisor') OR employee.department = 'Human Resource' THEN NULL
+                                                    ELSE evaluator.bio_userid
+                                                END AS evaluator_bio_userid,
+                                                evaluator.department AS evaluator_department,
+                                                evaluator.position AS evaluator_position,
+                                                summ.rating,
+                                                summ.hr_rating,
+                                                summ.manager_rating
+                                            FROM evaluation
+                                            JOIN accounts AS employee ON evaluation.account_id = employee.employee_id
+                                            JOIN eval_summary AS summ ON evaluation.account_id = summ.user_id
+                                            LEFT JOIN accounts AS evaluator 
+                                                ON evaluator.department = employee.department 
+                                                AND evaluator.user_level = 2
+                                            GROUP BY 
+                                                employee.employee_id,
+                                                evaluation.evaluation_date;";
                                             $result = $con->query($sql);
                                             $html = '';
 
                                             if ($result && $result->num_rows > 0) {
                                                 while ($accounts = $result->fetch_assoc()) {
-
+                                                    $managerName = $accounts['evaluator_first_name'] . " " . $accounts['evaluator_middle_name'] . " " . $accounts['evaluator_last_name'];
                                                     $rating = (int)$accounts['rating'];
                                                     $hr_rating = $accounts['hr_rating'] !== NULL ? $accounts['hr_rating'] : "N/A";
                                                     $manager_rating = $accounts["manager_rating"] !== NULL ? $accounts["manager_rating"] : "N/A";
@@ -177,11 +195,18 @@
 
                                                     $html .= '<tr>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['employee_id']) . '</td>';
-                                                    $html .= '<td><a class="" href="employee_profile.php?employee=' . htmlspecialchars($accounts['employee_id']) . '">' . htmlspecialchars($accounts['employee_first_name']) . ' ' . htmlspecialchars($accounts['employee_middle_name']) . ' ' . htmlspecialchars($accounts['employee_last_name']) . '</a></td>';
+                                                    $html .= '<td><a class="" href="employee_profile.php?employee=' . htmlspecialchars($accounts['bio_userid']) . '">' . htmlspecialchars($accounts['employee_first_name']) . ' ' . htmlspecialchars($accounts['employee_middle_name']) . ' ' . htmlspecialchars($accounts['employee_last_name']) . '</a></td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['employee_department']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['employee_position']) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['evaluation_date']) . '</td>';
-                                                    $html .= '<td><a class="" href="employee_profile.php?employee=' . htmlspecialchars($accounts['employee_id']) . '">' . htmlspecialchars($accounts['evaluator_first_name']) . ' ' . htmlspecialchars($accounts['evaluator_middle_name']) . ' ' . htmlspecialchars($accounts['evaluator_last_name']) . '</a></td>';
+                                                    $html .= '<td>';
+                                                    if ($accounts['evaluator_first_name'] !== 'N/A' && !is_null($accounts['evaluator_bio_userid'])) {
+                                                        $html .= '<a class="" href="employee_profile.php?employee=' . htmlspecialchars($accounts['evaluator_bio_userid']) . '">' .
+                                                            htmlspecialchars($managerName) . '</a>';
+                                                    } else {
+                                                        $html .= 'N/A';
+                                                    }
+                                                    $html .= '</td>';
                                                     $html .= '<td>' . htmlspecialchars($hr_rating) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($manager_rating) . '</td>';
                                                     $html .= '<td>' . htmlspecialchars($accounts['rating']) . '</td>';

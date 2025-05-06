@@ -127,6 +127,7 @@
                                                             FROM accounts account
                                                             WHERE active != 0 AND user_level != 0
                                                             AND department = '$d' AND employee_id != '$u'
+                                                            AND position != 'Supervisor'
                                                             ORDER BY
                                                                 first_name;";
 
