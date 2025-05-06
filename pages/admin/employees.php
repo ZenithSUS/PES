@@ -145,7 +145,7 @@
                                                         ORDER BY date_hired DESC;";
                                             } else if ($filter === "NotEvaluated") {
                                                 $sql = "SELECT * FROM accounts 
-                                                        WHERE archived = 0 
+                                                        WHERE (archived != 3 AND user_level != 0) 
                                                         AND (
                                                             (
                                                             emp_status = 'Probationary' 

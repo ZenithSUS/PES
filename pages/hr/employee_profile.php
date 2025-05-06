@@ -658,8 +658,8 @@
                 "sLengthMenu": "Results :  _MENU_",
             },
             "stripeClasses": [],
-            "lengthMenu": [3],
-            "pageLength": 10
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
         });
 
         multiCheck(c3);

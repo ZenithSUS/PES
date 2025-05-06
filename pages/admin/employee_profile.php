@@ -646,8 +646,8 @@
                 "sLengthMenu": "Results :  _MENU_",
             },
             "stripeClasses": [],
-            "lengthMenu": [3],
-            "pageLength": 10
+            "lengthMenu": [5, 10, 15, 20],
+            "pageLength": 5
         });
 
         multiCheck(c3);
@@ -745,8 +745,8 @@
                 const idd = formData.get('emp_id3');
                 const stat2 = formData.get('stat2');
                 const violationId = formData.get('violation_id');
-                
-                
+
+
                 console.log(idd);
                 console.log(stat2);
 
@@ -903,7 +903,6 @@
         }
 
         checkResolved();
-
     </script>
 
 </body>
