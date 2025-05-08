@@ -240,7 +240,7 @@
                                                         $buttonClass = 'btn-muted disabled';
                                                         $disabled = 'disabled="disabled"';
                                                         $buttonText = 'Evaluate';
-                                                    } elseif ($evalExists && $isInEvalWindow) {
+                                                    } elseif ($evalExists) {
                                                         $buttonClass = 'btn-info';
                                                         $disabled = '';
                                                         $buttonText = 'Evaluate';

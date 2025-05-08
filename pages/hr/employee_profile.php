@@ -116,7 +116,7 @@
                                         <div class="row mb-3">
                                             <div class="col-md-12 text-center">
                                                 <?php
-                                                $sql = "SELECT * FROM accounts WHERE bio_userid = ? AND archived = 0";
+                                                $sql = "SELECT * FROM accounts WHERE bio_userid = ?";
                                                 $stmt = $con->prepare($sql);
                                                 $stmt->bind_param("s", $employeeData);
                                                 $stmt->execute();
