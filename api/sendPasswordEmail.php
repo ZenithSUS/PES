@@ -194,7 +194,7 @@ For security reasons, we strongly recommend changing your password after logging
 If you did not request this password reset, please contact our support team immediately as your account may be at risk.
 
 Regards,
-Seiwa Kaiun Philippines Inc.';
+Innotor Philippines Inc.';
 
         // Send email
         $mail->send();
