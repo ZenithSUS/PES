@@ -218,6 +218,6 @@ Innotor Philippines Inc.';
     exit;
 } else {
     // If not a POST request, redirect to the reset password form
-    header('Location: ../password-reset.php');
+    header('Location: ../authentication/SignIn.php');
     exit;
 }
