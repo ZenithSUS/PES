@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 05:35 AM
+-- Generation Time: May 16, 2025 at 02:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,7 +58,7 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`, `last_name`, `gender`, `department`, `emp_status`, `position`, `date_hired`, `username`, `password`, `email`, `phone`, `img`, `active`, `archived`, `otp`, `user_level`, `for_eval`, `current_eval`, `bio_userid`) VALUES
 (2, '16622', 'Rodante', 'Regis', 'Reyes', 'Male', 'Administrator', 'Regular', 'Administrator', 'July 25, 2013', 'rrreyes', '18c0395de718bb42f7f5828f5232bba8', 'rrreyes@innotor.com', '099123123', 'uploads/rodante.jpg', 1, 0, '', 0, 'admin', '', '5'),
-(3, '16623', 'Amiel', 'Briones', 'Manaog', 'Male', 'MIS', 'Regular', 'Technician', 'May 15, 2024', 'abmanaog', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '99123123', 'uploads/mike.jpeg', 1, 0, '', 3, 'September 04, 2025', '../forms/evaluation/7BFKPP1EQ7.xlsx', '2'),
+(3, '16623', 'Amiel', 'Briones', 'Manaog', 'Male', 'MIS', 'Regular', 'Technician', 'May 14, 2024', 'abmanaog2', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '99123123', 'uploads/mike.jpeg', 1, 0, '', 3, 'September 04, 2025', '../forms/evaluation/7BFKPP1EQ7.xlsx', '2'),
 (5, '16624', 'Bennard', 'Histo', 'Cuba', 'Male', 'MIS', 'Regular', 'Manager', 'October 5, 2024', 'bhcuba3', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '12345678933', 'uploads/pro.jpeg', 1, 0, '', 2, 'April 8, 2025', '../forms/evaluation/GV7OX6GWST.xlsx', '3'),
 (6, '16625', 'Christine', 'Tapia', 'Lumbres', 'Female', 'Human Resource', 'Regular', 'Performance', 'December 10, 20', 'ctlumbres', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '12345678900', 'uploads/16625_jane.jpeg', 1, 0, '', 1, 'December 10, 2024', NULL, '4'),
 (32, '16626', 'Raymund', 'G', 'Delarosa', 'Male', 'Engineering', 'Regular', 'Engineer', 'October 25, 2023', 'rgdelarosa6', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9556621712', 'uploads/16626_2.jpg', 1, 0, NULL, 3, 'September 25, 2024', '../forms/evaluation/3FOVW4NZ6G.xlsx', '6'),
@@ -67,7 +67,7 @@ INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`
 (35, '16629', 'Jomar', 'K', 'Abrise', 'Male', 'Quality Control', 'Regular', 'Manager', 'February 26, 2023', 'jkabrise', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278171', 'uploads/16629_jomaricon.png', 1, 0, NULL, 2, 'August 26, 2023', '../forms/evaluation/9EV4DDEXPI.xlsx', '9'),
 (36, '16630', 'Rcio', 'T', 'Baguisa', 'Male', 'Engineering', 'Regular', 'Engineer', 'September 22, 2024', 'rtbaguisa', '18c0395de718bb42f7f5828f5232bba8', 'rodante_reyes@rocketmail.com', '9876123541', 'uploads/16630_ricoicon.jfif', 1, 0, NULL, 3, 'September 27, 2025', '../forms/evaluation/HDALIA31ZX.xlsx', '10'),
 (37, '16631', 'Marvin', 'Ramos', 'Montoya', 'Male', 'Quality Control', 'Contractual', 'Technician', 'October 10, 2024', 'mrmontoya', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '09962563251', 'uploads/16631_winicon.png', 1, 0, NULL, 3, 'September 19, 2025', '../forms/evaluation/U3A5ZR8PSW.xlsx', '11'),
-(38, '16632', 'Klein', 'Corpuz', 'Castillo', 'Female', 'Quality Control', 'Regular', 'Staff', 'September 4, 2024', 'kccastillo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278176', 'uploads/16632_freepikman.jpg', 1, 0, NULL, 3, 'March 4, 2025', '../forms/evaluation/GIZ91Y08G2.xlsx', '12'),
+(38, '16632', 'Klein', 'Corpuz', 'Castillo', 'Female', 'Quality Control', 'Regular', 'Staff', 'April 11, 2025', 'kccastillo', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278176', 'uploads/16632_freepikman.jpg', 1, 0, NULL, 3, 'March 4, 2025', '../forms/evaluation/GIZ91Y08G2.xlsx', '12'),
 (39, '16633', 'Cecille', 'Medina', 'Ortis', 'Female', 'Engineering', 'Regular', 'Engineer', 'March 8, 2024', 'cmortis', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '9953800662', 'uploads/16633_dreamstine.jpg', 1, 0, NULL, 3, 'September 8, 2024', '../forms/evaluation/UZ9GCMRQYL.xlsx', '13'),
 (40, '16634', 'Jeran', 'D', 'Merino', 'Male', 'MIS', 'Contractual', 'Technician', 'September 9, 2024', 'jdmerino', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '09962563657', 'uploads/16634_abenson.jpg', 1, 0, NULL, 3, 'September 27, 2025', '../forms/evaluation/LMTT1RUQKO.xlsx', '14'),
 (44, '16635', 'Carol', 'C', 'Banawa', 'Female', 'Production', 'Regular', 'Operator', 'September 18, 2024', 'ccbanawa', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '9962563444', 'uploads/16635_businessman.png', 1, 0, NULL, 3, 'September 28, 2025', '../forms/evaluation/JUX5KY1954.xlsx', '15'),
@@ -82,7 +82,22 @@ INSERT INTO `accounts` (`account_id`, `employee_id`, `first_name`, `middle_name`
 (53, '16644', 'Rico', 'Pilar', 'Blanco', 'Male', 'Engineering', 'Probationary', 'Engineer', 'April 17, 2024', 'rpblanco24', '18c0395de718bb42f7f5828f5232bba8', 'danteregis81@gmail.com', '9846278725', 'uploads/16644_vecteezy.jpg', 1, 0, NULL, 3, 'March 17, 2025', NULL, '24'),
 (54, '16645', 'Myrna', 'Palabok', 'Pansit', 'Female', 'Quality Control', 'Contractual', 'Staff', 'October 18, 2024', 'mppansit', '18c0395de718bb42f7f5828f5232bba8', 'rgdeomampo@innotor.com', '9962563699', 'uploads/16645_vecteezy.jpg', 1, 0, NULL, 3, 'September 18, 2025', '../forms/evaluation/5SEQYA7JWA.xlsx', '25'),
 (55, '16646', 'Bennard', 'Madrid', 'Delarea', 'Male', 'Quality Control', 'Regular', 'Staff', 'April 2, 2024', 'bmdelarea', '18c0395de718bb42f7f5828f5232bba8', 'jerandmerino@gmail.com', '12345678999', 'uploads/16646_vecteezy.jpg', 1, 0, NULL, 3, 'March 2, 2025', NULL, '26'),
-(56, '16647', 'Gigi', 'Batlo', 'Sisa', 'Female', 'MIS', 'Contractual', 'Technician', 'October 20, 2024', 'gbsisa27', '18c0395de718bb42f7f5828f5232bba8', 'gbsisa@gmail.com', '9962563645', 'uploads/16647_winicon.png', 1, 0, NULL, 3, 'April 3, 2025', '../forms/evaluation/FQAUDD4YNY.xlsx', '27');
+(56, '16647', 'Gigi', 'Batlo', 'Sisa', 'Female', 'MIS', 'Contractual', 'Technician', 'October 20, 2024', 'gbsisa27', '18c0395de718bb42f7f5828f5232bba8', 'gbsisa@gmail.com', '9962563645', 'uploads/16647_winicon.png', 1, 0, NULL, 3, 'April 3, 2025', '../forms/evaluation/EZS845IBE7.xlsx', '27'),
+(57, '16648', 'Jeran Christopher', 'DInglasan', 'Merino', 'Male', 'Finance', 'Contractual', 'Driver', 'October 21, 2024', 'jdmerino28', '18c0395de718bb42f7f5828f5232bba8', 'jeranmerino147@gmail.com', '9123456789', 'uploads/16648_innotor.jpg', 1, 0, NULL, 3, 'April 4, 2025', '../forms/evaluation/9LJETWYMH6.xlsx', '28'),
+(59, '16649', 'Juan', 'Lukas', 'Dela Cruz', 'Male', 'Finance', 'Probationary', 'Supervisor', 'October 21, 2024', 'jldelacruz29', '18c0395de718bb42f7f5828f5232bba8', 'jeranmerino147@gmail.com', '9123456789', 'uploads/16649_innotor.jpg', 1, 0, NULL, 2, 'September 21, 2025', '../forms/evaluation/B33ZHNPFPB.xlsx', '29'),
+(60, '16650', 'Mika ', 'Elma', 'Dino', 'Female', 'Human Resource', 'Contractual', 'Facility', 'December 2, 2024', 'medino30', '18c0395de718bb42f7f5828f5232bba8', 'johndoe@gmail.com', '9063897482', 'uploads/16650_logo.jpg', 1, 0, NULL, 3, 'October 30, 2025', '../forms/evaluation/B7X99P6WIP.xlsx', '30'),
+(61, '16651', 'Jane', 'Vicky', 'Doe', 'Female', 'MIS', 'Contractual', 'Engineer', 'November 16, 2024', 'jvdoe31', '18c0395de718bb42f7f5828f5232bba8', 'janedoe@gmail.com', '09772814562', 'uploads/16651_innotor.jpg', 1, 0, NULL, 3, 'October 14, 2025', '../forms/evaluation/V7YFOWKQ6X.xlsx', '31'),
+(62, '16652', 'Jeran Christopher', 'D.', 'Merino', 'Male', 'Finance', 'Probationary', 'Manager', 'November 10, 2024', 'jdmerino32', '18c0395de718bb42f7f5828f5232bba8', 'jeranmerino147@gmail.com', '09063897482', 'uploads/16652_express.png', 1, 0, NULL, 2, 'October 19, 2025', '../forms/evaluation/1V710ZSD31.xlsx', '32'),
+(63, '16653', 'John', 'Fren', 'Doe', 'Female', 'MIS', 'Regular', 'Supervisor', 'November 12, 2024', 'jfdoe33', '18c0395de718bb42f7f5828f5232bba8', 'johndoe@gmail.com', '09063897482', 'uploads/16653_logo.jpg', 1, 0, NULL, 1, 'April 19, 2026', '../forms/evaluation/0DERMMZ4FP.xlsx', '33'),
+(64, '16654', 'Test ', 'Mod', 'Archive', 'Male', 'MIS', 'Contractual', 'Facility', 'November 4, 2024', 'tmarchive34', '18c0395de718bb42f7f5828f5232bba8', 'johndoe@gmail.com', '09063897482', 'uploads/16654_logo.jpg', 1, 0, NULL, 3, 'April 18, 2025', NULL, '34'),
+(65, '16655', 'Grisha', 'May', 'Carmilla', 'Female', 'Finance', 'Contractual', 'Staff', 'November 15, 2024', 'gmcarmilla35', '18c0395de718bb42f7f5828f5232bba8', 'carmilla@gmail.com', '9332916638', 'uploads/16655_express.png', 1, 0, NULL, 3, 'October 20, 2025', '../forms/evaluation/AN4IMQ8PVD.xlsx', '35'),
+(66, '16656', 'Jane', 'Vicky', 'Doe', 'Female', 'Production', 'Contractual', 'QC Inspector', 'November 14, 2024', 'jvdoe36', '18c0395de718bb42f7f5828f5232bba8', 'janedoe@gmail.com', '09772814562', 'uploads/16656_innotor.jpg', 1, 0, NULL, 3, 'October 20, 2025', '../forms/evaluation/QM518T9ZQ0.xlsx', '36'),
+(67, '16657', 'Dan', 'Regis', 'Reyes', 'Male', 'Finance', 'Contractual', 'QC Inspector', 'November 14, 2024', 'drreyes37', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakaiun.com.ph', '09063897482', 'uploads/16657_logo.jpg', 1, 0, NULL, 3, 'October 20, 2025', '../forms/evaluation/SCNGOZ6YUG.xlsx', '37'),
+(68, '16658', 'Mike', 'Reyna', 'Martin', 'Male', 'Finance', 'Contractual', 'Engineer', 'November 14, 2024', 'mrmartin38', '18c0395de718bb42f7f5828f5232bba8', 'mikereyes@gmail.com', '09332495521', 'uploads/16658_innotor.jpg', 1, 0, NULL, 3, 'October 20, 2025', '../forms/evaluation/PPCRGHCM1F.xlsx', '38'),
+(69, '16659', 'John', 'Fren', 'Doe', 'Male', 'Warehouse', 'Contractual', 'Safety Officer', 'November 14, 2024', 'jfdoe39', '18c0395de718bb42f7f5828f5232bba8', 'johndoe@gmail.com', '09063897482', 'uploads/16659_logo.jpg', 1, 0, NULL, 3, 'April 28, 2025', '../forms/evaluation/8XTOZ5VNI4.xlsx', '39'),
+(70, '16660', 'Grisha', 'Bilon', 'Enriquez', 'Male', 'Warehouse', 'Contractual', 'Staff', 'November 10, 2024', 'gbenriquez40', '18c0395de718bb42f7f5828f5232bba8', 'dan.reyes@seiwakauin.com.ph', '9242249812', 'uploads/16660_innotor.jpg', 1, 0, NULL, 3, 'October 22, 2025', '../forms/evaluation/14FQ0QU9PC.xlsx', '40'),
+(71, '16661', 'Mike', 'DInglasan', 'Santiago', 'Male', 'Warehouse', 'Contractual', 'Timekeeping', 'November 14, 2024', 'mdsantiago41', '18c0395de718bb42f7f5828f5232bba8', 'santos@gmail.com', '09332916638', 'uploads/16661_innotor.jpg', 1, 0, NULL, 3, 'April 28, 2025', NULL, '41'),
+(72, '16662', 'Bam', 'Filia', 'Marcos', 'Male', 'MIS', 'Contractual', 'Facility', 'December 2, 2024', 'bfmarcos42', '18c0395de718bb42f7f5828f5232bba8', 'bam@gmail.com', '09429301123', 'uploads/16662_anonymous.png', 1, 0, NULL, 3, 'October 30, 2025', '../forms/evaluation/4K78PZQ7PZ.xlsx', '42');
 
 -- --------------------------------------------------------
 
@@ -1290,7 +1305,23 @@ INSERT INTO `evaluation` (`evaluation_id`, `account_id`, `evaluation_date`, `for
 (137, 16642, 'March 28, 2025', NULL, NULL, NULL, '../forms/evaluation/DGWOKPQR4U.xlsx'),
 (138, 16642, 'March 28, 2025', NULL, '16625', '16625', '../forms/evaluation/V02HWLNF3B.xlsx'),
 (141, 16645, 'April 3, 2025', NULL, '16625', NULL, '../forms/evaluation/31FEP3TGT0.xlsx'),
-(142, 16645, 'April 4, 2025', 'April 1, 2025', '16625', '16629', '../forms/evaluation/5SEQYA7JWA.xlsx');
+(142, 16645, 'April 4, 2025', 'April 1, 2025', '16625', '16629', '../forms/evaluation/5SEQYA7JWA.xlsx'),
+(158, 16647, 'April 7, 2025', 'April 3, 2025', '16625', NULL, '../forms/evaluation/EZS845IBE7.xlsx'),
+(175, 16648, 'April 7, 2025', 'April 4, 2025', '16625', '16625', '../forms/evaluation/9LJETWYMH6.xlsx'),
+(179, 16650, 'April 7, 2025', 'April 4, 2025', '16625', '16625', '../forms/evaluation/TVXSMTHECJ.xlsx'),
+(181, 16649, 'April 10, 2025', 'April 5, 2025', '16625', '16625', '../forms/evaluation/B33ZHNPFPB.xlsx'),
+(182, 16650, 'April 11, 2025', 'April 3, 2025', '16625', '16625', '../forms/evaluation/RD0H337IQZ.xlsx'),
+(183, 16651, 'April 30, 2025', 'April 30, 2025', '16625', '16624', '../forms/evaluation/V7YFOWKQ6X.xlsx'),
+(184, 16653, 'May 5, 2025', 'April 26, 2025', '16625', '16625', '../forms/evaluation/0DERMMZ4FP.xlsx'),
+(185, 16652, 'May 5, 2025', 'April 24, 2025', '16625', '16625', '../forms/evaluation/1V710ZSD31.xlsx'),
+(186, 16655, 'May 6, 2025', 'April 29, 2025', '16625', '16652', '../forms/evaluation/AN4IMQ8PVD.xlsx'),
+(187, 16656, 'May 6, 2025', 'April 28, 2025', '16625', '16642', '../forms/evaluation/QM518T9ZQ0.xlsx'),
+(188, 16657, 'May 6, 2025', 'April 28, 2025', '16625', '16652', '../forms/evaluation/SCNGOZ6YUG.xlsx'),
+(189, 16658, 'May 6, 2025', 'April 28, 2025', '16625', '16652', '../forms/evaluation/PPCRGHCM1F.xlsx'),
+(190, 16659, 'May 8, 2025', 'April 28, 2025', '16625', NULL, '../forms/evaluation/8XTOZ5VNI4.xlsx'),
+(191, 16660, 'May 8, 2025', 'April 24, 2025', '16625', '16637', '../forms/evaluation/14FQ0QU9PC.xlsx'),
+(192, 16662, 'May 16, 2025', 'May 16, 2025', '16625', '16624', '../forms/evaluation/4K78PZQ7PZ.xlsx'),
+(193, 16650, 'May 16, 2025', 'May 16, 2025', '16625', '16625', '../forms/evaluation/B7X99P6WIP.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1332,7 +1363,21 @@ INSERT INTO `eval_summary` (`esid`, `user_id`, `hr_id`, `hr_rating`, `manager_ra
 (31, '16635', '16625', '23', '71', '94', 'ok na siya', '../forms/evaluation/JUX5KY1954.xlsx'),
 (32, '16641', '16625', '24', NULL, '24', NULL, NULL),
 (33, '16642', '16625', '25', '75', '100', '100', '../forms/evaluation/V02HWLNF3B.xlsx'),
-(35, '16645', '16625', '25', '75', '100', 'good job!', '../forms/evaluation/5SEQYA7JWA.xlsx');
+(35, '16645', '16625', '25', '75', '100', 'good job!', '../forms/evaluation/5SEQYA7JWA.xlsx'),
+(39, '16647', '16625', '25', NULL, '25', NULL, NULL),
+(43, '16648', '16625', '25', '73.7', '98.7', 'OKS', '../forms/evaluation/BUOFBMFJYR.xlsx'),
+(50, '16650', '16625', '23.9', '72.7', '96.6', 'OKS', '../forms/evaluation/TVXSMTHECJ.xlsx'),
+(52, '16649', '16625', '23.1', '73.1', '96.2', 'okoks', '../forms/evaluation/B33ZHNPFPB.xlsx'),
+(53, '16651', '16625', '24', '72.5', '96.5', 'Notable Manager', '../forms/evaluation/V7YFOWKQ6X.xlsx'),
+(54, '16653', '16625', '24.1', '72.9', '97', 'Very Good Employee', '../forms/evaluation/0DERMMZ4FP.xlsx'),
+(55, '16652', '16625', '24.1', '72.5', '96.6', 'Very Good', '../forms/evaluation/1V710ZSD31.xlsx'),
+(56, '16655', '16625', '23.5', '72.7', '96.2', 'Very Remarkable Employee', '../forms/evaluation/AN4IMQ8PVD.xlsx'),
+(57, '16656', '16625', '25', '70.5', '95.5', 'Oksssss', '../forms/evaluation/QM518T9ZQ0.xlsx'),
+(58, '16657', '16625', '24', '73', '97', 'Awesome Employee keep it up', '../forms/evaluation/SCNGOZ6YUG.xlsx'),
+(59, '16658', '16625', '24', '73.5', '97.5', 'Very Excellent Employee', '../forms/evaluation/PPCRGHCM1F.xlsx'),
+(60, '16659', '16625', '24.5', NULL, '24.5', NULL, NULL),
+(61, '16660', '16625', '24', '67.5', '91.5', 'Omsimized', '../forms/evaluation/14FQ0QU9PC.xlsx'),
+(62, '16662', '16625', '24.7', '72.6', '97.3', 'A hardworking employee keeps up the good work', '../forms/evaluation/4K78PZQ7PZ.xlsx');
 
 -- --------------------------------------------------------
 
@@ -1356,7 +1401,8 @@ INSERT INTO `hr_violation_list` (`violation_id`, `violation_title`, `violation_d
 (3, 'Habitual Absenteeism', 'Consecutive absence in the workspace for week/s / month/s'),
 (7, 'test violation', 'test'),
 (8, 'INSUBORDINATION', 'Discourtesy and disrespectful act towards a superior'),
-(9, 'NEGLIGENCE OF DUTY', 'Prolong break periods');
+(9, 'NEGLIGENCE OF DUTY', 'Prolong break periods'),
+(12, 'Tampering of Documents', 'Change Confidential Documents Content ');
 
 -- --------------------------------------------------------
 
@@ -1384,13 +1430,14 @@ INSERT INTO `user_violations` (`record_id`, `employee_id`, `violation_id`, `depa
 (3, '16627', '8', 'MIS', 'March 8, 2025', 'Resolved', '2 days suspension'),
 (7, '16626', '1', 'Engineering', 'March 19, 2025', 'Under Review', NULL),
 (8, '16626', '3', 'Engineering', 'March 19, 2025', 'Under Review', NULL),
-(9, '16632', '3', 'Quality Control', 'March 19, 2025', 'Resolved', 'Written Warning'),
+(9, '16632', '3', 'Quality Control', 'March 19, 2025', 'Under Review', ''),
 (10, '16631', '2', 'Quality Control', 'March 19, 2025', 'Under Review', NULL),
 (11, '16639', '1', 'Quality Control', 'March 20, 2025', 'Pending', NULL),
 (12, '16636', '3', 'Warehouse', 'March 20, 2025', 'Pending', NULL),
 (13, '16641', '3', 'Production', 'March 28, 2025', 'Under Review', NULL),
 (14, '16643', '2', 'Warehouse', 'April 2, 2025', 'Under Review', NULL),
-(15, '16645', '1', 'Quality Control', 'April 3, 2025', 'Resolved', 'Verbal Warning');
+(15, '16645', '1', 'Quality Control', 'April 3, 2025', 'Resolved', 'Verbal Warning'),
+(16, '16655', '2', 'Finance', 'May 6, 2025', 'Resolved', 'Verbal Warning');
 
 --
 -- Indexes for dumped tables
@@ -1441,7 +1488,7 @@ ALTER TABLE `user_violations`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `attendances`
@@ -1453,25 +1500,25 @@ ALTER TABLE `attendances`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
 
 --
 -- AUTO_INCREMENT for table `eval_summary`
 --
 ALTER TABLE `eval_summary`
-  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `esid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `hr_violation_list`
 --
 ALTER TABLE `hr_violation_list`
-  MODIFY `violation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `violation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_violations`
 --
 ALTER TABLE `user_violations`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
