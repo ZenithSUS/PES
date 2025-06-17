@@ -187,7 +187,8 @@
                                                 <input id="" class="form-control text-dark" name="eval_empstat" type="text" value="<?php echo $empstat ?>" readonly>
                                             </div>
                                         </div>
-                                        <div class="container mt-4">
+
+                                        <div class="container mt-4" id="managerEvaluationContainer">
                                             <div class="row mb-2">
                                                 <h4>Manager Evaluation</h4>
                                             </div>
@@ -291,6 +292,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
+
 
                                         <div class="container mt-4">
                                             <div class="row mb-2">
@@ -443,6 +445,13 @@
             console.log(to_eval_position);
             const evaluationForm = document.getElementById('evaluationForm');
             const submitButton = document.getElementById('submitEvaluation');
+            
+            const managerEvaluation = document.getElementById('managerEvaluationContainer');
+            managerEvaluation.style.display = 'none';
+
+            if(to_eval_position === 'Manager' || to_eval_position === 'Supervisor' || department === 'Human Resource') {
+                managerEvaluation.style.display = 'block';
+            }
 
             evaluationForm.addEventListener('submit', async function(event) {
 
@@ -733,11 +742,15 @@
 
             if (userRole !== 2 && (to_eval_position !== 'Manager' && to_eval_position !== 'Supervisor') && department !== 'Human Resource') {
                 disableInputs('#managerEvaluation');
-                document.getElementById('rate_comment').disabled = true;
+                if(document.getElementById('rate_comment')) {
+                    document.getElementById('rate_comment').disabled = true;
+                }
             }
             if (userRole !== 1 && to_eval_position !== 'Manager') {
                 disableInputs('#hrEvaluation');
-                document.getElementById('rate_comment').disabled = true;
+                if(document.getElementById('rate_comment')) {
+                    document.getElementById('rate_comment').disabled = true;
+                }
             }
             if ((userRole !== 1 && userRole !== 2) && (to_eval_position !== 'Manager' || to_eval_position !== 'Supervisor')) {
                 disableInputs('#managerEvaluation');

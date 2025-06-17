@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $date = DateTime::createFromFormat('F j, Y', $formattedDateHired);
 
             if ($status === "Probationary") {
-                $date->modify('+11 months');
+                $date->modify('+11 months +2 weeks');
                 $for_eval = $date->format('F j, Y');
             } else if ($status === "Contractual") {
                 $date->modify('+5 months +2 weeks');

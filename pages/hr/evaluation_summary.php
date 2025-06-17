@@ -98,8 +98,12 @@
                         </nav>
                     </div>
 
-                    <div class="d-flex justify-content-end mb-3">
-
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="d-flex items-center gap-2 justify-center">
+                            <h4 class="mb-0 mt-1">Filter:</h4>
+                            <button id="filterByNoManagerBtn" class="btn btn-primary" onclick="filterTableByManagerRating('no_manager')">No Manager Rating</button>
+                            <button id="filterByAllBtn" class="btn btn-primary" onclick="filterTableByManagerRating('all')">Show All</button>
+                        </div>
                         <button type="button" id="exportExcel" class="btn btn-success btn-block">Export to Excel</button>
 
                     </div>
@@ -385,6 +389,32 @@
             });
 
         });
+
+        function filterTableByManagerRating(filterType) {
+            var table = $('#style-3').DataTable();
+            const filterByNoManagerBtn = document.getElementById('filterByNoManagerBtn');
+            const filterByAllBtn = document.getElementById('filterByAllBtn');
+
+            filterByNoManagerBtn.classList.remove('active', 'btn-success');
+            filterByNoManagerBtn.classList.add('btn-primary');
+            
+            
+            filterByAllBtn.classList.remove('active', 'btn-success');
+            filterByAllBtn.classList.add('btn-primary');
+
+            if (filterType === 'no_manager') {
+                // Filter rows where Manager Rating column (index 7) is 'N/A' or empty
+                table.column(7).search('^(N/A|)$', true, false).draw();
+                filterByNoManagerBtn.classList.remove('btn-primary');
+                filterByNoManagerBtn.classList.add('btn-success', 'active');
+                
+            } else {
+                // Clear all filters
+                table.search('').columns().search('').draw();
+                filterByAllBtn.classList.remove('btn-primary');
+                filterByAllBtn.classList.add('btn-success', 'active');
+            }
+        }
     </script>
 
 </body>

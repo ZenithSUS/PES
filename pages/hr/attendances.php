@@ -158,9 +158,11 @@
                         </form>
                     </div>
                     
-                    <div class="col-md-3 mb-5">
+                    <div class="col-md-12 mb-5">
                         <label>&nbsp;</label>
                         <button name="filter" class="btn btn-primary btn-block" onclick="fetchAttendance()">Filter</button>
+                        <label>&nbsp;</label>
+                        <button type="button" id="hideDailyTime" class="btn btn-danger btn-block" disabled>Hide Daily Time</button>
                         <label>&nbsp;</label>
                         <button type="button" id="exportExcel" class="btn btn-success btn-block">Export to Excel</button>
                     </div>
@@ -173,14 +175,14 @@
                                         <thead>
                                             <tr>
                                                 <th>RFID</th>
-                                                <th>Employee</th>
-                                                <th>Date</th>
-                                                <th>Time IN</th>
-                                                <th>Time OUT</th>
+                                                <th id="employeeData">Employee</th>
+                                                <th class="dailyData">Date</th>
+                                                <th class="dailyData">Time IN</th>
+                                                <th class="dailyData">Time OUT</th>
                                                 <th>Work Hours</th>
                                                 <th>Late (mins)</th>
                                                 <th>Overtime</th>
-                                                <th>Remarks</th>
+                                                <th class="dailyData">Remarks</th>
                                             </tr>
                                         </thead>
                                         <tbody id="attendanceBody">
@@ -261,7 +263,7 @@
                 if (data.length > 0) {
                     let previousUserId = null;
 
-                    data.forEach(row => {
+                    data.forEach((row, index) => {
                         if (previousUserId !== row.userid) {
                             let empRow = document.createElement("tr");
                             empRow.classList.add("employee-row");
@@ -280,7 +282,32 @@
                                              <td>${row.overtime}</td>
                                              <td>${row.remark}</td>`;
                         tbody.appendChild(attnRow);
+
+                        const isLastRecordForUser = (index === data.length - 1) || 
+                                   (index < data.length - 1 && data[index + 1].userid !== row.userid);
+        
+                        if (isLastRecordForUser) {
+                            
+                            let attnTotalData = document.createElement("tr");
+                            attnTotalData.classList.add("total-row");
+                            attnTotalData.style.fontWeight = "bold";
+                            attnTotalData.innerHTML = `<td colspan='5'>Total</td>
+                                                    <td style="text-align: center;">${row.total_work_hours}</td>
+                                                    <td style="text-align: center;">${row.total_late_minutes}</td>
+                                                    <td style="text-align: center;">${row.total_overtime}</td>
+                                                    <td class="dailyData"></td>`;
+                            tbody.appendChild(attnTotalData);
+                        }
                     });
+                    const dailyTime = document.getElementById("hideDailyTime");
+                    dailyTime.textContent = "Hide Daily Time";
+                    dailyTime.classList.remove("btn-primary");
+                    dailyTime.classList.add("btn-danger");
+                    dailyTime.disabled = false;
+                    document.querySelector("#employeeData").colSpan = 0;
+                    document.querySelectorAll(".dailyData").forEach(row => {
+                         row.style.display = "";
+                    })
                 } else {
                     tbody.innerHTML = "<tr><td colspan='9'>No attendance records found</td></tr>";
                 }
@@ -288,14 +315,88 @@
             .catch(error => console.error("Error fetching data:", error));
         }
 
-        document.getElementById("exportExcel").addEventListener("click", function() {
-            let table = document.getElementById("attendanceTable");
-            let ws = XLSX.utils.table_to_sheet(table);
-            let wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Attendance Report");
-
-            XLSX.writeFile(wb, "Attendance_Report.xlsx");
+      document.getElementById("hideDailyTime").addEventListener("click", () => {
+        const dailyDataRow = document.querySelectorAll(".dailyData");
+        const employeeDataRow = document.querySelector("#employeeData");
+        const attendanceRows = document.querySelectorAll(".attendance-row");
+        const button = document.getElementById("hideDailyTime");
+    
+        attendanceRows.forEach(row => {
+            row.style.display = row.style.display === "none" ? "" : "none";
         });
+
+        dailyDataRow.forEach(row => {
+            row.style.display = row.style.display === "none" ? "" : "none";
+        })
+    
+        // Update button text
+        button.textContent = button.textContent.includes("Hide") ? "Show Daily Time" : "Hide Daily Time";
+        employeeDataRow.colSpan = button.textContent.includes("Hide") ? 0 : 4;
+        // Update button class color
+        button.classList.toggle("btn-primary");
+        button.classList.toggle("btn-danger");
+        });
+
+         document.getElementById("exportExcel").addEventListener("click", function() {
+            let table = document.getElementById("attendanceTable");
+            let clonedTable = table.cloneNode(true);
+            
+            // Check if daily time data is hidden
+            let dailyDataElements = document.querySelectorAll(".dailyData");
+            let isDailyTimeHidden = dailyDataElements[0] && dailyDataElements[0].style.display === "none";
+            
+            if (isDailyTimeHidden) {
+                // Remove daily time columns from header
+                let headerRow = clonedTable.querySelector("thead tr");
+                let dailyTimeHeaders = headerRow.querySelectorAll(".dailyData");
+                dailyTimeHeaders.forEach(header => header.remove());
+                
+                // Adjust employee column span
+                let employeeHeader = headerRow.querySelector("#employeeData");
+                if (employeeHeader) {
+                    employeeHeader.colSpan = 4;
+                }
+                
+                // Remove daily time rows (attendance-row) from body
+                let attendanceRows = clonedTable.querySelectorAll(".attendance-row");
+                attendanceRows.forEach(row => row.remove());
+                
+                // Remove empty cells from employee rows and total rows
+                let bodyRows = clonedTable.querySelectorAll("tbody tr");
+                bodyRows.forEach(row => {
+                    if (row.classList.contains("employee-row")) {
+                        // Keep first cell (RFID) and second cell (Employee name with colspan)
+                        let cells = row.querySelectorAll("td");
+                        for (let i = cells.length - 1; i >= 2; i--) {
+                            if (i > 1) cells[i].remove();
+                        }
+                    } else if (row.classList.contains("total-row")) {
+                        // Adjust total row structure
+                        let cells = row.querySelectorAll("td");
+                        if (cells.length > 0) {
+                            cells[0].textContent = "Total";
+                            cells[0].colSpan = 5; // Span across RFID and Employee columns
+                            // Remove the extra cells that were originally for daily data
+                            for (let i = cells.length - 1; i >= 1; i--) {
+                                if (i < 6) break; // Keep work hours, late, overtime, remarks
+                                cells[i].remove();
+                            }
+                        }
+                    }
+                });
+            }
+            
+                // Create worksheet from the modified table
+                let ws = XLSX.utils.table_to_sheet(clonedTable);
+                let wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Attendance Report");
+                
+                // Generate filename with current date
+                let currentDate = new Date().toISOString().split('T')[0];
+                let filename = `Attendance_Report_${currentDate}.xlsx`;
+                
+                XLSX.writeFile(wb, filename);
+            });
 
         function formatDate(dateString) {
             if (!dateString) return "";

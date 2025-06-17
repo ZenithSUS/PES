@@ -1,3 +1,14 @@
+import ctypes
+import sys
+
+def hide_console():
+    whnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if whnd != 0:
+        ctypes.windll.user32.ShowWindow(whnd, 0)  # SW_HIDE = 0
+        ctypes.windll.kernel32.CloseHandle(whnd)
+
+hide_console()
+
 from datetime import date, datetime
 import requests
 from json import dumps

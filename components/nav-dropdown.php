@@ -1,41 +1,38 @@
 <?php
 
-    include('../../api/database.php');
-    include('../../api/session.php');
+include('../../api/database.php');
+include('../../api/session.php');
 
-    
 
-    if(isset($_SESSION['user_id'])) {
 
-        $user_id = $_SESSION['user_id'];
+if (isset($_SESSION['user_id'])) {
 
-        $retrieveUser = "SELECT * FROM accounts WHERE employee_id = $user_id";
+    $user_id = $_SESSION['user_id'];
 
-        $result = $con->query($retrieveUser);
+    $retrieveUser = "SELECT * FROM accounts WHERE employee_id = $user_id";
 
-        if ($result->num_rows > 0) {
-        
-            $data = $result->fetch_assoc();
+    $result = $con->query($retrieveUser);
 
-            $userFirstname = $data['first_name'];
-            $userLastname = $data['last_name'];
-            $userEmail = $data['email'];
-            $userPhone = $data['phone'];
-            $img = $data['img'];
-            $role = $data['user_level'];
+    if ($result->num_rows > 0) {
 
-        }
+        $data = $result->fetch_assoc();
 
-    } else {
+        $userFirstname = $data['first_name'];
+        $userLastname = $data['last_name'];
+        $userEmail = $data['email'];
+        $userPhone = $data['phone'];
+        $img = $data['img'];
+        $role = $data['user_level'];
+    }
+} else {
 
-        echo '<script>
+    echo '<script>
         
                 localStorage.clear();
                 window.location.href = "../../authentication/SignIn.php";
 
               </script>';
-
-    }
+}
 
 ?>
 
@@ -43,12 +40,12 @@
 <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="avatar-container d-flex justify-content-end align-items-end">
-            
+
             <div class="avatar avatar-sm avatar-indicators avatar-online">
                 <?php
 
-                    $base64Image = $img;
-                    echo '<img src="../../api/'. $base64Image .'" class="rounded-circle" alt="avatar">';
+                $base64Image = $img;
+                echo '<img src="../../api/' . $base64Image . '" class="rounded-circle" alt="avatar">';
 
                 ?>
             </div>
@@ -59,12 +56,10 @@
         <div class="user-profile-section">
             <div class="media mx-auto">
                 <div class="media-body">
-                    <h5><?php echo $userFirstname." ".$userLastname ?></h5>
+                    <h5><?php echo $userFirstname . " " . $userLastname ?></h5>
                     <p>
-                        <?php 
-                            echo ($role == 1) ? 'Human Resource' : 
-                                (($role == 2) ? $_SESSION['department'].' Manager' : 
-                                (($role == 3) ? 'Employee' : 'Administrator'));
+                        <?php
+                        echo ($role == 1) ? 'Human Resource' : (($role == 2) ? $_SESSION['department'] . ' Manager' : (($role == 3) ? 'Employee' : 'Administrator'));
                         ?>
                     </p>
                 </div>
@@ -72,7 +67,10 @@
         </div>
         <div class="dropdown-item">
             <a href="./profile.php">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
                 <span>Profile</span>
             </a>
         </div>
@@ -86,35 +84,33 @@
             </a>
         </div>
     </div>
-    
+
 </li>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function() {
 
         const logout = document.getElementById('logoutAccount');
 
         logout.onclick = function() {
             fetch('../../api/logout.php', {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.log(data.error);
-                    alert(data.error);
-                } else {
-                    console.log(data.message);
-                    alert(data.message);
-                    localStorage.clear();
-                    window.location.href = '../../authentication/SignIn.php';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.log(data.error);
+                        alert(data.error);
+                    } else {
+                        console.log(data.message);
+                        alert(data.message);
+                        localStorage.clear();
+                        window.location.href = '../../authentication/SignIn.php';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         };
     });
-
 </script>

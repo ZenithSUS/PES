@@ -26,7 +26,7 @@ $sql = "SELECT *,
            WHEN emp_status = 'Contractual' THEN 
                DATEDIFF(DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK), CURDATE())
            WHEN emp_status = 'Probationary' THEN 
-               DATEDIFF(DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH), CURDATE())
+               DATEDIFF(DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK), CURDATE())
            ELSE 0
        END AS days_remaining_in_window
 FROM accounts 
@@ -37,10 +37,10 @@ AND (
      CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
      CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
     OR
-    /* For Probationary employees: 1-month window */
+    /* For Probationary employees: 2-week window */
     (emp_status = 'Probationary' AND
      CURDATE() >= STR_TO_DATE(for_eval, '%M %d, %Y') AND
-     CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 1 MONTH))
+     CURDATE() <= DATE_ADD(STR_TO_DATE(for_eval, '%M %d, %Y'), INTERVAL 2 WEEK))
 )
 ORDER BY STR_TO_DATE(for_eval, '%M %d, %Y') ASC, days_remaining_in_window ASC;";
 
@@ -58,8 +58,9 @@ if ($result->num_rows > 0) {
             'position' => $userRecord['position'],
             'status' => $userRecord['emp_status'],
             'date_hired' => $userRecord['date_hired'],
-            'date_evaluation' => $userRecord['emp_status'] === "Probationary" ? date('F, d, Y', strtotime($userRecord['for_eval'] . ' +1 month ')) : date('F, d, Y', strtotime($userRecord['for_eval'] . ' +14 days ')),
+            'date_evaluation' => date('F, d, Y', strtotime($userRecord['for_eval'] . ' +14 days ')),
             'days_remaining' => $userRecord['days_remaining_in_window'],
+            'monthNo' => $userRecord['emp_status'] === "Probationary" ? "12th" : "6th",
         ];
     }
 } else {
@@ -120,7 +121,7 @@ if (isset($hrRecords[0])) {
         // $mail->addAddress($sendTO);
 
         $mail->isHTML(true);
-        $mail->Subject = "Under Employees Evaluation (6th month)";
+        $mail->Subject = "Under Employees Evaluation Non-Contractual";
         $mail->Body = '';
         $mail->Body .= "
             <!DOCTYPE html>
@@ -234,7 +235,7 @@ if (isset($hrRecords[0])) {
                                                             <td data-label='Department'>{$userRecord['department']}</td>
                                                             <td data-label='Position'>{$userRecord['position']}</td>
                                                             <td data-label='Status'>{$userRecord['status']}</td>
-                                                            <td data-label='Period Covered'>6th month evaluation</td>
+                                                            <td data-label='Period Covered'>{$userRecord['monthNo']} month evaluation</td>
                                                             <td data-label='Evaluation Deadline'>{$userRecord['date_evaluation']}</td>
                                                             <td data-label='Days Remaining'>{$userRecord['days_remaining']}</td>
                                                         </tr>";

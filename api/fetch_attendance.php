@@ -204,6 +204,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $attendanceRecords = [];
+$totalWorkHours = 0;
 
 while ($row = $result->fetch_assoc()) {
     $userId = $row['userid'];
@@ -255,6 +256,10 @@ while ($row = $result->fetch_assoc()) {
 $data = [];
 
 foreach ($employees as $empId => $fullName) {
+    $totalWorkHours = 0;
+    $totalLateMinutes = 0;
+    $totalOvertimeHours = 0;
+    
     $current = clone $start;
     while ($current < $end) {
         $dateStr = $current->format('m/d/Y');
@@ -300,7 +305,6 @@ foreach ($employees as $empId => $fullName) {
                         if(isOutTime5($checkOut, $isNightTime)) {
                             $workHours = 8;
                         }
-                        
 
                         $officialDayStartTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' 08:00:00 AM');
                         $officialDayEndTime = DateTime::createFromFormat('m/d/Y h:i:s A', $dateStr . ' 04:00:00 PM');
@@ -318,13 +322,24 @@ foreach ($employees as $empId => $fullName) {
                             $remark = ($remark === "Present") ? "Undertime" : $remark . " (Undertime)";
                         }
                     }
+                    
+                    $totalWorkHours += $workHours;
+                    $totalLateMinutes += $lateTime;
+                    $totalOvertimeHours += $overtime;
+                    
                 } catch (Exception $e) {
                     error_log("Error processing time data: " . $e->getMessage());
                 }
             }
-            $checkHourRange = $workHours >= 8 | $workHours == 0;
+            
+            $checkHourRange = $workHours >= 8 || $workHours == 0;
             $formattedHours = number_format(min($workHours, 8), $checkHourRange ? 0 : 2);
+            $formattedTotalHours = number_format($totalWorkHours, $totalWorkHours == (int)$totalWorkHours ? 0 : 2);
+            
+            // Keep decimal format for individual records, but add "hr" for totals
             $formattedOvertime = number_format($overtime, $overtime == 0 ? 0 : 2);
+            $formattedTotalOvertime = number_format($totalOvertimeHours, $totalOvertimeHours == (int)$totalOvertimeHours ? 0 : 2) . ' hr';
+            
             $data[] = [
                 'userid' => $empId,
                 'full_name' => $fullName,
@@ -336,9 +351,15 @@ foreach ($employees as $empId => $fullName) {
                 'remark' => $remark,
                 'late' => $lateTime,
                 'overtime' => $formattedOvertime,
-                'is_night_shift' => $isNightShift
+                'is_night_shift' => $isNightShift,
+                'total_work_hours' => $formattedTotalHours,
+                'total_late_minutes' => $totalLateMinutes . ' min',
+                'total_overtime' => $formattedTotalOvertime,
             ];
         } else {
+            $formattedTotalHours = number_format($totalWorkHours, $totalWorkHours == (int)$totalWorkHours ? 0 : 2) . ' hr';
+            $formattedTotalOvertime = number_format($totalOvertimeHours, $totalOvertimeHours == (int)$totalOvertimeHours ? 0 : 2) . ' hr';
+            
             $data[] = [
                 'userid' => $empId,
                 'full_name' => $fullName,
@@ -349,8 +370,11 @@ foreach ($employees as $empId => $fullName) {
                 'work_hours' => 0,
                 'remark' => 'Absent',
                 'late' => 0,
-                'overtime' => 0,
-                'is_night_shift' => false
+                'overtime' => '0',
+                'is_night_shift' => false,
+                'total_work_hours' => $formattedTotalHours,
+                'total_late_minutes' => $totalLateMinutes . ' min',
+                'total_overtime' => $formattedTotalOvertime,
             ];
         }
         $current->modify('+1 day');

@@ -33,9 +33,8 @@ if ($result->num_rows > 0) {
     $position = $userRecord['position'];
     $status = $userRecord['emp_status'];
     $dateHired = $userRecord['date_hired'];
-    $dateEvaluation = $userRecord['for_eval'];
-    
-
+    $dateEvaluation = date('F, d, Y', strtotime($userRecord['for_eval'] . ' +14 days '));
+    $monthNo = $status === "Probationary" ? "12th" : "6th";
 } else {
 
     echo json_encode(["status" => 'No user found.']);
@@ -94,7 +93,7 @@ try {
     $mail->addAddress($sendTO);
 
     $mail->isHTML(true);
-    $mail->Subject = "Under Regularization Employees Evaluation (6th month)";
+    $mail->Subject = "Under Regularization Employees Evaluation";
     $mail->Body    = '';
     $mail->Body .= "
             <!DOCTYPE html>
@@ -205,7 +204,7 @@ try {
                                             <td data-label='Department'>$department</td>
                                             <td data-label='Position'>$position</td>
                                             <td data-label='Status'>$status</td>
-                                            <td data-label='Period Covered'>6th month Evaluation</td>
+                                            <td data-label='Period Covered'>$monthNo month Evaluation</td>
                                         </tr>
                                     </tbody>
                                 </table>
